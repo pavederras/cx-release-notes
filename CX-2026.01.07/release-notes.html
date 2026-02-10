@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CX Sprint 2026.01.07 Release Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark Mode (Default) */
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #666;
+            --accent-primary: #0078FF;
+            --border-color: #2a2a2a;
+            --shadow-color: rgba(0,0,0,0.3);
+            --hover-glow: rgba(0,120,255,0.2);
+
+            /* Status badge colors - Dark */
+            --status-new-bg: rgba(0, 120, 255, 0.15);
+            --status-new-text: #4da3ff;
+            --status-new-border: rgba(0, 120, 255, 0.3);
+
+            --status-enhanced-bg: rgba(0, 200, 255, 0.15);
+            --status-enhanced-text: #5dbbff;
+            --status-enhanced-border: rgba(0, 200, 255, 0.3);
+
+            --status-fix-bg: rgba(255, 100, 100, 0.15);
+            --status-fix-text: #ff8080;
+            --status-fix-border: rgba(255, 100, 100, 0.3);
+
+            --status-performance-bg: rgba(255, 200, 0, 0.15);
+            --status-performance-text: #ffcc66;
+            --status-performance-border: rgba(255, 200, 0, 0.3);
+
+            --status-technical-bg: rgba(150, 150, 150, 0.15);
+            --status-technical-text: #b0b0b0;
+            --status-technical-border: rgba(150, 150, 150, 0.3);
+
+            --status-spike-bg: rgba(100, 200, 255, 0.15);
+            --status-spike-text: #80d4ff;
+            --status-spike-border: rgba(100, 200, 255, 0.3);
+
+            --status-deprecated-bg: rgba(255, 150, 150, 0.15);
+            --status-deprecated-text: #ff9999;
+            --status-deprecated-border: rgba(255, 150, 150, 0.3);
+        }
+
+        [data-theme="light"] {
+            /* Light Mode */
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f0f0f0;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-muted: #999;
+            --accent-primary: #0078FF;
+            --border-color: #e0e0e0;
+            --shadow-color: rgba(0,0,0,0.08);
+            --hover-glow: rgba(0,120,255,0.12);
+
+            /* Status badge colors - Light */
+            --status-new-bg: #d4edda;
+            --status-new-text: #155724;
+            --status-new-border: #c3e6cb;
+
+            --status-enhanced-bg: #cce5ff;
+            --status-enhanced-text: #004085;
+            --status-enhanced-border: #b8daff;
+
+            --status-fix-bg: #f8d7da;
+            --status-fix-text: #721c24;
+            --status-fix-border: #f5c6cb;
+
+            --status-performance-bg: #fff3cd;
+            --status-performance-text: #856404;
+            --status-performance-border: #ffeaa7;
+
+            --status-technical-bg: #e2e3e5;
+            --status-technical-text: #383d41;
+            --status-technical-border: #d6d8db;
+
+            --status-spike-bg: #d1ecf1;
+            --status-spike-text: #0c5460;
+            --status-spike-border: #bee5eb;
+
+            --status-deprecated-bg: #f5c6cb;
+            --status-deprecated-text: #721c24;
+            --status-deprecated-border: #f1aeb5;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            color: var(--text-primary);
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .sprint-dropdown {
+            font-size: 1rem;
+            padding: 0.4rem 2rem 0.4rem 0.8rem;
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230078FF' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 12px;
+        }
+
+        .sprint-dropdown:hover {
+            background-color: var(--hover-glow);
+            border-color: var(--accent-primary);
+        }
+
+        .sprint-dropdown:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px var(--hover-glow);
+        }
+
+        .header .sprint-dates {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 1rem;
+        }
+
+        .markdown-link {
+            color: var(--accent-primary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .markdown-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .navigation {
+            background: var(--bg-secondary);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px var(--shadow-color);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex: 1;
+            overflow-x: auto;
+            justify-content: center;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            font-weight: bold;
+        }
+
+        .nav-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .theme-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .release-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .section-header .count {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .features-container {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px var(--hover-glow);
+            border-color: var(--accent-primary);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .status-new {
+            background: var(--status-new-bg);
+            color: var(--status-new-text);
+            border: 1px solid var(--status-new-border);
+        }
+
+        .status-enhanced {
+            background: var(--status-enhanced-bg);
+            color: var(--status-enhanced-text);
+            border: 1px solid var(--status-enhanced-border);
+        }
+
+        .status-fix {
+            background: var(--status-fix-bg);
+            color: var(--status-fix-text);
+            border: 1px solid var(--status-fix-border);
+        }
+
+        .status-performance {
+            background: var(--status-performance-bg);
+            color: var(--status-performance-text);
+            border: 1px solid var(--status-performance-border);
+        }
+
+        .status-technical {
+            background: var(--status-technical-bg);
+            color: var(--status-technical-text);
+            border: 1px solid var(--status-technical-border);
+        }
+
+        .status-spike {
+            background: var(--status-spike-bg);
+            color: var(--status-spike-text);
+            border: 1px solid var(--status-spike-border);
+        }
+
+        .status-deprecated {
+            background: var(--status-deprecated-bg);
+            color: var(--status-deprecated-text);
+            border: 1px solid var(--status-deprecated-border);
+        }
+
+        .feature-title {
+            flex: 1;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        .ticket-link {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .ticket-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .feature-summary {
+            margin-top: 1rem;
+            color: var(--text-primary);
+            line-height: 1.8;
+            background: var(--bg-tertiary);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .feature-summary strong {
+            color: var(--accent-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-summary ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .feature-summary li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .feature-details {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .feature-details ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .feature-details li {
+            margin-bottom: 0.3rem;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .screenshot-item {
+            text-align: center;
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .screenshot-item img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px var(--hover-glow);
+            border-color: var(--accent-primary);
+        }
+
+        .screenshot-caption {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        footer {
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            transition: background 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .navigation {
+                padding: 0.5rem 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .feature-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>CX Sprint 2026.01.07</h1>
+            <select id="sprint-selector" class="sprint-dropdown" onchange="switchSprint(this.value)" aria-label="Switch to different sprint">
+                <option value="CX-2026.01.07" selected>2026.01.07</option>
+<option value="CX-2026.01.28" >2026.01.28</option>
+            </select>
+        </div>
+        <p class="sprint-dates">
+            <a href="release-notes.md" class="markdown-link" download>📄 View Markdown Source</a>
+        </p>
+    </div>
+
+    <nav class="navigation">
+        <div class="nav-links">
+            <a href="#home-portal" class="nav-link">Home Portal (12)</a>
+<a href="#smartapp" class="nav-link">SmartApp (8)</a>
+<a href="#servicing" class="nav-link">Servicing (5)</a>
+<a href="#admin-portal" class="nav-link">Admin Portal (1)</a>
+<a href="#tech-debt" class="nav-link">Tech Debt (7)</a>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-icon">🌙</span>
+            <span id="theme-text">Light</span>
+        </button>
+    </nav>
+
+    <div class="container">
+        
+        <section id="home-portal" class="release-section">
+            <h2 class="section-header">Home Portal <span class="count">(12 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-deprecated">🗑️ REMOVED</span>
+                    <h3 class="feature-title">Remove 'Change Since' on Home Value card</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/29709" class="ticket-link" target="_blank">#29709</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Problem Statement: As a Home Portal user, I want the Change Since date to be removed so that I am not confused.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/29709_1.png" alt="Remove 'Change Since' on Home Value card" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    
+                    <div class="screenshot-item">
+                        <img src="screenshots/29709_2.png" alt="Remove 'Change Since' on Home Value card" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Workflow - Borrower Auth Doc Request</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/85234" class="ticket-link" target="_blank">#85234</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>ID Acceptance Criteria AC1</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/85234-workflow-borrower-auth-doc-request.png" alt="Workflow - Borrower Auth Doc Request" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-enhanced">✨ ENHANCED</span>
+                    <h3 class="feature-title">After Mortgage Account SSO Redirect, update header links to use referral domain</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/87521" class="ticket-link" target="_blank">#87521</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a borrower, if I am on the BankCMG domain or a JV domain, and I click "view" on the mortgage account, I will arrive on the cmghomeloans.com domain's view of the mortgage account details page (see #87510). While I am on that page, I want all header links to route back to the domain I came from. Acceptance Criteria: Pre-conditions: I am a borrower on BankCMG or JV and I've selected to view a cmg serviced loan., I land on the CMGHL servicing page, I can view the servicing details of that loan that I selected (same behavior as today) When I select the top navigation, the expected behavior is as follows: All navigation links below should return the user to that page, using the domain they came from : Dashboard Home Search* (doesn't need to change, because it is an external link to HouseCanary) Your Home Calculators Apply Now All sub links under Avatar menu My Profile Logout.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/87521-after-mortgage-account-sso-redirect-upda.png" alt="After Mortgage Account SSO Redirect, update header links to use referral domain" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Create Your Homes feature flag</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/89994" class="ticket-link" target="_blank">#89994</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a user, I want the Your Homes page to behind a feature flag so I can control by user if needed. Features to add additional homes for tracking value will remain within comehome, they use Home Search and View Home.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/89994-create-your-homes-feature-flag.png" alt="Create Your Homes feature flag" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">Showing multiple loading states when loading a loan detail dashboard</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/87544" class="ticket-link" target="_blank">#87544</a>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/87544-showing-multiple-loading-states-when-loa.png" alt="Showing multiple loading states when loading a loan detail dashboard" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">My Profile - Back button takes the user to the Oops! page.</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/87623" class="ticket-link" target="_blank">#87623</a>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/87623-my-profile-back-button-takes-the-user-to.png" alt="My Profile - Back button takes the user to the Oops! page." onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">User is not redirected to the login screen when they get a 401 error while unauthenticated</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/90879" class="ticket-link" target="_blank">#90879</a>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/90879-user-is-not-redirected-to-the-login-scre.png" alt="User is not redirected to the login screen when they get a 401 error while unauthenticated" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">Verify with Plaid/Truv button does nothing after you refresh the page while on the autofill accounts route</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91080" class="ticket-link" target="_blank">#91080</a>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/91080-verify-with-plaid-truv-button-does-nothi.png" alt="Verify with Plaid/Truv button does nothing after you refresh the page while on the autofill accounts route" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">SSO Redirect - Opening Nav links in a new tab does not redirect.</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91146" class="ticket-link" target="_blank">#91146</a>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/91146-sso-redirect-opening-nav-links-in-a-new-.png" alt="SSO Redirect - Opening Nav links in a new tab does not redirect." onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">Login Dialog is not closing after logging in during loan application flow</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91539" class="ticket-link" target="_blank">#91539</a>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/91539-login-dialog-is-not-closing-after-loggin.png" alt="Login Dialog is not closing after logging in during loan application flow" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">Home Affordability Calculator Displaying Incorrect Principal Calculation</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91691" class="ticket-link" target="_blank">#91691</a>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/91691-home-affordability-calculator-displaying.png" alt="Home Affordability Calculator Displaying Incorrect Principal Calculation" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="smartapp" class="release-section">
+            <h2 class="section-header">SmartApp <span class="count">(8 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-enhanced">✨ ENHANCED</span>
+                    <h3 class="feature-title">Update to Plaid VOA prefill question to match Truv VOIE</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/64816" class="ticket-link" target="_blank">#64816</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a SmartApp borrower, I choose to autofill my assets, I want to be able to verify my assets using Plaid and have that experience similar to Truv VOIE.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/64816_1.png" alt="Update to Plaid VOA prefill question to match Truv VOIE" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    
+                    <div class="screenshot-item">
+                        <img src="screenshots/64816_2.png" alt="Update to Plaid VOA prefill question to match Truv VOIE" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Truv Branding CMG Template</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/86402" class="ticket-link" target="_blank">#86402</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a borrower, If I'm applying for a loan via Smartapp and use Truv, I see the brand that I started applying with reflected in Truv, so that there is brand consistency. What needs to happen: As a user applying for a loan using SmartApp hosted on the Bank CMG domain (currently securemortgage.bankcmg.com), I use Truv, I want to see BankCMG branding applied to the Truv Bridge component.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/86402_1.png" alt="Truv Branding CMG Template" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Reroute View Button to SSO</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/87510" class="ticket-link" target="_blank">#87510</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a user, I should only be able to view and manage payments for my CMG serviced loan on the secure.cmghomeloans.com domain. Selecting the "view" button while I am on my dashboard using the the BankCMG domain or a JV domain will trigger redirect SSO to the secure.cmghomeloan.com domain's mortgage account details page. Related SSO research: https://dev.azure.com/cmgfidev/Consumer%20Experience/_workitems/edit/87414 Acceptance Criteria: Pre-conditions: I am a borrower on the Bank CMG or JV domain and have a loan that is serviced by CMGHL, I am on Bank CMG and select "View" on a CMG serviced loan, I get redirected to the CMGHL servicing domain.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/87510-reroute-view-button-to-sso.png" alt="Reroute View Button to SSO" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Plaid Branding Bank CMG Template</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/89963" class="ticket-link" target="_blank">#89963</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a borrower, I use Plaid to verify my assets, I see the customized Plaid template related to the domain that I'm on, so that there is brand consistency.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/89963_1.png" alt="Plaid Branding Bank CMG Template" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">Wrong SmartApp Date in Byte</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/86150" class="ticket-link" target="_blank">#86150</a>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/86150-wrong-smartapp-date-in-byte.png" alt="Wrong SmartApp Date in Byte" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">Name mismatch check should be case insensitive and trim whitespace</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/90029" class="ticket-link" target="_blank">#90029</a>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/90029-name-mismatch-check-should-be-case-insen.png" alt="Name mismatch check should be case insensitive and trim whitespace" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">User receives error when progressing in loan application - no BorrowerGUID when redirected back to in-progress application after logging in after being logged out for inactivity</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/90042" class="ticket-link" target="_blank">#90042</a>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/90042-user-receives-error-when-progressing-in-.png" alt="User receives error when progressing in loan application - no BorrowerGUID when redirected back to in-progress application after logging in after being logged out for inactivity" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="servicing" class="release-section">
+            <h2 class="section-header">Servicing <span class="count">(5 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Add 'Notice of Service Transfer' to Documents</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/89926" class="ticket-link" target="_blank">#89926</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a user, be able to access additional document types so that I can view them without contacting support.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/89926_1.png" alt="Add 'Notice of Service Transfer' to Documents" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Upgrade Aspen Grove widgets to 1.48.0</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91079" class="ticket-link" target="_blank">#91079</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a general rule, we always assume that everything Sagent sends us is in ET, and all validations must be performed in ET; that is, the users local time is always converted to ET to validate things like cut-off times, duplicate payments, whether the current month has been paid, etc. In this particular case, I have been creating test cases and improving the code around the method that determines whether the current month has already been paid. To do this, I established the following principle: - A month is NOT paid by default. - It is only considered paid if the backend has advanced the dueDate to the next cycle. This implies that: - dueDate always represents the date of the next pending payment. - If the user has paid July, the dueDate moves to August. - If we still see dueDate = July 1 and today = July 2 (or even today = July 1), then July is NOT paid. -, ever the field daysPastDue > 0, it means the current month is still unpaid and there is a delay.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/91079-upgrade-aspen-grove-widgets-to-1-48-0.png" alt="Upgrade Aspen Grove widgets to 1.48.0" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Upgrade Aspen Grove widgets to 1.49.0</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91546" class="ticket-link" target="_blank">#91546</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>new version ( 1.49 ) sent by email with latest fix's on Escrow Only payments.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/91546-upgrade-aspen-grove-widgets-to-1-49-0.png" alt="Upgrade Aspen Grove widgets to 1.49.0" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-spike">🔍 SPIKE</span>
+                    <h3 class="feature-title">Research "Payoff Quicker" Calculator [8 hours]</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/89593" class="ticket-link" target="_blank">#89593</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Description Servicing has indicated that the Pay-Off Sooner/Additional Principal Payment calculator is one of the most-used calculator functions that exists and would like it to be integrated into Servicing Portal.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/89593-research-payoff-quicker-calculator-8-hou.png" alt="Research "Payoff Quicker" Calculator [8 hours]" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="admin-portal" class="release-section">
+            <h2 class="section-header">Admin Portal <span class="count">(1 items)</span></h2>
+            <div class="features-container">
+                
+            </div>
+        </section>
+        
+
+        <section id="tech-debt" class="release-section">
+            <h2 class="section-header">Tech Debt <span class="count">(7 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Remove unwanted encoding done to support '+' in contact email</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/80137" class="ticket-link" target="_blank">#80137</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a developer, remove the unnecessary encoding of contact email addresses containing a '+' sign in the Conx API, so that Loan Serv API can correctly handle these emails without relying on pre-encoded input.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/80137-remove-unwanted-encoding-done-to-support.png" alt="Remove unwanted encoding done to support '+' in contact email" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Upgrade ConX API to .NET 10/.SLNX Format</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/85568" class="ticket-link" target="_blank">#85568</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>- ConX API solution is upgraded to .NET 10 and builds successfully both locally and in build pipelines. - ConX API is successfully deployed to lower environments and responds to calls. - ConX API solution file is converted to `.slnx` format.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/85568-upgrade-conx-api-to-net-10-slnx-format.png" alt="Upgrade ConX API to .NET 10/.SLNX Format" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Upgrade ConX Admin API to .NET 10/.SLNX Format</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/85569" class="ticket-link" target="_blank">#85569</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>- ConX Admin API solution is upgraded to .NET 10 and builds successfully both locally and in build pipelines. - ConX Admin API is successfully deployed to lower environments and responds to calls. - ConX Admin API solution file is converted to `.slnx` format.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/85569-upgrade-conx-admin-api-to-net-10-slnx-fo.png" alt="Upgrade ConX Admin API to .NET 10/.SLNX Format" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Upgrade ConX Third Party API to .NET 10/.SLNX Format</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/85570" class="ticket-link" target="_blank">#85570</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>- ConX Third Party API solution is upgraded to .NET 10 and builds successfully both locally and in build pipelines. - ConX Third Party API is successfully deployed to lower environments and responds to calls. - ConX Third Party API solution file is converted to `.slnx` format.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/85570-upgrade-conx-third-party-api-to-net-10-s.png" alt="Upgrade ConX Third Party API to .NET 10/.SLNX Format" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Update admin api base url</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/90656" class="ticket-link" target="_blank">#90656</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Update admin base url to fix dev env.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/90656-update-admin-api-base-url.png" alt="Update admin api base url" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-spike">🔍 SPIKE</span>
+                    <h3 class="feature-title">Research code related house canary loan officer sync job.</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/90097" class="ticket-link" target="_blank">#90097</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a Home Portal Developer, understand the behavior of "HouseCanaryLoanOfficerSync" azure function, identify root causes for below 400 Bad Request responses, and propose fixes with product team's feedback.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/90097-research-code-related-house-canary-loan-.png" alt="Research code related house canary loan officer sync job." onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-spike">🔍 SPIKE</span>
+                    <h3 class="feature-title">Identify causes and remediation options for  build warnings in Conx API, Conx Admin API and Third Party API [16 Hrs]</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91638" class="ticket-link" target="_blank">#91638</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Investigate current build warnings for the Conx API, Conx Admin API and Third Party API, identify causes and remediation options..</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/91638-identify-causes-and-remediation-options-.png" alt="Identify causes and remediation options for  build warnings in Conx API, Conx Admin API and Third Party API [16 Hrs]" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-spike">🔍 SPIKE</span>
+                    <h3 class="feature-title">Identify causes and remediation options for  build warnings in Conx API, Conx Admin API and Third Party API [16 Hrs]</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91638" class="ticket-link" target="_blank">#91638</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Investigate current build warnings for the Conx API, Conx Admin API and Third Party API, identify causes and remediation options..</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/91638-identify-causes-and-remediation-options-.png" alt="Identify causes and remediation options for  build warnings in Conx API, Conx Admin API and Third Party API [16 Hrs]" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">Total Completed</span>
+                    <h3 class="feature-title">70 items</h3>
+                    
+                </div>
+                
+                
+                
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">Total Completed</span>
+                    <h3 class="feature-title">70 items</h3>
+                    
+                </div>
+                
+                
+                
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">Total Completed</span>
+                    <h3 class="feature-title">70 items</h3>
+                    
+                </div>
+                
+                
+                
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">Total Completed</span>
+                    <h3 class="feature-title">70 items</h3>
+                    
+                </div>
+                
+                
+                
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">Total Completed</span>
+                    <h3 class="feature-title">70 items</h3>
+                    
+                </div>
+                
+                
+                
+            </div>
+            
+            </div>
+        </section>
+        
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Consumer Experience Team | Generated from Azure DevOps</p>
+    </footer>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Sprint switching functionality
+        function switchSprint(sprintFolder) {
+            // Navigate to the selected sprint's HTML file
+            window.location.href = '../' + sprintFolder + '/release-notes.html';
+        }
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            // Update button text and icon
+            if (newTheme === 'light') {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            } else {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            }
+        }
+
+        // Load saved theme on page load
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+
+            html.setAttribute('data-theme', savedTheme);
+
+            if (savedTheme === 'light') {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            } else {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            }
+        })();
+
+        function enlargeImage(img) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'flex';
+            modalImg.src = img.src;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

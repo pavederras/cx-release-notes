@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CX Sprint 2026.01.28 Release Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark Mode (Default) */
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #666;
+            --accent-primary: #0078FF;
+            --border-color: #2a2a2a;
+            --shadow-color: rgba(0,0,0,0.3);
+            --hover-glow: rgba(0,120,255,0.2);
+
+            /* Status badge colors - Dark */
+            --status-new-bg: rgba(0, 120, 255, 0.15);
+            --status-new-text: #4da3ff;
+            --status-new-border: rgba(0, 120, 255, 0.3);
+
+            --status-enhanced-bg: rgba(0, 200, 255, 0.15);
+            --status-enhanced-text: #5dbbff;
+            --status-enhanced-border: rgba(0, 200, 255, 0.3);
+
+            --status-fix-bg: rgba(255, 100, 100, 0.15);
+            --status-fix-text: #ff8080;
+            --status-fix-border: rgba(255, 100, 100, 0.3);
+
+            --status-performance-bg: rgba(255, 200, 0, 0.15);
+            --status-performance-text: #ffcc66;
+            --status-performance-border: rgba(255, 200, 0, 0.3);
+
+            --status-technical-bg: rgba(150, 150, 150, 0.15);
+            --status-technical-text: #b0b0b0;
+            --status-technical-border: rgba(150, 150, 150, 0.3);
+
+            --status-spike-bg: rgba(100, 200, 255, 0.15);
+            --status-spike-text: #80d4ff;
+            --status-spike-border: rgba(100, 200, 255, 0.3);
+
+            --status-deprecated-bg: rgba(255, 150, 150, 0.15);
+            --status-deprecated-text: #ff9999;
+            --status-deprecated-border: rgba(255, 150, 150, 0.3);
+        }
+
+        [data-theme="light"] {
+            /* Light Mode */
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f0f0f0;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-muted: #999;
+            --accent-primary: #0078FF;
+            --border-color: #e0e0e0;
+            --shadow-color: rgba(0,0,0,0.08);
+            --hover-glow: rgba(0,120,255,0.12);
+
+            /* Status badge colors - Light */
+            --status-new-bg: #d4edda;
+            --status-new-text: #155724;
+            --status-new-border: #c3e6cb;
+
+            --status-enhanced-bg: #cce5ff;
+            --status-enhanced-text: #004085;
+            --status-enhanced-border: #b8daff;
+
+            --status-fix-bg: #f8d7da;
+            --status-fix-text: #721c24;
+            --status-fix-border: #f5c6cb;
+
+            --status-performance-bg: #fff3cd;
+            --status-performance-text: #856404;
+            --status-performance-border: #ffeaa7;
+
+            --status-technical-bg: #e2e3e5;
+            --status-technical-text: #383d41;
+            --status-technical-border: #d6d8db;
+
+            --status-spike-bg: #d1ecf1;
+            --status-spike-text: #0c5460;
+            --status-spike-border: #bee5eb;
+
+            --status-deprecated-bg: #f5c6cb;
+            --status-deprecated-text: #721c24;
+            --status-deprecated-border: #f1aeb5;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            color: var(--text-primary);
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .sprint-dropdown {
+            font-size: 1rem;
+            padding: 0.4rem 2rem 0.4rem 0.8rem;
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230078FF' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 12px;
+        }
+
+        .sprint-dropdown:hover {
+            background-color: var(--hover-glow);
+            border-color: var(--accent-primary);
+        }
+
+        .sprint-dropdown:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px var(--hover-glow);
+        }
+
+        .header .sprint-dates {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 1rem;
+        }
+
+        .markdown-link {
+            color: var(--accent-primary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .markdown-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .navigation {
+            background: var(--bg-secondary);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px var(--shadow-color);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex: 1;
+            overflow-x: auto;
+            justify-content: center;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            font-weight: bold;
+        }
+
+        .nav-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .theme-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .release-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .section-header .count {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .features-container {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px var(--hover-glow);
+            border-color: var(--accent-primary);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .status-new {
+            background: var(--status-new-bg);
+            color: var(--status-new-text);
+            border: 1px solid var(--status-new-border);
+        }
+
+        .status-enhanced {
+            background: var(--status-enhanced-bg);
+            color: var(--status-enhanced-text);
+            border: 1px solid var(--status-enhanced-border);
+        }
+
+        .status-fix {
+            background: var(--status-fix-bg);
+            color: var(--status-fix-text);
+            border: 1px solid var(--status-fix-border);
+        }
+
+        .status-performance {
+            background: var(--status-performance-bg);
+            color: var(--status-performance-text);
+            border: 1px solid var(--status-performance-border);
+        }
+
+        .status-technical {
+            background: var(--status-technical-bg);
+            color: var(--status-technical-text);
+            border: 1px solid var(--status-technical-border);
+        }
+
+        .status-spike {
+            background: var(--status-spike-bg);
+            color: var(--status-spike-text);
+            border: 1px solid var(--status-spike-border);
+        }
+
+        .status-deprecated {
+            background: var(--status-deprecated-bg);
+            color: var(--status-deprecated-text);
+            border: 1px solid var(--status-deprecated-border);
+        }
+
+        .feature-title {
+            flex: 1;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        .ticket-link {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .ticket-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .feature-summary {
+            margin-top: 1rem;
+            color: var(--text-primary);
+            line-height: 1.8;
+            background: var(--bg-tertiary);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .feature-summary strong {
+            color: var(--accent-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-summary ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .feature-summary li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .feature-details {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .feature-details ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .feature-details li {
+            margin-bottom: 0.3rem;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .screenshot-item {
+            text-align: center;
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .screenshot-item img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px var(--hover-glow);
+            border-color: var(--accent-primary);
+        }
+
+        .screenshot-caption {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        footer {
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            transition: background 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .navigation {
+                padding: 0.5rem 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .feature-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>CX Sprint 2026.01.28</h1>
+            <select id="sprint-selector" class="sprint-dropdown" onchange="switchSprint(this.value)" aria-label="Switch to different sprint">
+                <option value="CX-2026.01.07" >2026.01.07</option>
+<option value="CX-2026.01.28" selected>2026.01.28</option>
+            </select>
+        </div>
+        <p class="sprint-dates">
+            <a href="release-notes.md" class="markdown-link" download>📄 View Markdown Source</a>
+        </p>
+    </div>
+
+    <nav class="navigation">
+        <div class="nav-links">
+            <a href="#home-portal" class="nav-link">Home Portal (14)</a>
+<a href="#smartapp" class="nav-link">SmartApp (4)</a>
+<a href="#servicing" class="nav-link">Servicing (10)</a>
+<a href="#tech-debt" class="nav-link">Tech Debt (7)</a>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-icon">🌙</span>
+            <span id="theme-text">Light</span>
+        </button>
+    </nav>
+
+    <div class="container">
+        
+        <section id="home-portal" class="release-section">
+            <h2 class="section-header">Home Portal <span class="count">(14 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-deprecated">🗑️ REMOVED</span>
+                    <h3 class="feature-title">Deprecate Site Introduction Modal for users after 8/8/2024 launch</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/28599" class="ticket-link" target="_blank">#28599</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a Home Portal user, I do not need to be made aware of launch upgrades after the site has been live for some time. Acceptance Criteria: Remove the Home Portal 8/8/2024 launch site introduction modal built via #24095 so that it no longer shows in any of the following scenarios on and after 9/18/2024: Upon any existing user clicking "Log In" on the Log In page ( https://dev.secure.cmghomeloans.com/login ) with accurate credentials who has not yet seen this modal (i.e., it is only shown to each user once after the release, and not again after that) Upon activating a new account via the Activate Account page, after the user has logged in with the new account Upon creating an account via the Create Account page Note: per 7/29/2024 conversation with @Cory Chandler this is just a database change on the announcement table to add an end-date to the modal, but this will be left in the code for if/, a message similar to this is reinstated in the future.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/28599-deprecate-site-introduction-modal-for-us.png" alt="Deprecate Site Introduction Modal for users after 8/8/2024 launch" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Partially hide loan number by default and add ability to view or hide full number</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/65133" class="ticket-link" target="_blank">#65133</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a user, I want my loan number to be partially hidden unless, view it so that my information is more secure.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/65133_1.png" alt="Partially hide loan number by default and add ability to view or hide full number" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Docutech - Get eSign Tasks Item</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/69460" class="ticket-link" target="_blank">#69460</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>ID Acceptance Criteria AC1 eSign Task Type displays only</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/69460_1.png" alt="Docutech - Get eSign Tasks Item" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Docutech - eSign Tasks Action Page</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/79993" class="ticket-link" target="_blank">#79993</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>ID Acceptance Criteria AC1 eSign Action Page accessible via Sign (To Do) and View (Completed) buttons from Task Framework.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/79993_1.png" alt="Docutech - eSign Tasks Action Page" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    
+                    <div class="screenshot-item">
+                        <img src="screenshots/79993_2.png" alt="Docutech - eSign Tasks Action Page" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Allow user to navigate to dashboard from Verify Identity page after redirect for an app in servicing</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/86711" class="ticket-link" target="_blank">#86711</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a user, be able to return to my dashboard without verifying my identity so that I can complete other tasks.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/86711-allow-user-to-navigate-to-dashboard-from.png" alt="Allow user to navigate to dashboard from Verify Identity page after redirect for an app in servicing" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-enhanced">✨ ENHANCED</span>
+                    <h3 class="feature-title">Enhance GET Document Upload Task workflow</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/87188" class="ticket-link" target="_blank">#87188</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>ID Acceptance Criteria AC1 System calls enhanced Clear Docs API and receives borrower names and application ID data.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/87188-enhance-get-document-upload-task-workflo.png" alt="Enhance GET Document Upload Task workflow" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-deprecated">🗑️ REMOVED</span>
+                    <h3 class="feature-title">Remove Feature Flag Miscellaneous Upload Document Task</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/87516" class="ticket-link" target="_blank">#87516</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Scope Remove feature flag: MiscDocTask ..</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/87516-remove-feature-flag-miscellaneous-upload.png" alt="Remove Feature Flag Miscellaneous Upload Document Task" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Upload Document - Add Doc Type(s) to Completed Task</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/89824" class="ticket-link" target="_blank">#89824</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a borrower, I want the ability to see the doctype(s) of the document(s) I uploaded to my completed tasks. Objective Provide borrower visibility to the doctype of documents used to complete a document upload task. Personas Persona Description Borrower Needs to upload miscellaneous documents securely in support of their loan application. Loan Officer (LO) Receives documents from borrower Requirements Current behavior:, a document is uploaded via tasks, the completed task then displays in the Completed tasks view with the task label used to upload.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/89824_1.png" alt="Upload Document - Add Doc Type(s) to Completed Task" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-enhanced">✨ ENHANCED</span>
+                    <h3 class="feature-title">Update Mortgage Calculator Computational Logic with Code Fix for 1/8 Point Interest Values</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92249" class="ticket-link" target="_blank">#92249</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a Home Portal user, I want the Mortgage Calculator to correctly calculate payments for interest rates ending in 1/8th increments (.125, .375, .625, .875), so that mortgage payment calculations are accurate and consistent with expected financial standards The existing Mortgage Calculator rounds up incorrectly, calculating payments for interest rates ending in 1/8th point increments (.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92249-update-mortgage-calculator-computational.png" alt="Update Mortgage Calculator Computational Logic with Code Fix for 1/8 Point Interest Values" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Bank CMG HouseCanary Branding</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92269" class="ticket-link" target="_blank">#92269</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a BankCMG borrower, I use comehome, I need to see BankCMG branding and when I hit back to dashboard it retains the branding from the source.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92269-bank-cmg-housecanary-branding.png" alt="Bank CMG HouseCanary Branding" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Turn off Your Homes Dashboard for BankCMG via feature flag temporarily</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93137" class="ticket-link" target="_blank">#93137</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Purpose Currently the BankCMG branded HouseCanary site has been created, and the SAML integration has been setup and is working between our the BankCMG Home Portal and the BankCMG HouseCanary site.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/93137-turn-off-your-homes-dashboard-for-bankcm.png" alt="Turn off Your Homes Dashboard for BankCMG via feature flag temporarily" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">User can see cached information when viewing mortgage</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/87983" class="ticket-link" target="_blank">#87983</a>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/87983-user-can-see-cached-information-when-vie.png" alt="User can see cached information when viewing mortgage" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">Verify Identity - User can submit the form without the DOB field filled out</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91752" class="ticket-link" target="_blank">#91752</a>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/91752-verify-identity-user-can-submit-the-form.png" alt="Verify Identity - User can submit the form without the DOB field filled out" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="smartapp" class="release-section">
+            <h2 class="section-header">SmartApp <span class="count">(4 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-enhanced">✨ ENHANCED</span>
+                    <h3 class="feature-title">CX | SmartApp | Update phone consent message for primary borrower</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/78782" class="ticket-link" target="_blank">#78782</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Problem Statement: As a user, I want the consent message to be updated so that I have more information.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/78782-cx-smartapp-update-phone-consent-message.png" alt="CX | SmartApp | Update phone consent message for primary borrower" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">CX | SmartApp | Add Phone Type and consent disclaimer to co-borrower information page</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91498" class="ticket-link" target="_blank">#91498</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Lisa WolfeProblem Statement: As a user, I want the consent message to be updated so that I have more information.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/91498_1.png" alt="CX | SmartApp | Add Phone Type and consent disclaimer to co-borrower information page" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">BankCMG Email Branding</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93046" class="ticket-link" target="_blank">#93046</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a BankCMG consumer, apply for a mortgage through SmartApp I want my emails branded to BankCMG so I receive brand I expect throughout process.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/93046-bankcmg-email-branding.png" alt="BankCMG Email Branding" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="servicing" class="release-section">
+            <h2 class="section-header">Servicing <span class="count">(10 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-enhanced">✨ ENHANCED</span>
+                    <h3 class="feature-title">Update message shown when there are no documents available</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/90375" class="ticket-link" target="_blank">#90375</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a user, be given more information about when to expect my documents so that I know when to check again.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/90375_1.png" alt="Update message shown when there are no documents available" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Display and Filter documents for Appraisal, Closing Disclosure, Funding Package, PMI Removal Notices, and 1099s</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/90377" class="ticket-link" target="_blank">#90377</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a user, be able to access additional document types so that I can view them without contacting support.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/90377-display-and-filter-documents-for-apprais.png" alt="Display and Filter documents for Appraisal, Closing Disclosure, Funding Package, PMI Removal Notices, and 1099s" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Change Loan Amount to Loan Balance on primary dashboard</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92003" class="ticket-link" target="_blank">#92003</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>"Loan Amount" will be changed to "Loan Balance" on the Mortgage Account cards which appear on the primary dashboard, for Cenlar and LoanServ loans. Current Appearance:</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92003_1.png" alt="Change Loan Amount to Loan Balance on primary dashboard" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Upgrade Aspen Grove widgets to 1.50.0</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92082" class="ticket-link" target="_blank">#92082</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>This version includes a few minor but significant changes: AP 1.50: The business-day control logic has been adjusted (3 business days, or 4 if past the cutoff time) when accessing the Edit / Delete AutoPay view.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92082-upgrade-aspen-grove-widgets-to-1-50-0.png" alt="Upgrade Aspen Grove widgets to 1.50.0" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Extend SSN search to include coborrowers for displaying servicing dashboard</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92256" class="ticket-link" target="_blank">#92256</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a user, be able to view my mortgage account dashboard so that I can manage my loan.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92256-extend-ssn-search-to-include-coborrowers.png" alt="Extend SSN search to include coborrowers for displaying servicing dashboard" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Add Banner for 1098 - Prior to Delivery</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92871" class="ticket-link" target="_blank">#92871</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Banner is present for all servicing clients as expected Email from stakeholders attached .</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92871_1.png" alt="Add Banner for 1098 - Prior to Delivery" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-spike">🔍 SPIKE</span>
+                    <h3 class="feature-title">Preview document</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/42244" class="ticket-link" target="_blank">#42244</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a user, be able to preview the PDF for my documents so that I do not need to leave the page.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/42244-preview-document.png" alt="Preview document" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-spike">🔍 SPIKE</span>
+                    <h3 class="feature-title">Define Alert Display API Requirements for Home Portal [16 hours]</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91672" class="ticket-link" target="_blank">#91672</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Background The Borrower Portal already supports rendering alert banners for users and loan accounts.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/91672-define-alert-display-api-requirements-fo.png" alt="Define Alert Display API Requirements for Home Portal [16 hours]" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">✅ TASK</span>
+                    <h3 class="feature-title">Verify existing servicing dashboards (Regression)</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92543" class="ticket-link" target="_blank">#92543</a>
+                </div>
+                
+                
+                
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="tech-debt" class="release-section">
+            <h2 class="section-header">Tech Debt <span class="count">(7 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Smart App | Remove Route History for ApplicationJSONStateString</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/87916" class="ticket-link" target="_blank">#87916</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Currently, we really only seed the sectionURL and routeURL to update the application state for a user.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/87916-smart-app-remove-route-history-for-appli.png" alt="Smart App | Remove Route History for ApplicationJSONStateString" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Remove unused Aspose.PDF.Drawing-related document generation code and clean up Docker components from TP API</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91669" class="ticket-link" target="_blank">#91669</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>As a Home Portal Developer, remove unused document-generation code that depends on Aspose.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/91669-remove-unused-aspose-pdf-drawing-related.png" alt="Remove unused Aspose.PDF.Drawing-related document generation code and clean up Docker components from TP API" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Send Loan-Conversion Service Bus Messages to Additional Topic</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92294" class="ticket-link" target="_blank">#92294</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>CMG is working to standardize/unify the Service Bus setup across the organization.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92294-send-loan-conversion-service-bus-message.png" alt="Send Loan-Conversion Service Bus Messages to Additional Topic" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Performance Improvements to usp_GetPipelineLoanApplicationList</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92559" class="ticket-link" target="_blank">#92559</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>When Clear calls the `/api/v1/external/loanapplications/pipeline` endpoint, this eventually gets to the `usp_GetPipelineLoanApplicationList` stored procedure.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92559-performance-improvements-to-usp-getpipel.png" alt="Performance Improvements to usp_GetPipelineLoanApplicationList" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Database Query Improvements for ExternalController.GetLoanApplicationsByGUIDsAsync</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92561" class="ticket-link" target="_blank">#92561</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>When the `/api/v1/external/loanapplications` is called with a list of Loan Application GUID's, each GUID is retrieved separately, and each GUID process results in four separate database queries.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92561-database-query-improvements-for-external.png" alt="Database Query Improvements for ExternalController.GetLoanApplicationsByGUIDsAsync" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Add claude initialization to UI repo</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93426" class="ticket-link" target="_blank">#93426</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>We need to set up a claude.md file in the UI repo..</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/93426-add-claude-initialization-to-ui-repo.png" alt="Add claude initialization to UI repo" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-spike">🔍 SPIKE</span>
+                    <h3 class="feature-title">Investigate Instituting a "Pre-Deploy" Process</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92275" class="ticket-link" target="_blank">#92275</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Look into splitting our deployment process into two steps: - Deploying artifacts to deployment slot - Swapping slots Splitting these steps allows us to do a "pre-deploy" of artifacts so that any deployment issues can be addressed separately (e.g.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92275-investigate-instituting-a-pre-deploy-pro.png" alt="Investigate Instituting a "Pre-Deploy" Process" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-spike">🔍 SPIKE</span>
+                    <h3 class="feature-title">Investigate Instituting a "Pre-Deploy" Process</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92275" class="ticket-link" target="_blank">#92275</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Look into splitting our deployment process into two steps: - Deploying artifacts to deployment slot - Swapping slots Splitting these steps allows us to do a "pre-deploy" of artifacts so that any deployment issues can be addressed separately (e.g.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92275-investigate-instituting-a-pre-deploy-pro.png" alt="Investigate Instituting a "Pre-Deploy" Process" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">Total Completed</span>
+                    <h3 class="feature-title">71 items</h3>
+                    
+                </div>
+                
+                
+                
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">Total Completed</span>
+                    <h3 class="feature-title">71 items</h3>
+                    
+                </div>
+                
+                
+                
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">Total Completed</span>
+                    <h3 class="feature-title">71 items</h3>
+                    
+                </div>
+                
+                
+                
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">Total Completed</span>
+                    <h3 class="feature-title">71 items</h3>
+                    
+                </div>
+                
+                
+                
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">Total Completed</span>
+                    <h3 class="feature-title">71 items</h3>
+                    
+                </div>
+                
+                
+                
+            </div>
+            
+            </div>
+        </section>
+        
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Consumer Experience Team | Generated from Azure DevOps</p>
+    </footer>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Sprint switching functionality
+        function switchSprint(sprintFolder) {
+            // Navigate to the selected sprint's HTML file
+            window.location.href = '../' + sprintFolder + '/release-notes.html';
+        }
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            // Update button text and icon
+            if (newTheme === 'light') {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            } else {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            }
+        }
+
+        // Load saved theme on page load
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+
+            html.setAttribute('data-theme', savedTheme);
+
+            if (savedTheme === 'light') {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            } else {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            }
+        })();
+
+        function enlargeImage(img) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'flex';
+            modalImg.src = img.src;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

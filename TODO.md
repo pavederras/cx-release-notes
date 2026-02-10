@@ -6,6 +6,57 @@ The release notes system is fully operational and ready for use. All core featur
 
 ---
 
+## 📋 Pending Work - Pick Up Tomorrow
+
+### Phase 1: Clean Up Existing Sprints
+- [ ] Review and refine markdown summaries for **CX-2026.01.07** (35 items)
+  - Edit summaries in `CX-2026.01.07/release-notes.md` for clarity and consistency
+  - Ensure all User Stories and Spikes have concise, scannable summaries
+  - Remove any unnecessary details or formatting issues
+
+- [ ] Review and refine markdown summaries for **CX-2026.01.28** (38 items)
+  - Edit summaries in `CX-2026.01.28/release-notes.md`
+  - Apply same clarity and consistency standards
+  - Verify all screenshots are properly referenced
+
+- [ ] Regenerate HTML for both sprints after cleanup
+  ```bash
+  node generate-html.js "CX-2026.01.07/release-notes.md"
+  node generate-html.js "CX-2026.01.28/release-notes.md"
+  ```
+
+### Phase 2: Update Template for Future Sprints
+- [ ] Review `release-notes-template.md` and update based on learnings
+- [ ] Decide on standard summary format/style for User Stories and Spikes
+- [ ] Document any additional guidelines for manual editing
+- [ ] Update TODO.md with refined workflow documentation
+
+### Phase 3: Create Simple Command/Workflow
+- [ ] Create a single command script (e.g., `generate-sprint.sh` or `generate-sprint.bat`)
+- [ ] Script should prompt for sprint info and run all 3 steps:
+  ```bash
+  # Example workflow to automate:
+  # 1. Create folder structure
+  # 2. Run enhance-release-notes.js
+  # 3. Run create-enhanced-release-notes.js
+  # 4. Run generate-html.js
+  ```
+- [ ] Test with next sprint: **CX (03) 2026.02.18** (Jan 29 - Feb 18, 2026)
+- [ ] Document the command in TODO.md
+
+### Remaining Sprints for 2026:
+- CX (03) 2026.02.18 - January 29 - February 18, 2026
+- CX (04) 2026.03.11 - February 19 - March 11, 2026
+- CX (05) 2026.04.01 - March 12 - April 1, 2026
+- CX (06) 2026.04.22 - April 2 - April 22, 2026
+- CX (07) 2026.05.13 - April 23 - May 13, 2026
+- CX (08) 2026.06.03 - May 14 - June 3, 2026
+- CX (09) 2026.06.24 - June 4 - June 24, 2026
+
+**Goal:** Once Phase 1-3 complete, generating release notes for any sprint should be a single command.
+
+---
+
 ## 🎯 Completed Features
 
 ### ✅ Azure DevOps Integration
@@ -296,6 +347,6 @@ done
 
 ---
 
-**Last Updated:** 2026-02-09
-**Status:** ✅ Production Ready
+**Last Updated:** 2026-02-06
+**Status:** ✅ Production Ready (Pending Phase 1-3 Refinements)
 **Version:** 2.0

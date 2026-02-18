@@ -6,43 +6,82 @@ The release notes system is fully operational and ready for use. All core featur
 
 ---
 
+## 🚀 Quick Start - Generate Release Notes (Single Command!)
+
+**For any new sprint, simply run:**
+
+```powershell
+.\generate-sprint.ps1
+```
+
+Or double-click: `generate-sprint.bat`
+
+The script will:
+1. ✅ Check prerequisites (Node.js, Azure CLI)
+2. ✅ Prompt for sprint information
+3. ✅ Create folder structure
+4. ✅ Pull work items from Azure DevOps
+5. ✅ Generate markdown with AI summaries
+6. ✅ Generate HTML with dark/light mode
+7. ✅ Optionally open in browser
+
+**That's it!** No manual steps required.
+
+---
+
 ## 📋 Pending Work - Pick Up Tomorrow
 
-### Phase 1: Clean Up Existing Sprints
-- [ ] Review and refine markdown summaries for **CX-2026.01.07** (35 items)
-  - Edit summaries in `CX-2026.01.07/release-notes.md` for clarity and consistency
-  - Ensure all User Stories and Spikes have concise, scannable summaries
-  - Remove any unnecessary details or formatting issues
+### Phase 1: Clean Up Existing Sprints ✅ COMPLETED (2026-02-11)
+- [x] Generated AI summaries for all **CX-2026.01.07** work items (36 User Stories, Bugs, and Spikes)
+- [x] Generated AI summaries for all **CX-2026.01.28** work items (33 User Stories, Bugs, and Spikes)
+- [x] Updated Azure DevOps `Custom.ReleaseNote` field for all 68 work items
+- [x] Regenerated markdown files with AI summaries
+- [x] Regenerated HTML for both sprints
 
-- [ ] Review and refine markdown summaries for **CX-2026.01.28** (38 items)
-  - Edit summaries in `CX-2026.01.28/release-notes.md`
-  - Apply same clarity and consistency standards
-  - Verify all screenshots are properly referenced
+**Approach Used:** Instead of manually editing markdown, we used AI to generate concise, user-friendly summaries and stored them directly in Azure DevOps. This creates a single source of truth for all future release notes.
 
-- [ ] Regenerate HTML for both sprints after cleanup
-  ```bash
-  node generate-html.js "CX-2026.01.07/release-notes.md"
-  node generate-html.js "CX-2026.01.28/release-notes.md"
-  ```
+### Phase 2: Update Template for Future Sprints ✅ COMPLETED (2026-02-11)
+- [x] Created `SUMMARY-GUIDELINES.md` with standard format/style documentation
+- [x] Defined summary format for User Stories (3-5 sentences), Bugs (2-3 sentences), and Spikes (3-4 sentences)
+- [x] Updated `release-notes-template.md` to clarify its purpose (executive summaries vs. detailed release notes)
+- [x] Updated TODO.md with refined ADO-based workflow documentation
 
-### Phase 2: Update Template for Future Sprints
-- [ ] Review `release-notes-template.md` and update based on learnings
-- [ ] Decide on standard summary format/style for User Stories and Spikes
-- [ ] Document any additional guidelines for manual editing
-- [ ] Update TODO.md with refined workflow documentation
+**Summary Format Established:**
+- **User Stories:** Bold header + business value + technical context for SMEs
+- **Bugs:** "Fixed [Issue]" header + problem statement + resolution
+- **Spikes:** Research topic header + findings + recommendations
+- **Storage:** All summaries in Azure DevOps `Custom.ReleaseNote` field
 
-### Phase 3: Create Simple Command/Workflow
-- [ ] Create a single command script (e.g., `generate-sprint.sh` or `generate-sprint.bat`)
-- [ ] Script should prompt for sprint info and run all 3 steps:
-  ```bash
-  # Example workflow to automate:
-  # 1. Create folder structure
-  # 2. Run enhance-release-notes.js
-  # 3. Run create-enhanced-release-notes.js
-  # 4. Run generate-html.js
-  ```
-- [ ] Test with next sprint: **CX (03) 2026.02.18** (Jan 29 - Feb 18, 2026)
-- [ ] Document the command in TODO.md
+### Phase 3: Create Simple Command/Workflow ✅ COMPLETED (2026-02-11)
+- [x] Created PowerShell automation script (`generate-sprint.ps1`)
+- [x] Created batch wrapper for easy execution (`generate-sprint.bat`)
+- [x] Script prompts for sprint info and runs all steps automatically:
+  1. Validates prerequisites (Node.js, Azure CLI, authentication)
+  2. Prompts for sprint number, date, and date range
+  3. Creates folder structure (`CX-YYYY.MM.DD/screenshots`)
+  4. Enhances work items from ADO (`enhance-release-notes.js`)
+  5. Generates markdown (`create-enhanced-release-notes.js`)
+  6. Generates HTML (`generate-html.js`)
+  7. Optionally opens in browser
+- [x] Documented the command usage below
+
+**How to Use:**
+```powershell
+# Option 1: Run PowerShell script directly
+.\generate-sprint.ps1
+
+# Option 2: Double-click generate-sprint.bat
+# Or run from Command Prompt:
+generate-sprint.bat
+```
+
+The script will prompt for:
+- Sprint number (e.g., 03)
+- Sprint end date (e.g., 2026.02.18)
+- Date range (e.g., January 29 - February 18, 2026)
+
+**Next Sprint to Test:**
+- [ ] Test with: **CX (03) 2026.02.18** (Jan 29 - Feb 18, 2026)
 
 ### Remaining Sprints for 2026:
 - CX (03) 2026.02.18 - January 29 - February 18, 2026
@@ -119,36 +158,97 @@ C:/github-projects/Release Notes/
 
 ---
 
-## 🚀 How to Generate Release Notes
+## 🚀 How to Generate Release Notes (Updated Workflow)
+
+### Prerequisites
+- Azure CLI authenticated (`az login`)
+- Azure DevOps defaults configured:
+  ```bash
+  az devops configure --defaults organization=https://cmgfidev.visualstudio.com project="Consumer Experience"
+  ```
 
 ### Step 1: Create Sprint Folder
 ```bash
-mkdir "C:/github-projects/Release Notes/CX-YYYY.MM.DD"
-mkdir "C:/github-projects/Release Notes/CX-YYYY.MM.DD/screenshots"
+cd "C:/github-projects/Release Notes"
+mkdir "CX-YYYY.MM.DD"
+mkdir "CX-YYYY.MM.DD/screenshots"
 ```
 
-### Step 2: Enhance Work Items (Extract Descriptions)
+### Step 2: Enhance Work Items (Pull from Azure DevOps)
+This step extracts descriptions AND Custom.ReleaseNote fields from ADO for User Stories, Spikes, and Bugs.
+
 ```bash
-cd "C:/github-projects/Release Notes"
 node enhance-release-notes.js "Consumer Experience\\CX (##) YYYY.MM.DD"
 ```
 
-### Step 3: Generate Markdown
+**What it does:**
+- Queries all completed work items from the sprint
+- Extracts Custom.ReleaseNote field (AI-generated summaries)
+- Falls back to System.Description if no release note exists
+- Saves to `enhanced-work-items.json`
+
+### Step 3: Generate Markdown (Immediately After Step 2)
+**IMPORTANT:** Run this immediately after Step 2 while `enhanced-work-items.json` contains the correct sprint data.
+
 ```bash
 node create-enhanced-release-notes.js "Consumer Experience\\CX (##) YYYY.MM.DD" "YYYY.MM.DD" "Month DD - Month DD, YYYY" "CX-YYYY.MM.DD"
 ```
+
 **Example:**
 ```bash
 node create-enhanced-release-notes.js "Consumer Experience\\CX (03) 2026.02.18" "2026.02.18" "January 29 - February 18, 2026" "CX-2026.02.18"
 ```
+
+**What it does:**
+- Reads `enhanced-work-items.json`
+- Categorizes work items by area path
+- Generates markdown with summaries
+- Saves to `CX-YYYY.MM.DD/release-notes.md`
 
 ### Step 4: Generate HTML
 ```bash
 node generate-html.js "CX-YYYY.MM.DD/release-notes.md"
 ```
 
+**What it does:**
+- Converts markdown to HTML
+- Adds dark/light mode toggle
+- Creates sprint dropdown navigation
+- Saves to `CX-YYYY.MM.DD/release-notes.html`
+
 ### Step 5: Open in Browser
-The HTML file will be at: `CX-YYYY.MM.DD/release-notes.html`
+```bash
+start "CX-YYYY.MM.DD/release-notes.html"
+```
+
+---
+
+## 📝 Working with Release Note Summaries
+
+### Viewing Summaries in Azure DevOps
+1. Open any work item in ADO
+2. Look for the **Custom.ReleaseNote** field
+3. This field contains the AI-generated or manually-written summary
+
+### Updating Summaries in Azure DevOps
+1. Edit the work item in ADO
+2. Update the **Custom.ReleaseNote** field (supports HTML)
+3. Save the work item
+4. Re-run Steps 2-4 above to regenerate release notes
+
+### Bulk Generating AI Summaries
+If work items don't have summaries yet, use the AI generation process:
+1. Extract work items: `node process-release-notes.js` (creates JSON files)
+2. Generate summaries using Claude AI (see `generate-summaries.js` or use agents)
+3. Update ADO: `node update-ado.js` (writes Custom.ReleaseNote fields)
+4. Follow normal workflow (Steps 2-4 above)
+
+### Summary Guidelines
+See **SUMMARY-GUIDELINES.md** for:
+- Format standards by work item type
+- Writing do's and don'ts
+- Quality checklist
+- Examples for User Stories, Bugs, and Spikes
 
 ---
 

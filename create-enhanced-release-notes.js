@@ -20,7 +20,7 @@ function loadEnhancedWorkItems() {
 // Get all work items from iteration
 function getIterationWorkItems(iterationPath) {
     try {
-        const wiql = `SELECT [System.Id], [System.Title], [System.WorkItemType], [System.State] FROM WorkItems WHERE [System.IterationPath] = '${iterationPath}' AND [System.State] IN ('Closed', 'Done', 'Resolved') ORDER BY [System.WorkItemType], [System.Id]`;
+        const wiql = `SELECT [System.Id], [System.Title], [System.WorkItemType], [System.State] FROM WorkItems WHERE [System.IterationPath] = '${iterationPath}' AND [System.State] IN ('Closed', 'Done', 'Resolved', 'Pending Deployment') ORDER BY [System.WorkItemType], [System.Id]`;
 
         const cmd = `az boards query --wiql "${wiql}" --output json`;
         const result = execSync(cmd, { encoding: 'utf-8', maxBuffer: 10 * 1024 * 1024 });
@@ -38,94 +38,72 @@ function getIterationWorkItems(iterationPath) {
     }
 }
 
-// Get sort order for work item type
+// Get sort order for work item type (User Story first, Spike second)
 function getTypeSortOrder(type) {
-    // Sort by actual work item type only, not by title keywords
     if (type === 'User Story') return 1;
     if (type === 'Spike') return 2;
-    if (type === 'Bug' || type === 'Defect') return 3;
-    if (type === 'Task') return 4;
-    return 5;
+    return 3; // anything else sorts last (shouldn't appear)
 }
 
-// Categorize work items
+const PARTNER = '__PARTNER__';
+
+// Resolve area category from a work item title.
+// Returns PARTNER constant for partner items, null for unrecognized, or a category string.
+function resolveCategory(title) {
+    const titleParts = title.split('|');
+    const fullTitle = title.toLowerCase();
+
+    if (titleParts.length > 1) {
+        const areaPath = titleParts[0].trim().toLowerCase();
+        if (areaPath.includes('partner')) return PARTNER;
+        if (areaPath.includes('home portal')) return 'Home Portal';
+        if (areaPath.includes('smartapp') || areaPath.includes('smart app')) return 'SmartApp';
+        if (areaPath.includes('servicing')) return 'Servicing';
+        if (areaPath.includes('admin portal')) return 'Admin Portal';
+        if (areaPath.includes('tech debt') || areaPath.includes('sitewide')) return 'Tech Debt';
+    }
+
+    if (fullTitle.includes('partner')) return PARTNER;
+    if (fullTitle.includes('home portal')) return 'Home Portal';
+    if (fullTitle.includes('smartapp') || fullTitle.includes('smart app')) return 'SmartApp';
+    if (fullTitle.includes('servicing')) return 'Servicing';
+    if (fullTitle.includes('admin portal')) return 'Admin Portal';
+    if (fullTitle.includes('tech debt')) return 'Tech Debt';
+
+    return null; // unrecognized area — ok for bugs, skip for stories/spikes
+}
+
+// Categorize work items — only User Stories and Spikes, by area path.
+// Tasks, Bugs, Defects, and partner items are excluded entirely.
 function categorizeWorkItems(workItems, enhancedItems) {
     const categories = {};
     const enhancedMap = new Map(enhancedItems.map(item => [item.id, item]));
 
     for (const item of workItems) {
-        // Extract area path from title (everything before the first "|")
-        let category = null;
-        const titleParts = item.title.split('|');
-        const fullTitle = item.title.toLowerCase();
+        const type = item.type;
 
-        // First try to get area path from title structure
-        if (titleParts.length > 1) {
-            const areaPath = titleParts[0].trim().toLowerCase();
+        // Only include User Stories and Spikes
+        if (type !== 'User Story' && type !== 'Spike') continue;
 
-            // Skip partner-related items entirely
-            if (areaPath.includes('partner')) {
-                continue;
-            }
+        const category = resolveCategory(item.title);
 
-            // Normalize area path names
-            if (areaPath.includes('home portal')) {
-                category = 'Home Portal';
-            } else if (areaPath.includes('smartapp') || areaPath.includes('smart app')) {
-                category = 'SmartApp';
-            } else if (areaPath.includes('servicing')) {
-                category = 'Servicing';
-            } else if (areaPath.includes('admin portal')) {
-                category = 'Admin Portal';
-            } else if (areaPath.includes('tech debt')) {
-                category = 'Tech Debt';
-            }
-        }
+        // Skip partner items and anything without a recognized area path
+        if (!category || category === PARTNER) continue;
 
-        // If no category yet, infer from title keywords
-        if (!category) {
-            // Skip partner items
-            if (fullTitle.includes('partner')) {
-                continue;
-            }
-
-            if (fullTitle.includes('home portal')) {
-                category = 'Home Portal';
-            } else if (fullTitle.includes('smartapp') || fullTitle.includes('smart app')) {
-                category = 'SmartApp';
-            } else if (fullTitle.includes('servicing')) {
-                category = 'Servicing';
-            } else if (fullTitle.includes('admin portal')) {
-                category = 'Admin Portal';
-            } else if (fullTitle.includes('tech debt')) {
-                category = 'Tech Debt';
-            } else {
-                // Skip items that don't match any category
-                continue;
-            }
-        }
-
-        if (!categories[category]) {
-            categories[category] = [];
-        }
-
-        // Add enhanced description if available
         const enhanced = enhancedMap.get(item.id);
+        if (!categories[category]) categories[category] = [];
         categories[category].push({
             ...item,
             summary: enhanced?.summary || null,
-            sortOrder: getTypeSortOrder(item.type)
+            sortOrder: getTypeSortOrder(type)
         });
     }
 
-    // Sort each category by type order
+    // Sort each section: User Story first, then Spike, then by ID
     for (const category in categories) {
-        categories[category].sort((a, b) => {
-            if (a.sortOrder !== b.sortOrder) {
-                return a.sortOrder - b.sortOrder;
-            }
-            return a.id - b.id; // Secondary sort by ID
-        });
+        categories[category].sort((a, b) =>
+            a.sortOrder !== b.sortOrder ? a.sortOrder - b.sortOrder : a.id - b.id
+        );
     }
 
     return categories;
@@ -143,10 +121,6 @@ function getStatus(type, title) {
         return { emoji: '🔍', label: 'SPIKE' };
     }
 
-    if (type === 'Task') {
-        return { emoji: '✅', label: 'TASK' };
-    }
-
     if (titleLower.includes('tech debt') || titleLower.includes('upgrade')) {
         return { emoji: '🔧', label: 'TECH' };
     }
@@ -162,15 +136,12 @@ function getStatus(type, title) {
     return { emoji: '🆕', label: 'NEW' };
 }
 
-// Clean title
+// Clean title — strip area path prefix (everything before and including the first "|")
 function cleanTitle(title) {
-    // Remove category prefix
-    return title
-        .replace(/^(SmartApp|Smartapp|Home Portal|Servicing|Partner Co-Branding MVP|Partner Portal|Tech Debt)\s*\|\s*/i, '')
-        .trim();
+    return title.replace(/^[^|]+\|\s*/, '').trim();
 }
 
-// Generate markdown for an item
+// Generate markdown for a User Story or Spike (full card with summary + screenshots)
 function generateItemMarkdown(item) {
     const status = getStatus(item.type, item.title);
     const cleanedTitle = cleanTitle(item.title);
@@ -180,72 +151,47 @@ function generateItemMarkdown(item) {
     md += `**Ticket:** [#${item.id}](${ticketUrl})\n`;
     md += `**Type:** ${item.type}\n\n`;
 
-    // Add summary for User Stories and Spikes
-    if (item.summary && (item.type === 'User Story' || item.type === 'Spike')) {
-        // Format as bulleted summary for better scanning
-        const summaryText = item.summary.trim();
-
-        // If it starts with "As a", format it nicely
-        if (summaryText.startsWith('As a')) {
-            md += `**Summary:**\n- ${summaryText}\n\n`;
-        } else {
-            // Otherwise just add as bullet
-            md += `**Summary:**\n- ${summaryText}\n\n`;
-        }
+    if (item.summary) {
+        md += `**Summary:**\n- ${item.summary.trim()}\n\n`;
     }
 
-    // Add screenshots placeholder for non-Tasks
-    if (item.type !== 'Task') {
-        md += `**Screenshots:**\n`;
-        md += `- \`screenshots/${item.id}_1.png\`\n\n`;
-    }
+    md += `**Screenshots:**\n`;
+    md += `- \`screenshots/${item.id}_1.png\`\n\n`;
 
     md += `---\n\n`;
 
     return md;
 }
 
+
 // Generate full markdown
-function generateMarkdown(sprintName, sprintDates, categories, workItems) {
+function generateMarkdown(sprintName, sprintDates, categories) {
     let md = `# CX Sprint ${sprintName} Release Notes\n\n`;
     md += `**Sprint Dates:** ${sprintDates}\n`;
     md += `**Release Date:** TBD\n\n`;
     md += `---\n\n`;
 
-    // Generate sections in specified order
     const sectionOrder = ['Home Portal', 'SmartApp', 'Servicing', 'Admin Portal', 'Tech Debt'];
-
-    // Add any remaining categories not in the specified order
-    for (const category in categories) {
-        if (!sectionOrder.includes(category) && categories[category].length > 0) {
-            sectionOrder.push(category);
-        }
-    }
 
     for (const category of sectionOrder) {
         if (categories[category] && categories[category].length > 0) {
             const items = categories[category];
             md += `## ${category} (${items.length} items)\n\n`;
-
             for (const item of items) {
                 md += generateItemMarkdown(item);
             }
         }
     }
 
-    // Summary
-    const userStories = workItems.filter(i => i.type === 'User Story').length;
-    const bugs = workItems.filter(i => i.type === 'Bug' || i.type === 'Defect').length;
-    const spikes = workItems.filter(i => i.type === 'Spike').length;
-    const techDebt = workItems.filter(i => i.title.toLowerCase().includes('tech debt')).length;
+    const allItems = Object.values(categories).flat();
+    const userStoryCount = allItems.filter(i => i.type === 'User Story').length;
+    const spikeCount = allItems.filter(i => i.type === 'Spike').length;
 
     md += `## Sprint Summary\n\n`;
     md += `### By Type\n`;
-    md += `- 🆕 **User Stories:** ${userStories}\n`;
-    md += `- 🐛 **Bugs/Defects:** ${bugs}\n`;
-    md += `- 🔍 **Spikes:** ${spikes}\n`;
-    md += `- 🔧 **Technical Debt:** ${techDebt}\n\n`;
-    md += `### Total Completed: ${workItems.length} items\n\n`;
+    md += `- 🆕 **User Stories:** ${userStoryCount}\n`;
+    md += `- 🔍 **Spikes:** ${spikeCount}\n\n`;
+    md += `### Total Completed: ${allItems.length} items\n\n`;
     md += `---\n\n`;
 
     md += `## CX Team\n\n`;
@@ -289,7 +235,7 @@ function main() {
     const categories = categorizeWorkItems(workItems, enhancedItems);
 
     // Generate markdown
-    const markdown = generateMarkdown(sprintName, sprintDates, categories, workItems);
+    const markdown = generateMarkdown(sprintName, sprintDates, categories);
 
     // Write to file
     const outputPath = path.join(__dirname, outputFolder, 'release-notes.md');

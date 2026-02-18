@@ -79,7 +79,8 @@ function getWorkItemDetails(workItemId) {
             type: workItem.fields['System.WorkItemType'],
             state: workItem.fields['System.State'],
             description: workItem.fields['System.Description'] || '',
-            acceptanceCriteria: workItem.fields['Microsoft.VSTS.Common.AcceptanceCriteria'] || ''
+            acceptanceCriteria: workItem.fields['Microsoft.VSTS.Common.AcceptanceCriteria'] || '',
+            releaseNote: workItem.fields['Custom.ReleaseNote'] || ''
         };
     } catch (error) {
         console.error(`Error fetching work item ${workItemId}:`, error.message);
@@ -90,7 +91,7 @@ function getWorkItemDetails(workItemId) {
 // Get all work items from iteration
 function getIterationWorkItems(iterationPath) {
     try {
-        const wiql = `SELECT [System.Id], [System.Title], [System.WorkItemType], [System.State] FROM WorkItems WHERE [System.IterationPath] = '${iterationPath}' AND [System.State] IN ('Closed', 'Done', 'Resolved') ORDER BY [System.WorkItemType], [System.Id]`;
+        const wiql = `SELECT [System.Id], [System.Title], [System.WorkItemType], [System.State] FROM WorkItems WHERE [System.IterationPath] = '${iterationPath}' AND [System.State] IN ('Closed', 'Done', 'Resolved', 'Pending Deployment') ORDER BY [System.WorkItemType], [System.Id]`;
 
         const cmd = `az boards query --wiql "${wiql}" --output json`;
         const result = execSync(cmd, { encoding: 'utf-8', maxBuffer: 10 * 1024 * 1024 });
@@ -125,12 +126,12 @@ function main() {
     const workItems = getIterationWorkItems(iterationPath);
     console.log(`Found ${workItems.length} completed work items\n`);
 
-    // Filter User Stories and Spikes
+    // Filter User Stories and Spikes only
     const itemsToEnhance = workItems.filter(wi =>
         wi.type === 'User Story' || wi.type === 'Spike'
     );
 
-    console.log(`Enhancing ${itemsToEnhance.length} User Stories and Spikes...\n`);
+    console.log(`Enhancing ${itemsToEnhance.length} User Stories, Spikes, and Bugs...\n`);
 
     const enhancedItems = [];
 
@@ -139,12 +140,16 @@ function main() {
 
         const details = getWorkItemDetails(item.id);
         if (details) {
-            const summary = extractSummary(details.description);
+            // Prefer Custom.ReleaseNote if available, otherwise extract from description
+            const summary = details.releaseNote
+                ? stripHtml(details.releaseNote)
+                : extractSummary(details.description);
 
             enhancedItems.push({
                 ...item,
                 summary: summary || 'No description available',
-                fullDescription: details.description
+                fullDescription: details.description,
+                releaseNote: details.releaseNote
             });
 
             console.log('✓');

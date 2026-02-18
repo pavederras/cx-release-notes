@@ -106,29 +106,23 @@
 
 ### Template Instructions
 
-**How to use this template for future sprints:**
+**Note:** This template shows a high-level grouped format. For detailed per-item release notes (the current automated process), follow the workflow in TODO.md.
 
-1. **Query the sprint work items**:
-   ```bash
-   az boards query --wiql "SELECT [System.Id], [System.Title], [System.WorkItemType], [System.State] FROM WorkItems WHERE [System.IterationPath] = 'Consumer Experience\\[ITERATION-PATH]' AND [System.State] IN ('Closed', 'Done', 'Resolved')" --output table
-   ```
+**How to use this template for executive summaries:**
 
-2. **Organize by category**:
-   - Group features by product area (Home Portal, Servicing, SmartApp, etc.)
-   - Separate bug fixes from enhancements
-   - Highlight technical improvements and performance gains
+1. **Review generated release notes**:
+   - Generated HTML files include all work items with detailed summaries
+   - Use those as the source for this high-level summary
 
-3. **Format work items**:
-   - Use descriptive titles that explain the value to users
-   - Link to work item IDs using: `[#ID](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/ID)`
-   - Group related items together with sub-bullets
+2. **Create executive summary**:
+   - Group features by product area and theme
+   - Highlight major features and bug fixes
+   - Include sprint statistics
+   - Note focus areas and accomplishments
 
-4. **Add context**:
-   - Include sprint dates
-   - Add summary statistics
-   - Note any major themes or focus areas
+3. **Format for presentation**:
+   - Use this grouped format for executive presentations
+   - Use the detailed HTML release notes for training and support teams
+   - Both formats serve different audiences
 
-5. **Review for audience**:
-   - Technical stakeholders: Include technical debt and performance items
-   - Product/Business: Focus on features and bug fixes
-   - Executives: Highlight sprint summary and major themes
+**For automated detailed release notes, see:** TODO.md and SUMMARY-GUIDELINES.md

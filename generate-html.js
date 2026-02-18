@@ -17,20 +17,30 @@ function parseMarkdown(mdContent) {
 
     for (const line of lines) {
         // Section headers (## Section Name)
-        if (line.startsWith('## ') && !line.startsWith('## Sprint Summary') && !line.startsWith('## CX Team')) {
+        if (line.startsWith('## ')) {
+            // Close out current item and section first
+            if (currentItem && currentSection) {
+                currentSection.items.push(currentItem);
+                currentItem = null;
+            }
             if (currentSection) {
                 sections.push(currentSection);
+                currentSection = null;
             }
 
-            const sectionMatch = line.match(/^## (.+?)(?:\s*\((\d+)\s*items?\))?$/);
-            if (sectionMatch) {
-                currentSection = {
-                    name: sectionMatch[1],
-                    count: sectionMatch[2] || '0',
-                    items: [],
-                    anchor: sectionMatch[1].toLowerCase().replace(/\s+/g, '-')
-                };
-                currentItem = null;
+            // Skip non-content sections — reset to null so their ### children are ignored
+            if (line.startsWith('## Sprint Summary') || line.startsWith('## CX Team')) {
+                // intentionally left empty — currentSection stays null
+            } else {
+                const sectionMatch = line.match(/^## (.+?)(?:\s*\((\d+)\s*items?\))?$/);
+                if (sectionMatch) {
+                    currentSection = {
+                        name: sectionMatch[1],
+                        count: sectionMatch[2] || '0',
+                        items: [],
+                        anchor: sectionMatch[1].toLowerCase().replace(/\s+/g, '-')
+                    };
+                }
             }
         }
         // Feature items (### with emoji and status)

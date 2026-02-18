@@ -60,7 +60,8 @@ function resolveCategory(title) {
         if (areaPath.includes('smartapp') || areaPath.includes('smart app')) return 'SmartApp';
         if (areaPath.includes('servicing')) return 'Servicing';
         if (areaPath.includes('admin portal')) return 'Admin Portal';
-        if (areaPath.includes('tech debt') || areaPath.includes('sitewide')) return 'Tech Debt';
+        if (areaPath.includes('tech debt')) return 'Tech Debt';
+        if (areaPath.includes('sitewide')) return 'Sitewide';
     }
 
     if (fullTitle.includes('partner')) return PARTNER;
@@ -176,7 +177,7 @@ function generateMarkdown(sprintName, sprintDates, categories) {
     md += `**Release Date:** TBD\n\n`;
     md += `---\n\n`;
 
-    const sectionOrder = ['Home Portal', 'SmartApp', 'Servicing', 'Admin Portal', 'Tech Debt'];
+    const sectionOrder = ['Home Portal', 'SmartApp', 'Servicing', 'Admin Portal', 'Sitewide', 'Tech Debt'];
 
     for (const category of sectionOrder) {
         if (categories[category] && categories[category].length > 0) {
@@ -188,15 +189,6 @@ function generateMarkdown(sprintName, sprintDates, categories) {
         }
     }
 
-    const allItems = Object.values(categories).flat();
-    const userStoryCount = allItems.filter(i => i.type === 'User Story').length;
-    const spikeCount = allItems.filter(i => i.type === 'Spike').length;
-
-    md += `## Sprint Summary\n\n`;
-    md += `### By Type\n`;
-    md += `- 🆕 **User Stories:** ${userStoryCount}\n`;
-    md += `- 🔍 **Spikes:** ${spikeCount}\n\n`;
-    md += `### Total Completed: ${allItems.length} items\n\n`;
     md += `---\n\n`;
 
     md += `## CX Team\n\n`;

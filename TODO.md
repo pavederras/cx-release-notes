@@ -6,47 +6,58 @@ The release notes system is fully operational and ready for use. All core featur
 
 ---
 
-## 📌 PICK UP HERE — Session Notes (2026-02-17)
+## 📌 PICK UP HERE — Session Notes (2026-02-18)
 
 ### What Was Accomplished This Session
-- ✅ Created `/cx-generate-release-notes` Claude Code slash command skill (`~/.claude/commands/cx-generate-release-notes.md`)
-- ✅ Generated CX(03) 2026.02.18 release notes — **18 items** (Home Portal 3, Servicing 6, Tech Debt 9)
-- ✅ AI summaries generated for all 18 work items and written to ADO `Custom.ReleaseNote` field
-- ✅ Fixed WIQL query to include `Pending Deployment` state (previously missing ~7 items)
-- ✅ Removed Bugs/Defects and Tasks from output — only **User Stories and Spikes** shown
-- ✅ All changes committed to git (commit `eb556ce`)
+- ✅ Skill file (`cx-generate-release-notes.md`) fully overhauled:
+  - Step 4: now correctly states `Pending Deployment` state and User Stories/Spikes only
+  - Step 5: removed dead Bug/Defect format; new structured `<ul><li>` bullet format with labeled points (What changed / Who benefits / Technical context); added grammar quality rules; **start every summary with a verb action** (no noun-phrase fragments)
+  - Step 6: updated sort description to remove "Bug"
+- ✅ `enhance-release-notes.js`: `stripHtml()` now converts `<li>` tags to newline-separated bullets so multi-bullet summaries survive HTML stripping
+- ✅ `create-enhanced-release-notes.js`: multi-line summaries now render as individual bullets in markdown; Sitewide added as its own category (no longer maps to Tech Debt); Sprint Summary block removed from markdown output
+- ✅ `generate-html.js`: fixed parser bug where `## Sprint Summary` and `## CX Team` sections caused the last work item to be duplicated and "Total Completed" to render as a phantom work item card (was reporting 22 items; now correctly 18)
+- ✅ `generate-pdf.js`: new script — generates light-mode PDF via system Chrome/puppeteer-core; Letter format with header/footer and page numbers
+- ✅ `deploy.ps1`: new script — one-command deploy to Azure Static Web Apps once token is provided
+- ✅ SWA CLI (`@azure/static-web-apps-cli`) installed locally in project
+- ✅ CX(03) 2026.02.18 release notes finalized:
+  - Grammar and sentence-fragment issues corrected across all 18 items
+  - Sitewide category added: #93401, #94048, #94483 moved from Tech Debt
+  - Final sections: Home Portal (3), Servicing (6), Sitewide (3), Tech Debt (6)
+  - HTML and PDF generated
 
-### Next Steps — Pick Up Tomorrow
+### Next Steps — Pick Up Next Session
 
-#### 1. Add Screenshots to CX(03)
-The release notes reference screenshot files that don't exist yet:
-```
-C:\GitHub-Projects\Release Notes\CX-2026.02.18\screenshots\
-```
-- Download screenshots from ADO work item attachments for each ticket
-- Naming convention: `{work-item-id}_1.png`, `{work-item-id}_2.png`, etc.
-- Key items needing screenshots: #93207, #94281, #94315, #92873, #93601, #93949, #93993, #94057, #94744, #66813, #67332, #85782, #93401, #94048, #94473, #94483, #95355, #93622
+#### 1. Finalize CX(03) — Screenshots + Late Items
+- Add screenshots to `CX-2026.02.18\screenshots\` as `{work-item-id}_1.png`
+- Re-run pipeline for any items that complete throughout the day:
+  ```powershell
+  node generate-html.js "CX-2026.02.18/release-notes.md"
+  node generate-pdf.js CX-2026.02.18
+  ```
 
-#### 2. Review the Skill File
-The Claude slash command skill lives **outside this repo** at:
+#### 2. Deploy to Azure Static Web Apps — BLOCKED on IT
+Request from IT/DevOps:
+> Create an **Azure Static Web App** — Name: `cx-release-notes`, Resource Group: `CmgCxRgSharedProd01`, Region: West US 2, SKU: Free, Deployment method: Other.
+> Share the **deployment token** from: Azure Portal → resource → Settings → Deployment Token.
+
+Once token is received:
+```powershell
+.\deploy.ps1 -Token "YOUR_TOKEN_HERE"
 ```
-C:\Users\dperras\.claude\commands\cx-generate-release-notes.md
-```
-- Review it to confirm it reflects all final rules (no bugs, Pending Deployment included)
-- Test it on the next sprint: `CX (04) 2026.03.11`
+URL will be: `https://cx-release-notes.azurestaticapps.net`
 
 #### 3. Consider Regenerating Older Sprints (Optional)
-CX(01) and CX(02) release notes were generated before the "no bugs" rule. They still contain bug items. If you want consistency:
+CX(01) and CX(02) still contain bug items and use the old single-paragraph summary format. To regenerate consistently:
 ```powershell
-# Re-run pipeline for old sprints (will pull from ADO Custom.ReleaseNote — summaries already exist)
 node enhance-release-notes.js "Consumer Experience\CX (01) 2026.01.07"
 node create-enhanced-release-notes.js "Consumer Experience\CX (01) 2026.01.07" "2026.01.07" "December 11 - January 7, 2026" "CX-2026.01.07"
 node generate-html.js "CX-2026.01.07/release-notes.md"
 # Repeat for CX (02) 2026.01.28
 ```
 
-#### 4. "Sitewide" Category (Low Priority)
-Items with `Sitewide |` prefix currently map to **Tech Debt**. Consider whether Sitewide should be its own section. In `create-enhanced-release-notes.js`, the `resolveCategory()` function handles this mapping.
+#### 4. Test Skill on Next Sprint
+- Next sprint: `CX (04) 2026.03.11` (February 19 - March 11, 2026)
+- Run `/cx-generate-release-notes 04 2026.03.11` and verify new bullet format, Sitewide category, and verb-first summaries
 
 ---
 

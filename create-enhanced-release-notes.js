@@ -152,7 +152,12 @@ function generateItemMarkdown(item) {
     md += `**Type:** ${item.type}\n\n`;
 
     if (item.summary) {
-        md += `**Summary:**\n- ${item.summary.trim()}\n\n`;
+        const lines = item.summary.split('\n').map(l => l.trim()).filter(Boolean);
+        md += `**Summary:**\n`;
+        for (const line of lines) {
+            md += `- ${line}\n`;
+        }
+        md += '\n';
     }
 
     md += `**Screenshots:**\n`;

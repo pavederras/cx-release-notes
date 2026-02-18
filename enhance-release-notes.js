@@ -8,12 +8,17 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-// Strip HTML tags and clean up text
+// Strip HTML tags and clean up text, preserving list item structure as newline-separated bullets
 function stripHtml(html) {
     if (!html) return '';
 
-    // Remove HTML tags
-    let text = html.replace(/<[^>]+>/g, ' ');
+    // Convert list items to newline-prefixed bullets before stripping other tags
+    let text = html
+        .replace(/<li[^>]*>/gi, '\n')
+        .replace(/<\/li>/gi, '');
+
+    // Remove remaining HTML tags
+    text = text.replace(/<[^>]+>/g, ' ');
 
     // Decode HTML entities
     text = text
@@ -24,12 +29,10 @@ function stripHtml(html) {
         .replace(/&quot;/g, '"')
         .replace(/&#39;/g, "'");
 
-    // Clean up whitespace
-    text = text
-        .replace(/\s+/g, ' ')
-        .trim();
+    // Clean up each line individually, then rejoin
+    const lines = text.split('\n').map(l => l.replace(/\s+/g, ' ').trim()).filter(Boolean);
 
-    return text;
+    return lines.join('\n');
 }
 
 // Extract meaningful summary from description

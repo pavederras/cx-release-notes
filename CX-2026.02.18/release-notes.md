@@ -5,7 +5,7 @@
 
 ---
 
-## Home Portal (3 items)
+## Home Portal (4 items)
 
 ### 🆕 NEW: Add 'IRS Form 1099-INT � Mortgage Interest Statement' to Documents
 **Ticket:** [#93207](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93207)
@@ -43,7 +43,19 @@
 
 ---
 
-## Servicing (6 items)
+### 🆕 NEW: Update HouseCanary AzureFunctions to duplicate syncs to the BankCMG HC API with the correct ClientID/Secret
+**Ticket:** [#93831](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93831)
+**Type:** User Story
+
+**Summary:**
+- Extended HouseCanary Azure Functions to sync data to the BankCMG HouseCanary API. Updated LO sync and Claimed Properties sync Azure Functions to duplicate operations to the BankCMG HouseCanary API alongside the existing CMG sync. BankCMG users now receive the same property intelligence data synchronization that CMG users have, ensuring consistency across both brands.
+
+**Screenshots:**
+- `screenshots/93831_1.png`
+
+---
+
+## Servicing (7 items)
 
 ### 🆕 NEW: Add Banner for 1098 - After Delivery
 **Ticket:** [#92873](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92873)
@@ -117,7 +129,19 @@
 
 ---
 
-## Sitewide (3 items)
+### 🆕 NEW: Add Payoff Quicker Function to Payment Card
+**Ticket:** [#93311](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93311)
+**Type:** User Story
+
+**Summary:**
+- Added a payoff calculator to the payment card in the servicing view. Borrowers can instantly see how extra payments reduce their outstanding loan balance and shorten their payoff timeline, without leaving the portal.
+
+**Screenshots:**
+- `screenshots/93311_1.png`
+
+---
+
+## Sitewide (4 items)
 
 ### 🆕 NEW: Announcements - Extend character count
 **Ticket:** [#93401](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93401)
@@ -155,7 +179,19 @@
 
 ---
 
-## Tech Debt (6 items)
+### 🆕 NEW: Implement Spanish Translation to SmartApp/HomePortal Using Native Angular Localization
+**Ticket:** [#93148](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93148)
+**Type:** User Story
+
+**Summary:**
+- Implemented Spanish language localization for SmartApp and Home Portal using Angular's native i18n framework. Spanish-speaking borrowers can now navigate the application in their preferred language, improving accessibility for a broader customer base. Built on Angular's built-in localization system for long-term maintainability and straightforward addition of future languages.
+
+**Screenshots:**
+- `screenshots/93148_1.png`
+
+---
+
+## Tech Enhancements (8 items)
 
 ### 🔧 TECH: Refactor login logic to ensure the loading indicator is not turned off until the user's dashboard is shown
 **Ticket:** [#66813](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/66813)
@@ -214,6 +250,30 @@
 
 **Screenshots:**
 - `screenshots/95355_1.png`
+
+---
+
+### 🆕 NEW: Initial Alerting System Implementation
+**Ticket:** [#93861](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93861)
+**Type:** User Story
+
+**Summary:**
+- Implemented the foundational alerting system endpoints and data store using FastEndpoints and Entity Framework Core, based on the proof-of-concept architecture. Establishes the core data store and endpoint patterns that future alert-driven features across the CX platform will build on.
+
+**Screenshots:**
+- `screenshots/93861_1.png`
+
+---
+
+### 🔍 SPIKE: Research Switch Back to the OOTB Okta Hosted Login Page for Authentication
+**Ticket:** [#92606](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92606)
+**Type:** Spike
+
+**Summary:**
+- Researched the feasibility of switching the CX authentication flow back to Okta's out-of-the-box hosted login page from the current custom implementation. Evaluated feature parity for 'Remember My Device' functionality and the ability to preserve current branding and styling on the hosted page. Findings inform a future decision on whether to migrate away from the custom login page, reducing maintenance overhead.
+
+**Screenshots:**
+- `screenshots/92606_1.png`
 
 ---
 

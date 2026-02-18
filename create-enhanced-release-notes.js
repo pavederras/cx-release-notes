@@ -20,7 +20,7 @@ function loadEnhancedWorkItems() {
 // Get all work items from iteration
 function getIterationWorkItems(iterationPath) {
     try {
-        const wiql = `SELECT [System.Id], [System.Title], [System.WorkItemType], [System.State] FROM WorkItems WHERE [System.IterationPath] = '${iterationPath}' AND [System.State] IN ('Closed', 'Done', 'Resolved', 'Pending Deployment') ORDER BY [System.WorkItemType], [System.Id]`;
+        const wiql = `SELECT [System.Id], [System.Title], [System.WorkItemType], [System.State] FROM WorkItems WHERE [System.IterationPath] = '${iterationPath}' AND [System.State] IN ('Closed', 'Done', 'Resolved', 'Pending Deployment', 'Code Review') ORDER BY [System.WorkItemType], [System.Id]`;
 
         const cmd = `az boards query --wiql "${wiql}" --output json`;
         const result = execSync(cmd, { encoding: 'utf-8', maxBuffer: 10 * 1024 * 1024 });
@@ -60,7 +60,7 @@ function resolveCategory(title) {
         if (areaPath.includes('smartapp') || areaPath.includes('smart app')) return 'SmartApp';
         if (areaPath.includes('servicing')) return 'Servicing';
         if (areaPath.includes('admin portal')) return 'Admin Portal';
-        if (areaPath.includes('tech debt')) return 'Tech Debt';
+        if (areaPath.includes('tech debt') || areaPath === 'spike') return 'Tech Enhancements';
         if (areaPath.includes('sitewide')) return 'Sitewide';
     }
 
@@ -177,7 +177,7 @@ function generateMarkdown(sprintName, sprintDates, categories) {
     md += `**Release Date:** TBD\n\n`;
     md += `---\n\n`;
 
-    const sectionOrder = ['Home Portal', 'SmartApp', 'Servicing', 'Admin Portal', 'Sitewide', 'Tech Debt'];
+    const sectionOrder = ['Home Portal', 'SmartApp', 'Servicing', 'Admin Portal', 'Sitewide', 'Tech Enhancements'];
 
     for (const category of sectionOrder) {
         if (categories[category] && categories[category].length > 0) {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -515,10 +515,10 @@
 
     <nav class="navigation">
         <div class="nav-links">
-            <a href="#home-portal" class="nav-link">Home Portal (3)</a>
-<a href="#servicing" class="nav-link">Servicing (6)</a>
-<a href="#sitewide" class="nav-link">Sitewide (3)</a>
-<a href="#tech-debt" class="nav-link">Tech Debt (6)</a>
+            <a href="#home-portal" class="nav-link">Home Portal (4)</a>
+<a href="#servicing" class="nav-link">Servicing (7)</a>
+<a href="#sitewide" class="nav-link">Sitewide (4)</a>
+<a href="#tech-enhancements" class="nav-link">Tech Enhancements (8)</a>
         </div>
         <button class="theme-toggle" onclick="toggleTheme()">
             <span id="theme-icon">🌙</span>
@@ -529,7 +529,7 @@
     <div class="container">
         
         <section id="home-portal" class="release-section">
-            <h2 class="section-header">Home Portal <span class="count">(3 items)</span></h2>
+            <h2 class="section-header">Home Portal <span class="count">(4 items)</span></h2>
             <div class="features-container">
                 
             <div class="feature-item">
@@ -597,12 +597,34 @@
                     </div>
             </div>
             
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Update HouseCanary AzureFunctions to duplicate syncs to the BankCMG HC API with the correct ClientID/Secret</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93831" class="ticket-link" target="_blank">#93831</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Extended HouseCanary Azure Functions to sync data to the BankCMG HouseCanary API. Updated LO sync and Claimed Properties sync Azure Functions to duplicate operations to the BankCMG HouseCanary API alongside the existing CMG sync. BankCMG users now receive the same property intelligence data synchronization that CMG users have, ensuring consistency across both brands.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/93831_1.png" alt="Update HouseCanary AzureFunctions to duplicate syncs to the BankCMG HC API with the correct ClientID/Secret" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
             </div>
         </section>
         
 
         <section id="servicing" class="release-section">
-            <h2 class="section-header">Servicing <span class="count">(6 items)</span></h2>
+            <h2 class="section-header">Servicing <span class="count">(7 items)</span></h2>
             <div class="features-container">
                 
             <div class="feature-item">
@@ -736,12 +758,34 @@
                     </div>
             </div>
             
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Add Payoff Quicker Function to Payment Card</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93311" class="ticket-link" target="_blank">#93311</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Added a payoff calculator to the payment card in the servicing view. Borrowers can instantly see how extra payments reduce their outstanding loan balance and shorten their payoff timeline, without leaving the portal.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/93311_1.png" alt="Add Payoff Quicker Function to Payment Card" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
             </div>
         </section>
         
 
         <section id="sitewide" class="release-section">
-            <h2 class="section-header">Sitewide <span class="count">(3 items)</span></h2>
+            <h2 class="section-header">Sitewide <span class="count">(4 items)</span></h2>
             <div class="features-container">
                 
             <div class="feature-item">
@@ -809,12 +853,34 @@
                     </div>
             </div>
             
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Implement Spanish Translation to SmartApp/HomePortal Using Native Angular Localization</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93148" class="ticket-link" target="_blank">#93148</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Implemented Spanish language localization for SmartApp and Home Portal using Angular's native i18n framework. Spanish-speaking borrowers can now navigate the application in their preferred language, improving accessibility for a broader customer base. Built on Angular's built-in localization system for long-term maintainability and straightforward addition of future languages.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/93148_1.png" alt="Implement Spanish Translation to SmartApp/HomePortal Using Native Angular Localization" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
             </div>
         </section>
         
 
-        <section id="tech-debt" class="release-section">
-            <h2 class="section-header">Tech Debt <span class="count">(6 items)</span></h2>
+        <section id="tech-enhancements" class="release-section">
+            <h2 class="section-header">Tech Enhancements <span class="count">(8 items)</span></h2>
             <div class="features-container">
                 
             <div class="feature-item">
@@ -921,6 +987,50 @@
                 <div class="screenshots-grid">
                     <div class="screenshot-item">
                         <img src="screenshots/95355_1.png" alt="Fix API Build running out of disk space" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Initial Alerting System Implementation</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93861" class="ticket-link" target="_blank">#93861</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Implemented the foundational alerting system endpoints and data store using FastEndpoints and Entity Framework Core, based on the proof-of-concept architecture. Establishes the core data store and endpoint patterns that future alert-driven features across the CX platform will build on.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/93861_1.png" alt="Initial Alerting System Implementation" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-spike">🔍 SPIKE</span>
+                    <h3 class="feature-title">Research Switch Back to the OOTB Okta Hosted Login Page for Authentication</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92606" class="ticket-link" target="_blank">#92606</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Researched the feasibility of switching the CX authentication flow back to Okta's out-of-the-box hosted login page from the current custom implementation. Evaluated feature parity for 'Remember My Device' functionality and the ability to preserve current branding and styling on the hosted page. Findings inform a future decision on whether to migrate away from the custom login page, reducing maintenance overhead.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92606_1.png" alt="Research Switch Back to the OOTB Okta Hosted Login Page for Authentication" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
                         <p class="screenshot-caption">Click to enlarge</p>
                     </div>
                     </div>

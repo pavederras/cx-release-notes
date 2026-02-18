@@ -94,7 +94,7 @@ function getWorkItemDetails(workItemId) {
 // Get all work items from iteration
 function getIterationWorkItems(iterationPath) {
     try {
-        const wiql = `SELECT [System.Id], [System.Title], [System.WorkItemType], [System.State] FROM WorkItems WHERE [System.IterationPath] = '${iterationPath}' AND [System.State] IN ('Closed', 'Done', 'Resolved', 'Pending Deployment') ORDER BY [System.WorkItemType], [System.Id]`;
+        const wiql = `SELECT [System.Id], [System.Title], [System.WorkItemType], [System.State] FROM WorkItems WHERE [System.IterationPath] = '${iterationPath}' AND [System.State] IN ('Closed', 'Done', 'Resolved', 'Pending Deployment', 'Code Review') ORDER BY [System.WorkItemType], [System.Id]`;
 
         const cmd = `az boards query --wiql "${wiql}" --output json`;
         const result = execSync(cmd, { encoding: 'utf-8', maxBuffer: 10 * 1024 * 1024 });

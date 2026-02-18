@@ -34,17 +34,78 @@ async function generatePdf(sprintFolder) {
 
     const page = await browser.newPage();
 
+    // Set viewport to Letter content width (8.5" minus 0.5" margins at 96dpi = 768px)
+    // This forces the browser to lay out at PDF width before we capture
+    await page.setViewport({ width: 880, height: 1056, deviceScaleFactor: 1 });
+
     // Load the HTML file
     await page.goto(`file:///${htmlFile.replace(/\\/g, '/')}`, {
         waitUntil: 'networkidle0'
     });
 
-    // Force light mode for PDF — easier to print and distribute
+    // Apply PDF-only modifications — does not affect the HTML file
     await page.evaluate(() => {
+        // Force light mode
         document.documentElement.setAttribute('data-theme', 'light');
+
+        // Remove sprint dropdown and theme toggle from header/nav
+        const sprintSelector = document.getElementById('sprint-selector');
+        if (sprintSelector) sprintSelector.remove();
+
+        const themeToggle = document.querySelector('.theme-toggle');
+        if (themeToggle) themeToggle.remove();
+
+        // Remove the markdown source link
+        const markdownLink = document.querySelector('.markdown-link');
+        if (markdownLink) markdownLink.remove();
     });
 
-    // Wait a moment for theme transition
+    // Inject PDF-only CSS: full-width content, no sticky nav, no transition artifacts
+    await page.addStyleTag({ content: `
+        * { transition: none !important; box-sizing: border-box !important; }
+        html { font-size: 13px !important; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+        .navigation { position: static !important; padding: 0.4rem 1rem !important; }
+        .nav-links { justify-content: flex-start !important; }
+        .container {
+            max-width: none !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0.5rem 0 !important;
+        }
+        .release-section {
+            width: 100% !important;
+            margin-bottom: 1.25rem !important;
+        }
+        .release-section h2 {
+            font-size: 1.5rem !important;
+            margin-bottom: 0.75rem !important;
+            padding-bottom: 0.3rem !important;
+        }
+        .features-container { width: 100% !important; display: block !important; }
+        .feature-item {
+            width: 100% !important;
+            padding: 0.75rem !important;
+            margin-bottom: 0.6rem !important;
+            break-inside: avoid !important;
+        }
+        .feature-header { margin-bottom: 0.5rem !important; }
+        .feature-title { font-size: 1.1rem !important; }
+        .feature-summary {
+            width: 100% !important;
+            margin-top: 0.5rem !important;
+            padding: 0.6rem 0.75rem !important;
+        }
+        .feature-summary ul {
+            margin-top: 0.25rem !important;
+            margin-bottom: 0 !important;
+        }
+        .feature-summary li { margin-bottom: 0.25rem !important; }
+        .header { padding: 1.25rem 1rem !important; }
+        .header-content { justify-content: center !important; }
+    `});
+
+    // Wait for theme transition to settle
     await new Promise(r => setTimeout(r, 500));
 
     await page.pdf({
@@ -52,10 +113,10 @@ async function generatePdf(sprintFolder) {
         format: 'Letter',
         printBackground: true,
         margin: {
-            top: '0.75in',
-            right: '0.75in',
-            bottom: '0.75in',
-            left: '0.75in'
+            top: '0.4in',
+            right: '0.25in',
+            bottom: '0.4in',
+            left: '0.25in'
         },
         displayHeaderFooter: true,
         headerTemplate: `

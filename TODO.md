@@ -6,6 +6,50 @@ The release notes system is fully operational and ready for use. All core featur
 
 ---
 
+## 📌 PICK UP HERE — Session Notes (2026-02-17)
+
+### What Was Accomplished This Session
+- ✅ Created `/cx-generate-release-notes` Claude Code slash command skill (`~/.claude/commands/cx-generate-release-notes.md`)
+- ✅ Generated CX(03) 2026.02.18 release notes — **18 items** (Home Portal 3, Servicing 6, Tech Debt 9)
+- ✅ AI summaries generated for all 18 work items and written to ADO `Custom.ReleaseNote` field
+- ✅ Fixed WIQL query to include `Pending Deployment` state (previously missing ~7 items)
+- ✅ Removed Bugs/Defects and Tasks from output — only **User Stories and Spikes** shown
+- ✅ All changes committed to git (commit `eb556ce`)
+
+### Next Steps — Pick Up Tomorrow
+
+#### 1. Add Screenshots to CX(03)
+The release notes reference screenshot files that don't exist yet:
+```
+C:\GitHub-Projects\Release Notes\CX-2026.02.18\screenshots\
+```
+- Download screenshots from ADO work item attachments for each ticket
+- Naming convention: `{work-item-id}_1.png`, `{work-item-id}_2.png`, etc.
+- Key items needing screenshots: #93207, #94281, #94315, #92873, #93601, #93949, #93993, #94057, #94744, #66813, #67332, #85782, #93401, #94048, #94473, #94483, #95355, #93622
+
+#### 2. Review the Skill File
+The Claude slash command skill lives **outside this repo** at:
+```
+C:\Users\dperras\.claude\commands\cx-generate-release-notes.md
+```
+- Review it to confirm it reflects all final rules (no bugs, Pending Deployment included)
+- Test it on the next sprint: `CX (04) 2026.03.11`
+
+#### 3. Consider Regenerating Older Sprints (Optional)
+CX(01) and CX(02) release notes were generated before the "no bugs" rule. They still contain bug items. If you want consistency:
+```powershell
+# Re-run pipeline for old sprints (will pull from ADO Custom.ReleaseNote — summaries already exist)
+node enhance-release-notes.js "Consumer Experience\CX (01) 2026.01.07"
+node create-enhanced-release-notes.js "Consumer Experience\CX (01) 2026.01.07" "2026.01.07" "December 11 - January 7, 2026" "CX-2026.01.07"
+node generate-html.js "CX-2026.01.07/release-notes.md"
+# Repeat for CX (02) 2026.01.28
+```
+
+#### 4. "Sitewide" Category (Low Priority)
+Items with `Sitewide |` prefix currently map to **Tech Debt**. Consider whether Sitewide should be its own section. In `create-enhanced-release-notes.js`, the `resolveCategory()` function handles this mapping.
+
+---
+
 ## 🚀 Quick Start - Generate Release Notes (Single Command!)
 
 **For any new sprint, simply run:**
@@ -386,9 +430,9 @@ done
 ### Sprints Completed:
 - CX (01) 2026.01.07 - Dec 11, 2025 to Jan 7, 2026 (35 items)
 - CX (02) 2026.01.28 - Jan 14, 2026 to Jan 28, 2026 (38 items)
+- CX (03) 2026.02.18 - Jan 29 to Feb 18, 2026 (18 items — User Stories & Spikes only) ✅
 
 ### Known Iterations for 2026:
-- CX (03) 2026.02.18 - Jan 29 to Feb 18
 - CX (04) 2026.03.11 - Feb 19 to Mar 11
 - CX (05) 2026.04.01 - Mar 12 to Apr 1
 - CX (06) 2026.04.22 - Apr 2 to Apr 22
@@ -447,6 +491,6 @@ done
 
 ---
 
-**Last Updated:** 2026-02-06
-**Status:** ✅ Production Ready (Pending Phase 1-3 Refinements)
-**Version:** 2.0
+**Last Updated:** 2026-02-17
+**Status:** ✅ Production Ready
+**Version:** 3.0

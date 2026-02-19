@@ -2,152 +2,91 @@
 
 ## ✅ System Status: PRODUCTION READY
 
-The release notes system is fully operational and ready for use. All core features have been implemented and tested.
+The release notes system is fully operational. All 3 completed sprints are published to GitHub Pages with uniform formatting, PDF exports, and AI-generated summaries written back to Azure DevOps.
 
 ---
 
-## 📌 PICK UP HERE — Session Notes (2026-02-18)
+## 🚀 Quick Start
 
-### What Was Accomplished This Session
-- ✅ Skill file (`cx-generate-release-notes.md`) fully overhauled:
-  - Step 4: now correctly states `Pending Deployment` state and User Stories/Spikes only
-  - Step 5: removed dead Bug/Defect format; new structured `<ul><li>` bullet format with labeled points (What changed / Who benefits / Technical context); added grammar quality rules; **start every summary with a verb action** (no noun-phrase fragments)
-  - Step 6: updated sort description to remove "Bug"
-- ✅ `enhance-release-notes.js`: `stripHtml()` now converts `<li>` tags to newline-separated bullets so multi-bullet summaries survive HTML stripping
-- ✅ `create-enhanced-release-notes.js`: multi-line summaries now render as individual bullets in markdown; Sitewide added as its own category (no longer maps to Tech Debt); Sprint Summary block removed from markdown output
-- ✅ `generate-html.js`: fixed parser bug where `## Sprint Summary` and `## CX Team` sections caused the last work item to be duplicated and "Total Completed" to render as a phantom work item card (was reporting 22 items; now correctly 18)
-- ✅ `generate-pdf.js`: new script — generates light-mode PDF via system Chrome/puppeteer-core; Letter format with header/footer and page numbers
-- ✅ `deploy.ps1`: new script — one-command deploy to Azure Static Web Apps once token is provided
-- ✅ SWA CLI (`@azure/static-web-apps-cli`) installed locally in project
-- ✅ CX(03) 2026.02.18 release notes finalized:
-  - Grammar and sentence-fragment issues corrected across all 18 items
-  - Sitewide category added: #93401, #94048, #94483 moved from Tech Debt
-  - Final sections: Home Portal (3), Servicing (6), Sitewide (3), Tech Debt (6)
-  - HTML and PDF generated
+**To generate release notes for a new sprint, run the Claude Code skill:**
 
-### Next Steps — Pick Up Next Session
-
-#### 1. Finalize CX(03) — Screenshots + Late Items
-- Add screenshots to `CX-2026.02.18\screenshots\` as `{work-item-id}_1.png`
-- Re-run pipeline for any items that complete throughout the day:
-  ```powershell
-  node generate-html.js "CX-2026.02.18/release-notes.md"
-  node generate-pdf.js CX-2026.02.18
-  ```
-
-#### 2. Deploy to Azure Static Web Apps — BLOCKED on IT
-Request from IT/DevOps:
-> Create an **Azure Static Web App** — Name: `cx-release-notes`, Resource Group: `CmgCxRgSharedProd01`, Region: West US 2, SKU: Free, Deployment method: Other.
-> Share the **deployment token** from: Azure Portal → resource → Settings → Deployment Token.
-
-Once token is received:
-```powershell
-.\deploy.ps1 -Token "YOUR_TOKEN_HERE"
 ```
-URL will be: `https://cx-release-notes.azurestaticapps.net`
-
-#### 3. Consider Regenerating Older Sprints (Optional)
-CX(01) and CX(02) still contain bug items and use the old single-paragraph summary format. To regenerate consistently:
-```powershell
-node enhance-release-notes.js "Consumer Experience\CX (01) 2026.01.07"
-node create-enhanced-release-notes.js "Consumer Experience\CX (01) 2026.01.07" "2026.01.07" "December 11 - January 7, 2026" "CX-2026.01.07"
-node generate-html.js "CX-2026.01.07/release-notes.md"
-# Repeat for CX (02) 2026.01.28
+/cx-generate-release-notes 04 2026.03.11
 ```
 
-#### 4. Test Skill on Next Sprint
-- Next sprint: `CX (04) 2026.03.11` (February 19 - March 11, 2026)
-- Run `/cx-generate-release-notes 04 2026.03.11` and verify new bullet format, Sitewide category, and verb-first summaries
+The skill handles all 10 steps automatically:
+1. Parse sprint info and confirm configuration
+2. Create folder structure
+3. Pull work items from Azure DevOps
+4. AI-generate summaries for items missing release notes
+5. Write summaries back to ADO (`Custom.ReleaseNote`)
+6. Generate Markdown
+7. Generate HTML (dark/light mode, sprint dropdown)
+8. Generate PDF (letter format, light mode)
+9. Publish to GitHub Pages
+10. Report results
 
 ---
 
-## 🚀 Quick Start - Generate Release Notes (Single Command!)
+## 📋 Completed Sprints
 
-**For any new sprint, simply run:**
+All sprints use uniform formatting: verb-first summaries, labeled bullet points (What changed / Who benefits / Technical context), no Sprint Summary section, Tech Enhancements (not Tech Debt).
 
-```powershell
-.\generate-sprint.ps1
-```
+| Sprint | Date Range | Items | HTML | PDF | Published |
+|--------|-----------|-------|------|-----|-----------|
+| CX (01) 2026.01.07 | Dec 11, 2025 – Jan 7, 2026 | ~35 | ✅ | ✅ | ✅ |
+| CX (02) 2026.01.28 | Jan 8 – Jan 28, 2026 | ~33 | ✅ | ✅ | ✅ |
+| CX (03) 2026.02.18 | Jan 29 – Feb 18, 2026 | 18 | ✅ | ✅ | ✅ |
 
-Or double-click: `generate-sprint.bat`
-
-The script will:
-1. ✅ Check prerequisites (Node.js, Azure CLI)
-2. ✅ Prompt for sprint information
-3. ✅ Create folder structure
-4. ✅ Pull work items from Azure DevOps
-5. ✅ Generate markdown with AI summaries
-6. ✅ Generate HTML with dark/light mode
-7. ✅ Optionally open in browser
-
-**That's it!** No manual steps required.
+**Live site:** https://pavederras.github.io/cx-release-notes/
 
 ---
 
-## 📋 Pending Work - Pick Up Tomorrow
+## 🗓️ Upcoming Sprints
 
-### Phase 1: Clean Up Existing Sprints ✅ COMPLETED (2026-02-11)
-- [x] Generated AI summaries for all **CX-2026.01.07** work items (36 User Stories, Bugs, and Spikes)
-- [x] Generated AI summaries for all **CX-2026.01.28** work items (33 User Stories, Bugs, and Spikes)
-- [x] Updated Azure DevOps `Custom.ReleaseNote` field for all 68 work items
-- [x] Regenerated markdown files with AI summaries
-- [x] Regenerated HTML for both sprints
+| Sprint | End Date | Date Range |
+|--------|----------|-----------|
+| CX (04) | 2026.03.11 | February 19 – March 11, 2026 |
+| CX (05) | 2026.04.01 | March 12 – April 1, 2026 |
+| CX (06) | 2026.04.22 | April 2 – April 22, 2026 |
+| CX (07) | 2026.05.13 | April 23 – May 13, 2026 |
+| CX (08) | 2026.06.03 | May 14 – June 3, 2026 |
+| CX (09) | 2026.06.24 | June 4 – June 24, 2026 |
 
-**Approach Used:** Instead of manually editing markdown, we used AI to generate concise, user-friendly summaries and stored them directly in Azure DevOps. This creates a single source of truth for all future release notes.
+---
 
-### Phase 2: Update Template for Future Sprints ✅ COMPLETED (2026-02-11)
-- [x] Created `SUMMARY-GUIDELINES.md` with standard format/style documentation
-- [x] Defined summary format for User Stories (3-5 sentences), Bugs (2-3 sentences), and Spikes (3-4 sentences)
-- [x] Updated `release-notes-template.md` to clarify its purpose (executive summaries vs. detailed release notes)
-- [x] Updated TODO.md with refined ADO-based workflow documentation
+## 📁 Folder Structure
 
-**Summary Format Established:**
-- **User Stories:** Bold header + business value + technical context for SMEs
-- **Bugs:** "Fixed [Issue]" header + problem statement + resolution
-- **Spikes:** Research topic header + findings + recommendations
-- **Storage:** All summaries in Azure DevOps `Custom.ReleaseNote` field
-
-### Phase 3: Create Simple Command/Workflow ✅ COMPLETED (2026-02-11)
-- [x] Created PowerShell automation script (`generate-sprint.ps1`)
-- [x] Created batch wrapper for easy execution (`generate-sprint.bat`)
-- [x] Script prompts for sprint info and runs all steps automatically:
-  1. Validates prerequisites (Node.js, Azure CLI, authentication)
-  2. Prompts for sprint number, date, and date range
-  3. Creates folder structure (`CX-YYYY.MM.DD/screenshots`)
-  4. Enhances work items from ADO (`enhance-release-notes.js`)
-  5. Generates markdown (`create-enhanced-release-notes.js`)
-  6. Generates HTML (`generate-html.js`)
-  7. Optionally opens in browser
-- [x] Documented the command usage below
-
-**How to Use:**
-```powershell
-# Option 1: Run PowerShell script directly
-.\generate-sprint.ps1
-
-# Option 2: Double-click generate-sprint.bat
-# Or run from Command Prompt:
-generate-sprint.bat
 ```
-
-The script will prompt for:
-- Sprint number (e.g., 03)
-- Sprint end date (e.g., 2026.02.18)
-- Date range (e.g., January 29 - February 18, 2026)
-
-**Next Sprint to Test:**
-- [ ] Test with: **CX (03) 2026.02.18** (Jan 29 - Feb 18, 2026)
-
-### Remaining Sprints for 2026:
-- CX (03) 2026.02.18 - January 29 - February 18, 2026
-- CX (04) 2026.03.11 - February 19 - March 11, 2026
-- CX (05) 2026.04.01 - March 12 - April 1, 2026
-- CX (06) 2026.04.22 - April 2 - April 22, 2026
-- CX (07) 2026.05.13 - April 23 - May 13, 2026
-- CX (08) 2026.06.03 - May 14 - June 3, 2026
-- CX (09) 2026.06.24 - June 4 - June 24, 2026
-
-**Goal:** Once Phase 1-3 complete, generating release notes for any sprint should be a single command.
+C:/GitHub-Projects/Release Notes/
+├── enhance-release-notes.js         ← Pulls work items from ADO (User Stories & Spikes only)
+├── create-enhanced-release-notes.js ← Generates Markdown from sprint data
+├── generate-html.js                 ← Converts Markdown to HTML (dark/light mode)
+├── generate-pdf.js                  ← Generates PDF via Puppeteer-core (light mode, letter)
+├── index.html                       ← Root redirect to latest sprint (GitHub Pages)
+├── .nojekyll                        ← Disables Jekyll on GitHub Pages
+├── vercel.json                      ← Vercel project config (name: cx-release-notes)
+├── .gitignore                       ← Excludes node_modules/, temp/, enhanced-work-items.json, *.docx
+├── TODO.md                          ← This file
+│
+├── CX-2026.01.07/
+│   ├── release-notes.md
+│   ├── release-notes.html
+│   ├── release-notes.pdf
+│   └── screenshots/
+│
+├── CX-2026.01.28/
+│   ├── release-notes.md
+│   ├── release-notes.html
+│   ├── release-notes.pdf
+│   └── screenshots/
+│
+└── CX-2026.02.18/
+    ├── release-notes.md
+    ├── release-notes.html
+    ├── release-notes.pdf
+    └── screenshots/
+```
 
 ---
 
@@ -155,277 +94,97 @@ The script will prompt for:
 
 ### ✅ Azure DevOps Integration
 - Azure DevOps CLI configured and authenticated
-- Automated work item querying from sprint iterations
-- Enhanced work item descriptions extracted from ADO
-- Automatic categorization by area path
+- Queries work items in states: `Closed`, `Done`, `Resolved`, `Pending Deployment`, `Code Review`
+- Only User Stories and Spikes are included (Bugs, Defects, Tasks excluded)
+- Reads `Custom.ReleaseNote` field, falls back to `System.Description`
+- AI-generated summaries written back to `Custom.ReleaseNote` via `az boards work-item update`
+
+### ✅ AI Summary Generation
+- Verb-first summaries (no noun-phrase title fragments)
+- Labeled bullet points: **What changed** / **Who benefits** / **Technical context**
+- User Story format and Spike format defined in skill
+- Grammar and quality checks built into skill instructions
+- Summaries stored in ADO as single source of truth
 
 ### ✅ Markdown Generation
-- Automated markdown generation from sprint data
-- Work items organized by area path (Home Portal, SmartApp, Servicing, Admin Portal, Tech Debt)
-- Proper sorting: User Story → Spike → Bug within each section
-- Bulleted summaries for User Stories and Spikes
-- Screenshot placeholders with work item ID
-- Exclusion of partner-related items
-- Exclusion of items without proper area paths
+- Work items organized by area path in defined order:
+  1. Home Portal
+  2. SmartApp
+  3. Servicing
+  4. Admin Portal
+  5. Tech Enhancements
+  6. Sitewide
+- Sorted: User Story → Spike within each section
+- Partner items and non-matching area paths excluded
+- No Sprint Summary section
 
 ### ✅ HTML Generation
-- **Dark/Light Mode Toggle** - Robinhood-inspired dark mode with blue accents
-- **Sprint Dropdown** - Switch between sprints from the header
-- **Centered Navigation** - Clean, scannable navigation matching area paths
-- **Theme Persistence** - Remembers user's theme preference
-- **Responsive Design** - Works on desktop, tablet, and mobile
-- **Markdown Link** - Direct link to source markdown file
-- **Status Badges** - Color-coded badges for NEW, ENHANCED, FIX, etc.
-- **Summary Boxes** - Highlighted summaries for User Stories and Spikes
-- **Click-to-Enlarge Images** - Modal for screenshot viewing
-- **Smooth Animations** - Professional transitions and hover effects
+- Dark/Light mode toggle with localStorage persistence
+- Sprint dropdown for switching between sprints
+- Click-to-enlarge screenshot modal
+- Status badges (NEW, ENHANCED, etc.)
+- Summary boxes for User Stories and Spikes
 
-### ✅ Automation Scripts
-- `enhance-release-notes.js` - Extracts descriptions from Azure DevOps
-- `create-enhanced-release-notes.js` - Generates markdown from sprint data
-- `generate-html.js` - Converts markdown to polished HTML
+### ✅ PDF Generation
+- Light mode, letter format with header/footer and page numbers
+- Generated via `puppeteer-core` + system Chrome
+- Viewport 880px, margins 0.25in left/right, base font 13px
+- Tight spacing for compact, printable output
 
----
-
-## 📁 Current Folder Structure
-
-```
-C:/github-projects/Release Notes/
-├── generate-html.js                 ← HTML generator with theme toggle
-├── generate-html.py                 ← Legacy Python version (not used)
-├── enhance-release-notes.js         ← ADO description extractor
-├── create-enhanced-release-notes.js ← Markdown generator
-├── enhanced-work-items.json         ← Cached work item descriptions
-├── release-notes-template.md        ← Original template (reference)
-├── TODO.md                          ← This file
-├── CX Sprint 2025.1.28 Release Notes.docx ← Original example
-│
-├── CX-2026.01.07/                   ← Sprint folder
-│   ├── release-notes.md             ← Markdown source (35 items)
-│   ├── release-notes.html           ← Generated HTML
-│   └── screenshots/                 ← Screenshot folder
-│
-└── CX-2026.01.28/                   ← Sprint folder
-    ├── release-notes.md             ← Markdown source (38 items)
-    ├── release-notes.html           ← Generated HTML
-    └── screenshots/                 ← Screenshot folder
-```
-
----
-
-## 🚀 How to Generate Release Notes (Updated Workflow)
-
-### Prerequisites
-- Azure CLI authenticated (`az login`)
-- Azure DevOps defaults configured:
-  ```bash
-  az devops configure --defaults organization=https://cmgfidev.visualstudio.com project="Consumer Experience"
-  ```
-
-### Step 1: Create Sprint Folder
-```bash
-cd "C:/github-projects/Release Notes"
-mkdir "CX-YYYY.MM.DD"
-mkdir "CX-YYYY.MM.DD/screenshots"
-```
-
-### Step 2: Enhance Work Items (Pull from Azure DevOps)
-This step extracts descriptions AND Custom.ReleaseNote fields from ADO for User Stories, Spikes, and Bugs.
-
-```bash
-node enhance-release-notes.js "Consumer Experience\\CX (##) YYYY.MM.DD"
-```
-
-**What it does:**
-- Queries all completed work items from the sprint
-- Extracts Custom.ReleaseNote field (AI-generated summaries)
-- Falls back to System.Description if no release note exists
-- Saves to `enhanced-work-items.json`
-
-### Step 3: Generate Markdown (Immediately After Step 2)
-**IMPORTANT:** Run this immediately after Step 2 while `enhanced-work-items.json` contains the correct sprint data.
-
-```bash
-node create-enhanced-release-notes.js "Consumer Experience\\CX (##) YYYY.MM.DD" "YYYY.MM.DD" "Month DD - Month DD, YYYY" "CX-YYYY.MM.DD"
-```
-
-**Example:**
-```bash
-node create-enhanced-release-notes.js "Consumer Experience\\CX (03) 2026.02.18" "2026.02.18" "January 29 - February 18, 2026" "CX-2026.02.18"
-```
-
-**What it does:**
-- Reads `enhanced-work-items.json`
-- Categorizes work items by area path
-- Generates markdown with summaries
-- Saves to `CX-YYYY.MM.DD/release-notes.md`
-
-### Step 4: Generate HTML
-```bash
-node generate-html.js "CX-YYYY.MM.DD/release-notes.md"
-```
-
-**What it does:**
-- Converts markdown to HTML
-- Adds dark/light mode toggle
-- Creates sprint dropdown navigation
-- Saves to `CX-YYYY.MM.DD/release-notes.html`
-
-### Step 5: Open in Browser
-```bash
-start "CX-YYYY.MM.DD/release-notes.html"
-```
-
----
-
-## 📝 Working with Release Note Summaries
-
-### Viewing Summaries in Azure DevOps
-1. Open any work item in ADO
-2. Look for the **Custom.ReleaseNote** field
-3. This field contains the AI-generated or manually-written summary
-
-### Updating Summaries in Azure DevOps
-1. Edit the work item in ADO
-2. Update the **Custom.ReleaseNote** field (supports HTML)
-3. Save the work item
-4. Re-run Steps 2-4 above to regenerate release notes
-
-### Bulk Generating AI Summaries
-If work items don't have summaries yet, use the AI generation process:
-1. Extract work items: `node process-release-notes.js` (creates JSON files)
-2. Generate summaries using Claude AI (see `generate-summaries.js` or use agents)
-3. Update ADO: `node update-ado.js` (writes Custom.ReleaseNote fields)
-4. Follow normal workflow (Steps 2-4 above)
-
-### Summary Guidelines
-See **SUMMARY-GUIDELINES.md** for:
-- Format standards by work item type
-- Writing do's and don'ts
-- Quality checklist
-- Examples for User Stories, Bugs, and Spikes
+### ✅ GitHub Pages Publishing
+- Repo: https://github.com/pavederras/cx-release-notes
+- Live site: https://pavederras.github.io/cx-release-notes/
+- `.nojekyll` disables Jekyll for instant build
+- `index.html` at root redirects to latest sprint
+- Sprint published by: `git add "CX-YYYY.MM.DD/" && git commit && git push`
 
 ---
 
 ## 📋 Area Path Categories
 
-Work items are automatically categorized based on their area path (the prefix before `|` in the title):
+Work items categorized in this display order:
+1. **Home Portal** — Home Portal items
+2. **SmartApp** — SmartApp / Smart App items
+3. **Servicing** — Servicing items
+4. **Admin Portal** — Admin Portal items
+5. **Tech Enhancements** — Technical improvements (formerly Tech Debt)
+6. **Sitewide** — Items spanning multiple areas
 
-**Displayed in this order:**
-1. **Home Portal** - All Home Portal work items
-2. **SmartApp** - SmartApp and Smart App items
-3. **Servicing** - Servicing-related items
-4. **Admin Portal** - Admin Portal items
-5. **Tech Debt** - Technical debt items
-
-**Excluded:**
-- Partner Co-Branding items
-- Partner Portal items
-- Items without recognizable area paths
-- Tasks without area path prefixes
+**Excluded:** Partner Co-Branding, Partner Portal, unrecognized area paths, all Bugs/Defects/Tasks
 
 ---
 
-## 🎨 Theme System
+## 📸 Screenshots
 
-### Dark Mode (Default)
-- Deep black background (#0d0d0d)
-- Blue accents (#0078FF)
-- Robinhood-inspired design
-- High contrast for readability
-
-### Light Mode
-- Clean white backgrounds
-- Same blue accents
-- Traditional design
-- Optimized for printing
-
-### Toggle Button
-Located in the navigation bar (top right), persists preference in localStorage.
+- Naming: `{work-item-id}_1.png` (increment for multiples: `_2.png`, `_3.png`)
+- Saved to: `CX-YYYY.MM.DD/screenshots/`
+- HTML renders them with click-to-enlarge modal
+- Add screenshots after generating HTML; no re-run needed
 
 ---
 
-## 🔄 Sprint Navigation
+## 💡 Future Enhancements
 
-### Sprint Dropdown
-- Located in header next to sprint title
-- Shows: "CX Sprint 2026.01.28 [Switch Sprint ▼]"
-- Lists all available sprints (oldest → newest)
-- Auto-discovers sprint folders
-- One-click navigation between sprints
-
----
-
-## 📊 Work Item Organization
-
-### Within Each Area Path:
-1. **User Stories** (first) - All user stories grouped together
-2. **Spikes** - Research and spike work items
-3. **Bugs** (last) - Bug fixes and defects
-
-### Display Format:
-```
-### 🆕 NEW: Feature Title
-**Ticket:** #12345
-**Type:** User Story
-
-**Summary:**
-- As a user, I want to... so that...
-
-**Screenshots:**
-- screenshots/12345-feature-name.png
-```
-
----
-
-## 📸 Screenshot Process
-
-### Current Implementation:
-- Screenshot placeholders automatically generated in markdown
-- Naming convention: `{work-item-id}_{number}.png` (e.g., `79993_1.png`, `79993_2.png`)
-- Multiple screenshots per work item supported with priority ordering
-- Stored in: `CX-YYYY.MM.DD/screenshots/`
-- Modal viewer in HTML for click-to-enlarge
-
-### Recommended Workflow:
-1. QA team attaches screenshots to Azure DevOps work items during testing
-2. When creating release notes, manually download key screenshots
-3. Save to `screenshots/` folder as `{work-item-id}_1.png` (increment number for multiple screenshots)
-4. Edit markdown to reference actual screenshots if multiple exist
-5. HTML will automatically display them with click-to-enlarge functionality
-
-### Future Enhancement:
-Create script to automatically download screenshots from work item attachments:
-```bash
-# Future script idea
-node download-screenshots.js "CX-YYYY.MM.DD"
-```
+- [ ] Automated screenshot download from Azure DevOps attachments
+- [ ] Email template generation
+- [ ] Slack/Teams notification on publish
+- [ ] Sprint metrics dashboard
+- [ ] Diff view between sprints
+- [ ] Search across sprints
 
 ---
 
 ## 🛠️ Useful Commands
 
-### Query Sprint Data
-```bash
-az boards query --wiql "SELECT [System.Id], [System.Title], [System.WorkItemType], [System.State] FROM WorkItems WHERE [System.IterationPath] = 'Consumer Experience\\CX (##) YYYY.MM.DD' AND [System.State] IN ('Closed', 'Done', 'Resolved')" --output table
-```
-
-### View Work Item Details
-```bash
-az boards work-item show --id [WORK-ITEM-ID] --output json
-```
-
-### List All Sprint Iterations
-```bash
+```powershell
+# List sprint iterations
 az boards iteration project list --project "Consumer Experience" --depth 3
-```
 
-### Regenerate All HTML Files
-```bash
-cd "C:/github-projects/Release Notes"
-for dir in CX-*/; do
-  node generate-html.js "${dir}release-notes.md"
-done
+# View a specific work item
+az boards work-item show --id [WORK-ITEM-ID] --output json
+
+# Query sprint work items
+az boards query --wiql "SELECT [System.Id], [System.Title] FROM WorkItems WHERE [System.IterationPath] = 'Consumer Experience\CX (##) YYYY.MM.DD' AND [System.State] IN ('Closed', 'Done', 'Resolved', 'Pending Deployment', 'Code Review')" --output table
 ```
 
 ---
@@ -435,73 +194,16 @@ done
 ### Azure DevOps
 - **Organization:** cmgfidev (https://cmgfidev.visualstudio.com)
 - **Project:** Consumer Experience
-- **Process Template:** CX Dev Process
-- **Default Team:** Consumer Experience Team
 
-### Sprints Completed:
-- CX (01) 2026.01.07 - Dec 11, 2025 to Jan 7, 2026 (35 items)
-- CX (02) 2026.01.28 - Jan 14, 2026 to Jan 28, 2026 (38 items)
-- CX (03) 2026.02.18 - Jan 29 to Feb 18, 2026 (18 items — User Stories & Spikes only) ✅
+### GitHub
+- **Repo:** https://github.com/pavederras/cx-release-notes
+- **Pages:** https://pavederras.github.io/cx-release-notes/
+- **Default branch:** main
 
-### Known Iterations for 2026:
-- CX (04) 2026.03.11 - Feb 19 to Mar 11
-- CX (05) 2026.04.01 - Mar 12 to Apr 1
-- CX (06) 2026.04.22 - Apr 2 to Apr 22
-- CX (07) 2026.05.13 - Apr 23 to May 13
-- CX (08) 2026.06.03 - May 14 to Jun 3
-- CX (09) 2026.06.24 - Jun 4 to Jun 24
+### Node.js
+- **Path (fnm):** `C:\Users\dperras\AppData\Roaming\fnm\node-versions\v24.13.1\installation\node.exe`
 
 ---
 
-## 💡 Future Enhancements
-
-### Potential Improvements:
-- [ ] Automated screenshot download from Azure DevOps
-- [ ] PDF export functionality
-- [ ] Email template generation
-- [ ] Slack/Teams integration for auto-posting
-- [ ] Sprint metrics dashboard
-- [ ] Acceptance criteria extraction
-- [ ] Automated deployment to Vercel/GitHub Pages
-- [ ] Diff view between sprints
-- [ ] Search functionality across sprints
-- [ ] Export to Word/PowerPoint
-
-### Nice-to-Have Features:
-- [ ] Expandable/collapsible sections
-- [ ] Print-optimized stylesheet
-- [ ] Team credits auto-population from ADO
-- [ ] Release notes comparison tool
-- [ ] Burndown chart integration
-- [ ] Custom branding options
-
----
-
-## 📝 Notes
-
-### Design Decisions:
-- **Excluded Partner Items:** Per user request, all Partner Co-Branding and Partner Portal items are excluded from release notes
-- **No "Other" Category:** Items must match one of the 5 defined area paths (Home Portal, SmartApp, Servicing, Admin Portal, Tech Debt)
-- **Dark Mode Default:** Robinhood-inspired dark theme is the default, with blue accents instead of green
-- **Centered Navigation:** Navigation items are centered for better visual balance
-- **Area Path Sorting:** Sections always appear in defined order regardless of item count
-
-### Maintenance:
-- `enhanced-work-items.json` is overwritten each time `enhance-release-notes.js` runs
-- HTML files can be regenerated anytime without losing data
-- Markdown files are the source of truth
-- Sprint dropdown auto-discovers new sprint folders
-
----
-
-## 🔗 Reference Links
-
-- **Original Example:** https://cx-sprint-release-2025.vercel.app/
-- **Azure DevOps Project:** https://cmgfidev.visualstudio.com/Consumer%20Experience
-- **Azure CLI Docs:** https://learn.microsoft.com/en-us/cli/azure/boards
-
----
-
-**Last Updated:** 2026-02-17
+**Last Updated:** 2026-02-18
 **Status:** ✅ Production Ready
-**Version:** 3.0

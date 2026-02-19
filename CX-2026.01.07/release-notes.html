@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -505,6 +505,7 @@
             <select id="sprint-selector" class="sprint-dropdown" onchange="switchSprint(this.value)" aria-label="Switch to different sprint">
                 <option value="CX-2026.01.07" selected>2026.01.07</option>
 <option value="CX-2026.01.28" >2026.01.28</option>
+<option value="CX-2026.02.18" >2026.02.18</option>
             </select>
         </div>
         <p class="sprint-dates">
@@ -518,7 +519,7 @@
 <a href="#smartapp" class="nav-link">SmartApp (8)</a>
 <a href="#servicing" class="nav-link">Servicing (5)</a>
 <a href="#admin-portal" class="nav-link">Admin Portal (1)</a>
-<a href="#tech-debt" class="nav-link">Tech Debt (7)</a>
+<a href="#tech-enhancements" class="nav-link">Tech Enhancements (7)</a>
         </div>
         <button class="theme-toggle" onclick="toggleTheme()">
             <span id="theme-icon">🌙</span>
@@ -541,7 +542,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Simplified Home Value Display Removed the 'Change Since' date field from Home Value cards across the Home Portal dashboard and Your Homes page to reduce borrower confusion. This field was not functioning correctly in production, and removing it streamlines the home value information display. The estimated equity field now takes the place of the removed date field for improved clarity.</li></ul>
+                    <ul><li>Removed the 'Change Since' date field from Home Value cards across the Home Portal dashboard and Your Homes page to reduce borrower confusion. This field was not functioning correctly in production, and removing it streamlines the home value information display. The estimated equity field now takes its place for improved clarity.</li></ul>
                 </div>
                 
                 
@@ -563,7 +564,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Early Borrower Authentication Verification Ordering Enabled automatic ordering of the Borrower Authentication Verification disclosure package immediately upon SmartApp submission, rather than waiting until the loan reaches LE Pending status. When the OrdBorrAuth feature flag is enabled, the system validates required borrower data (phone, email, SSN), augments the Byte loan creation with predefined field values, and triggers the Pre-Disclosure package via Docutech. This early ordering improves borrower onboarding, accelerates identity verification, and increases application-to-disclosure conversion rates. The feature includes validation safeguards and does not block loan creation if validation fails.</li></ul>
+                    <ul><li>Enabled automatic ordering of the Borrower Authentication Verification disclosure package immediately upon SmartApp submission, rather than waiting until the loan reaches LE Pending status. When the OrdBorrAuth feature flag is enabled, the system validates required borrower data (phone, email, SSN) and triggers the Pre-Disclosure package via Docutech. This improves borrower onboarding, accelerates identity verification, and increases application-to-disclosure conversion rates.</li></ul>
                 </div>
                 
                 
@@ -585,7 +586,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Persistent Domain Navigation After SSO Redirect Enhanced the Home Portal navigation to maintain referral domain context after SSO redirects. When borrowers from Bank CMG or JV domains are redirected to view CMG-serviced loan details on the CMGHL domain, all header navigation links (Dashboard, Your Homes, Calculators, Apply Now, and avatar menu options) now route users back to their original domain. This provides a seamless cross-domain experience while preserving brand-specific navigation context.</li></ul>
+                    <ul><li>Enhanced the Home Portal navigation to maintain referral domain context after SSO redirects. When borrowers from Bank CMG or JV domains are redirected to view CMG-serviced loan details on the CMGHL domain, all header navigation links now route users back to their original domain, providing a seamless cross-domain experience while preserving brand-specific navigation context.</li></ul>
                 </div>
                 
                 
@@ -607,7 +608,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Your Homes Feature Flag Implementation Added user-level feature flag control for the Your Homes page in the Home Portal. When enabled, the Your Homes navigation link is removed from both desktop header navigation and mobile/tablet footer navigation, allowing administrators to control access per user. The feature defaults to disabled (Your Homes visible) in production. All other features within the Home Portal, including Home Search and property value tracking, continue to function normally regardless of flag status.</li></ul>
+                    <ul><li>Added user-level feature flag control for the Your Homes page in the Home Portal, allowing administrators to control access per user. When enabled, the Your Homes navigation link is removed from both desktop header navigation and mobile/tablet footer navigation. The feature defaults to disabled (Your Homes visible) in production.</li></ul>
                 </div>
                 
                 
@@ -629,7 +630,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Fixed Multiple Loading Indicators Resolved an issue where multiple loading states were displaying simultaneously when accessing the loan detail dashboard. Users now see a single, consistent loading indicator for improved user experience and visual clarity.</li></ul>
+                    <ul><li>Resolved an issue where multiple loading states were displaying simultaneously when accessing the loan detail dashboard, providing users with a single, consistent loading indicator for improved visual clarity.</li></ul>
                 </div>
                 
                 
@@ -651,7 +652,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Fixed My Profile Back Button Navigation Corrected a navigation issue where clicking the back button on the My Profile page incorrectly redirected users to an error page. The back button now properly returns users to their previous page location.</li></ul>
+                    <ul><li>Corrected a navigation issue where clicking the back button on the My Profile page incorrectly redirected users to an error page. The back button now properly returns users to their previous page location.</li></ul>
                 </div>
                 
                 
@@ -673,7 +674,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Fixed Authentication Redirect on 401 Error Corrected an issue where unauthenticated users receiving a 401 error were not automatically redirected to the login screen. Users now receive proper authentication prompts when their session expires or authentication is required.</li></ul>
+                    <ul><li>Corrected an issue where unauthenticated users receiving a 401 error were not automatically redirected to the login screen. Users now receive proper authentication prompts when their session expires or authentication is required.</li></ul>
                 </div>
                 
                 
@@ -695,7 +696,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Fixed Plaid/Truv Button After Page Refresh Resolved an issue where the "Verify with Plaid" or "Verify with Truv" buttons became unresponsive after refreshing the page on the autofill accounts route. The verification buttons now function correctly even after page reloads during the asset verification process.</li></ul>
+                    <ul><li>Resolved an issue where the 'Verify with Plaid' or 'Verify with Truv' buttons became unresponsive after refreshing the page on the autofill accounts route. The verification buttons now function correctly even after page reloads during the asset verification process.</li></ul>
                 </div>
                 
                 
@@ -717,7 +718,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Copied from Repro Steps when changed from Bug to Defect Steps to Reproduce: 1) Navigate to the BankCMG Login page in an Incognito browser, at: https://uat.secure.bankcmg.com/login 2) Login on UAT with cchandler+ssotest@cmgfi.com / Test1234! 3) From the Dashboard, click the View button.</li></ul>
+                    <ul><li>Resolved a defect where navigation links opened in a new tab from the BankCMG portal failed to redirect users through SSO to the correct domain. Links opened in new tabs now properly complete the SSO redirect, ensuring users land on the correct domain-specific page.</li></ul>
                 </div>
                 
                 
@@ -739,7 +740,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Fixed Login Dialog Persistence Issue Corrected an issue where the login dialog remained open after successful authentication during the loan application flow. The login modal now properly closes upon successful login, allowing users to continue their application seamlessly.</li></ul>
+                    <ul><li>Corrected an issue where the login dialog remained open after successful authentication during the loan application flow. The login modal now properly closes upon successful login, allowing users to continue their application seamlessly.</li></ul>
                 </div>
                 
                 
@@ -761,13 +762,35 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Fixed Home Affordability Calculator Principal Amount Corrected an inaccurate principal calculation in the Home Affordability Calculator. The calculator now displays the correct principal amount based on user inputs, providing borrowers with accurate home affordability estimates for better financial planning.</li></ul>
+                    <ul><li>Corrected an inaccurate principal calculation in the Home Affordability Calculator. The calculator now displays the correct principal amount based on user inputs, providing borrowers with accurate home affordability estimates for better financial planning.</li></ul>
                 </div>
                 
                 
                 <div class="screenshots-grid">
                     <div class="screenshot-item">
                         <img src="screenshots/91691_1.png" alt="Home Affordability Calculator Displaying Incorrect Principal Calculation" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">Clicking any of the header links does not navigate you away from the tasks dashboard</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92070" class="ticket-link" target="_blank">#92070</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Resolved a navigation issue where clicking header links from the tasks dashboard failed to navigate users to the intended pages. All header navigation links now function correctly from the tasks dashboard, allowing users to freely navigate throughout the portal.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92070_1.png" alt="Clicking any of the header links does not navigate you away from the tasks dashboard" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
                         <p class="screenshot-caption">Click to enlarge</p>
                     </div>
                     </div>
@@ -790,7 +813,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Enhanced Asset Verification Experience with Plaid Updated the SmartApp asset verification flow to provide a consistent experience between Plaid and Truv VOIE integrations. When borrowers choose to auto-fill their assets, they now see a redesigned selection screen that clearly explains both verification options with security badges and detailed descriptions. The new interface includes "Verify with Plaid" and "Enter Manually" buttons, with appropriate routing for both primary borrowers and co-borrowers. This feature is gated behind the isTruvVOIEEnabled feature flag and remains disabled in production.</li></ul>
+                    <ul><li>Updated the SmartApp asset verification flow to provide a consistent experience between Plaid and Truv VOIE integrations. When borrowers choose to auto-fill their assets, they now see a redesigned selection screen with security badges and detailed descriptions for both verification options. This feature is gated behind the isTruvVOIEEnabled feature flag and remains disabled in production.</li></ul>
                 </div>
                 
                 
@@ -812,7 +835,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Domain-Specific Truv Branding Implementation Implemented domain-specific branding for the Truv income verification component within SmartApp. Borrowers applying through Bank CMG domains now see Bank CMG-branded Truv templates, while those on CMG Home Loans domains see CMG Home Loans branding. The system dynamically maps domain names to organization template IDs using the EPS VOE templates endpoint, ensuring brand consistency throughout the verification process. Once an order is created with specific branding, it persists even if the user crosses domains.</li></ul>
+                    <ul><li>Implemented domain-specific branding for the Truv income verification component within SmartApp. Borrowers applying through Bank CMG domains now see Bank CMG-branded Truv templates, while those on CMG Home Loans domains see CMG Home Loans branding. Once an order is created with specific branding, it persists even if the user crosses domains.</li></ul>
                 </div>
                 
                 
@@ -834,7 +857,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Cross-Domain SSO for Mortgage Account Viewing Implemented single sign-on redirect functionality for borrowers viewing CMG-serviced loans from Bank CMG or JV domains. When users click "View" on a CMG-serviced loan from these domains, they are automatically redirected via SSO to the secure.cmghomeloans.com domain's mortgage account details page. This ensures all payment management and mortgage servicing functionality remains centralized on the CMG Home Loans domain while maintaining seamless access across brand portals.</li></ul>
+                    <ul><li>Implemented single sign-on redirect functionality for borrowers viewing CMG-serviced loans from Bank CMG or JV domains. When users click 'View' on a CMG-serviced loan, they are automatically redirected via SSO to the secure.cmghomeloans.com domain, ensuring payment management and servicing functionality remain centralized on the CMG Home Loans domain.</li></ul>
                 </div>
                 
                 
@@ -856,7 +879,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Domain-Specific Plaid Branding Implementation Implemented domain-specific branding for the Plaid asset verification component within SmartApp. Borrowers applying through Bank CMG domains now see "Bank CMG uses Plaid to connect your bank" messaging, while those on CMG Home Loans domains see "CMG Home Loans uses Plaid to connect your bank." The system dynamically applies the appropriate template ID (link_customization_name) and client_name based on the application domain. Once a Plaid order is created with specific branding, it persists even if the user crosses domains, ensuring brand consistency throughout the asset verification process.</li></ul>
+                    <ul><li>Implemented domain-specific branding for the Plaid asset verification component within SmartApp. Borrowers applying through Bank CMG domains now see Bank CMG-branded messaging, while those on CMG Home Loans domains see CMG Home Loans branding. Once a Plaid order is created with specific branding, it persists even if the user crosses domains.</li></ul>
                 </div>
                 
                 
@@ -878,7 +901,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Fixed SmartApp Date Synchronization Issue Corrected an issue where SmartApp submission dates were being recorded incorrectly in Byte. The fix ensures accurate date/time stamps are now properly synchronized between SmartApp and Byte for improved loan tracking and reporting accuracy.</li></ul>
+                    <ul><li>Corrected an issue where SmartApp submission dates were being recorded incorrectly in Byte, ensuring accurate date/time stamps are properly synchronized between SmartApp and Byte for improved loan tracking and reporting accuracy.</li></ul>
                 </div>
                 
                 
@@ -900,7 +923,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Fixed Name Validation Sensitivity Improved SmartApp name mismatch validation to be case-insensitive and automatically trim whitespace. This prevents false validation errors when borrower names contain different capitalization or extra spaces, reducing friction during the application process.</li></ul>
+                    <ul><li>Improved SmartApp name mismatch validation to be case-insensitive and automatically trim whitespace, preventing false validation errors when borrower names contain different capitalization or extra spaces during the application process.</li></ul>
                 </div>
                 
                 
@@ -922,13 +945,35 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Fixed Session Timeout Redirect Issue Resolved an error where borrowers were unable to continue their loan application after being logged out due to inactivity. The fix ensures BorrowerGUID is properly restored when users log back in and are redirected to their in-progress application, allowing seamless continuation of the application process.</li></ul>
+                    <ul><li>Resolved an error where borrowers were unable to continue their loan application after being logged out due to inactivity. The fix ensures BorrowerGUID is properly restored when users log back in and are redirected to their in-progress application, allowing seamless continuation.</li></ul>
                 </div>
                 
                 
                 <div class="screenshots-grid">
                     <div class="screenshot-item">
                         <img src="screenshots/90042_1.png" alt="User receives error when progressing in loan application - no BorrowerGUID when redirected back to in-progress application after logging in after being logged out for inactivity" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-fix">🐛 FIX</span>
+                    <h3 class="feature-title">Smart App | Mobile User borrower information has no active borrowers, no primary borrower, data gets split across borrowers</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91566" class="ticket-link" target="_blank">#91566</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Resolved a critical data integrity issue where mobile SmartApp users experienced borrower information being split across multiple borrower records with no active or primary borrower designation. The fix ensures borrower data is properly consolidated and maintains correct active and primary borrower flags during mobile application sessions.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/91566_1.png" alt="Smart App | Mobile User borrower information has no active borrowers, no primary borrower, data gets split across borrowers" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
                         <p class="screenshot-caption">Click to enlarge</p>
                     </div>
                     </div>
@@ -951,7 +996,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>New Document Type: Notice of Servicing Transfer Added "Notice of Servicing Transfer" (also known as "Goodbye Letter") as a viewable document type in the Documents Center for servicing accounts. This document informs borrowers when their mortgage loan servicing is being transferred to a new servicer in compliance with RESPA requirements. The new document type appears under the "Transfers" filter category, enabling borrowers to access servicing transfer notifications without contacting support. Documents remain accessible until the end of the year following the transfer year.</li></ul>
+                    <ul><li>Added 'Notice of Servicing Transfer' (also known as 'Goodbye Letter') as a viewable document type in the Documents Center for servicing accounts. This document informs borrowers when their mortgage loan servicing is being transferred to a new servicer in compliance with RESPA requirements, appearing under the 'Transfers' filter category. Documents remain accessible until the end of the year following the transfer year.</li></ul>
                 </div>
                 
                 
@@ -973,7 +1018,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Aspen Grove Widgets 1.48.0: Payment and AutoPay Enhancements Upgraded Aspen Grove widgets to version 1.48.0, addressing critical payment timing and validation issues. Key improvements include: fixed monthly AutoPay eligibility logic to display appropriate error messages when setting up after the 15th and past cutoff time; corrected monthly payment amount calculation on one-time payments to properly determine if current month has been paid; enhanced error messaging and bank account validations for routing and account numbers; and implemented comprehensive unit tests for date calculations across all time zones. These changes ensure accurate payment processing regardless of user location.</li></ul>
+                    <ul><li>Upgraded Aspen Grove widgets to version 1.48.0, addressing critical payment timing and validation issues. Key improvements include fixed monthly AutoPay eligibility logic, corrected monthly payment amount calculations for one-time payments, enhanced error messaging for bank account validations, and comprehensive unit tests for date calculations across all time zones. These changes ensure accurate payment processing regardless of user location.</li></ul>
                 </div>
                 
                 
@@ -995,7 +1040,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Aspen Grove Widgets 1.49.0: Escrow-Only Payment Support Upgraded Aspen Grove widgets to version 1.49.0, adding support for escrow-only additional payments during off-cycle payment scenarios. The update enables three distinct payment types: Additional Principal only (PrincipalOnly), Additional Escrow only (EscrowOnly), and combined Additional Escrow and Principal (MonthlyPayment). These payment options are only available when the loan is not due and during off-cycle periods, with regular monthly payments remaining unchanged. All payment types have been verified to correctly impact Sagent servicing data.</li></ul>
+                    <ul><li>Upgraded Aspen Grove widgets to version 1.49.0, adding support for escrow-only additional payments during off-cycle payment scenarios. The update enables three distinct payment types: Additional Principal only, Additional Escrow only, and combined Additional Escrow and Principal. These options are only available when the loan is not due and during off-cycle periods.</li></ul>
                 </div>
                 
                 
@@ -1017,13 +1062,35 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Payoff Sooner Calculator Reusability Assessment Completed research on integrating the existing Pay-Off Sooner/Additional Principal Payment calculator into the Servicing Portal. The spike identified that the calculator code currently resides in ConX UI and should be migrated to the cmg-calculators NPM package for broader reuse. Key findings include working amortization logic, existing template structure, and the need for dynamic loan data injection via query parameters. The proposed solution involves extracting the component into the shared NPM package and providing Aspen Grove widgets with a custom URL pattern to serve relevant loan data, opening the calculator in a separate tab to maintain widget state and reduce cross-team dependencies.</li></ul>
+                    <ul><li>Completed research on integrating the existing Pay-Off Sooner/Additional Principal Payment calculator into the Servicing Portal. The spike identified that the calculator code resides in ConX UI and should be migrated to the cmg-calculators NPM package for broader reuse. The proposed solution involves extracting the component into the shared NPM package and providing Aspen Grove widgets with a custom URL pattern to serve relevant loan data.</li></ul>
                 </div>
                 
                 
                 <div class="screenshots-grid">
                     <div class="screenshot-item">
                         <img src="screenshots/89593_1.png" alt="Research "Payoff Quicker" Calculator [8 hours]" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-spike">🔍 SPIKE</span>
+                    <h3 class="feature-title">Research Feasibility for Standalone Bi-Weekly Mortgage Calculator [8 hours]</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/89863" class="ticket-link" target="_blank">#89863</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Completed feasibility research for integrating the bi-weekly mortgage calculator as a standalone tool linkable from multiple servicing areas. The calculator exists in the consumer-experience-calculators NPM package and includes complete amortization logic, graph generation, and downloadable CSV export functionality. Recommendations include avoiding embedding the NPM package directly in Aspen Grove widgets to prevent dependency chain complications.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/89863_1.png" alt="Research Feasibility for Standalone Bi-Weekly Mortgage Calculator [8 hours]" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
                         <p class="screenshot-caption">Click to enlarge</p>
                     </div>
                     </div>
@@ -1037,12 +1104,23 @@
             <h2 class="section-header">Admin Portal <span class="count">(1 items)</span></h2>
             <div class="features-container">
                 
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">✅ TASK</span>
+                    <h3 class="feature-title">Perform regression testing on Admin portal</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91488" class="ticket-link" target="_blank">#91488</a>
+                </div>
+                
+                
+                
+            </div>
+            
             </div>
         </section>
         
 
-        <section id="tech-debt" class="release-section">
-            <h2 class="section-header">Tech Debt <span class="count">(7 items)</span></h2>
+        <section id="tech-enhancements" class="release-section">
+            <h2 class="section-header">Tech Enhancements <span class="count">(7 items)</span></h2>
             <div class="features-container">
                 
             <div class="feature-item">
@@ -1054,7 +1132,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Removed Redundant Email Encoding for Plus Sign Characters Eliminated unnecessary encoding of '+' characters in email addresses within the Conx API, as the Loan Serv API now handles these characters natively. This technical improvement prevents double encoding and data inconsistencies when users add or update email addresses containing plus signs (e.g., test+123@email.com) at both global and account-level Email Preferences pages. The change depends on upstream fixes from the Loan Serv API team.</li></ul>
+                    <ul><li>Eliminated unnecessary encoding of '+' characters in email addresses within the Conx API, as the Loan Serv API now handles these characters natively. This prevents double encoding and data inconsistencies when users add or update email addresses containing plus signs at both global and account-level Email Preferences pages.</li></ul>
                 </div>
                 
                 
@@ -1076,7 +1154,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>ConX API Upgraded to .NET 10 Upgraded the ConX API solution to .NET 10 framework and converted to the new .SLNX solution format. The updated API builds successfully in both local development environments and CI/CD pipelines, and has been deployed and validated in lower environments to ensure compatibility and responsiveness.</li></ul>
+                    <ul><li>Upgraded the ConX API solution to .NET 10 framework and converted to the new .SLNX solution format. The updated API builds successfully in both local development environments and CI/CD pipelines, and has been deployed and validated in lower environments to ensure compatibility and responsiveness.</li></ul>
                 </div>
                 
                 
@@ -1098,7 +1176,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>ConX Admin API Upgraded to .NET 10 Upgraded the ConX Admin API solution to .NET 10 framework and converted to the new .SLNX solution format. The updated API builds successfully in both local development environments and CI/CD pipelines, and has been deployed and validated in lower environments to ensure compatibility and responsiveness.</li></ul>
+                    <ul><li>Upgraded the ConX Admin API solution to .NET 10 framework and converted to the new .SLNX solution format. The updated API builds successfully in both local development environments and CI/CD pipelines, and has been deployed and validated in lower environments to ensure compatibility and responsiveness.</li></ul>
                 </div>
                 
                 
@@ -1120,7 +1198,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>ConX Third Party API Upgraded to .NET 10 Upgraded the ConX Third Party API solution to .NET 10 framework and converted to the new .SLNX solution format. The updated API builds successfully in both local development environments and CI/CD pipelines, and has been deployed and validated in lower environments to ensure compatibility and responsiveness.</li></ul>
+                    <ul><li>Upgraded the ConX Third Party API solution to .NET 10 framework and converted to the new .SLNX solution format. The updated API builds successfully in both local development environments and CI/CD pipelines, and has been deployed and validated in lower environments to ensure compatibility and responsiveness.</li></ul>
                 </div>
                 
                 
@@ -1142,7 +1220,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Admin API Base URL Configuration Update Updated the admin API base URL configuration to resolve connectivity issues in the development environment. This technical fix ensures proper API endpoint routing for admin portal functionality across all environments.</li></ul>
+                    <ul><li>Updated the admin API base URL configuration to resolve connectivity issues in the development environment, ensuring proper API endpoint routing for admin portal functionality across all environments.</li></ul>
                 </div>
                 
                 
@@ -1164,7 +1242,7 @@
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>HouseCanary Loan Officer Sync Issue Analysis Investigated recurring 400 Bad Request errors in the HouseCanaryLoanOfficerSync Azure Function related to NMLS ID validation. The research identified that HouseCanary's API requires NMLS IDs to contain only letters and digits, but some loan officers have NMLS IDs with special characters or formatting issues. The spike documented root causes and proposed fixes to cleanse and validate NMLS ID data before syncing to prevent synchronization failures.</li></ul>
+                    <ul><li>Investigated recurring 400 Bad Request errors in the HouseCanaryLoanOfficerSync Azure Function related to NMLS ID validation. The research identified that HouseCanary's API requires NMLS IDs to contain only letters and digits, but some loan officers have NMLS IDs with special characters. Findings document root causes and proposed fixes to cleanse and validate NMLS ID data before syncing to prevent synchronization failures.</li></ul>
                 </div>
                 
                 
@@ -1180,104 +1258,22 @@
             <div class="feature-item">
                 <div class="feature-header">
                     <span class="status-badge status-spike">🔍 SPIKE</span>
-                    <h3 class="feature-title">Identify causes and remediation options for  build warnings in Conx API, Conx Admin API and Third Party API [16 Hrs]</h3>
+                    <h3 class="feature-title">Identify causes and remediation options for build warnings in Conx API, Conx Admin API and Third Party API [16 Hrs]</h3>
                     <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91638" class="ticket-link" target="_blank">#91638</a>
                 </div>
                 
                 <div class="feature-summary">
                     <strong>Summary:</strong>
-                    <ul><li>Build Warnings Analysis for ConX APIs Completed comprehensive investigation of build warnings across ConX API, ConX Admin API, and Third Party API solutions. The spike identified root causes of compilation warnings and documented remediation options to improve code quality, reduce technical debt, and ensure cleaner builds. Findings will guide future user stories to systematically address and eliminate build warnings across all three API solutions.</li></ul>
+                    <ul><li>Completed comprehensive investigation of build warnings across ConX API, ConX Admin API, and Third Party API solutions. The spike identified root causes of compilation warnings and documented remediation options to improve code quality and ensure cleaner builds. Findings will guide future user stories to systematically address and eliminate build warnings across all three API solutions.</li></ul>
                 </div>
                 
                 
                 <div class="screenshots-grid">
                     <div class="screenshot-item">
-                        <img src="screenshots/91638_1.png" alt="Identify causes and remediation options for  build warnings in Conx API, Conx Admin API and Third Party API [16 Hrs]" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <img src="screenshots/91638_1.png" alt="Identify causes and remediation options for build warnings in Conx API, Conx Admin API and Third Party API [16 Hrs]" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
                         <p class="screenshot-caption">Click to enlarge</p>
                     </div>
                     </div>
-            </div>
-            
-
-            <div class="feature-item">
-                <div class="feature-header">
-                    <span class="status-badge status-spike">🔍 SPIKE</span>
-                    <h3 class="feature-title">Identify causes and remediation options for  build warnings in Conx API, Conx Admin API and Third Party API [16 Hrs]</h3>
-                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/91638" class="ticket-link" target="_blank">#91638</a>
-                </div>
-                
-                <div class="feature-summary">
-                    <strong>Summary:</strong>
-                    <ul><li>Build Warnings Analysis for ConX APIs Completed comprehensive investigation of build warnings across ConX API, ConX Admin API, and Third Party API solutions. The spike identified root causes of compilation warnings and documented remediation options to improve code quality, reduce technical debt, and ensure cleaner builds. Findings will guide future user stories to systematically address and eliminate build warnings across all three API solutions.</li></ul>
-                </div>
-                
-                
-                <div class="screenshots-grid">
-                    <div class="screenshot-item">
-                        <img src="screenshots/91638_1.png" alt="Identify causes and remediation options for  build warnings in Conx API, Conx Admin API and Third Party API [16 Hrs]" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
-                        <p class="screenshot-caption">Click to enlarge</p>
-                    </div>
-                    </div>
-            </div>
-            
-
-            <div class="feature-item">
-                <div class="feature-header">
-                    <span class="status-badge status-new">Total Completed</span>
-                    <h3 class="feature-title">70 items</h3>
-                    
-                </div>
-                
-                
-                
-            </div>
-            
-
-            <div class="feature-item">
-                <div class="feature-header">
-                    <span class="status-badge status-new">Total Completed</span>
-                    <h3 class="feature-title">70 items</h3>
-                    
-                </div>
-                
-                
-                
-            </div>
-            
-
-            <div class="feature-item">
-                <div class="feature-header">
-                    <span class="status-badge status-new">Total Completed</span>
-                    <h3 class="feature-title">70 items</h3>
-                    
-                </div>
-                
-                
-                
-            </div>
-            
-
-            <div class="feature-item">
-                <div class="feature-header">
-                    <span class="status-badge status-new">Total Completed</span>
-                    <h3 class="feature-title">70 items</h3>
-                    
-                </div>
-                
-                
-                
-            </div>
-            
-
-            <div class="feature-item">
-                <div class="feature-header">
-                    <span class="status-badge status-new">Total Completed</span>
-                    <h3 class="feature-title">70 items</h3>
-                    
-                </div>
-                
-                
-                
             </div>
             
             </div>

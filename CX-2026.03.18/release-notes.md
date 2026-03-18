@@ -5,21 +5,8 @@
 
 ---
 
-## Home Portal (4 items)
+## Home Portal (3 items)
 
-### 🆕 NEW: View Authorized Third Party
-**Ticket:** [#33066](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/33066)
-**Type:** User Story
-
-**Summary:**
-- Authorized Third Parties Viewer Added to Home Portal Profile
-- What changed: Added a dedicated Authorized Third Parties section to the borrower's Home Portal profile page.
-- Who benefits: Borrowers can now view a list of people authorized to speak about their loan on their behalf, along with the full authorization history, without contacting support.
-
-**Screenshots:**
-- `screenshots/33066_1.png`
-
----
 
 ### 🆕 NEW: Add Mortgage Periodic Statement - Prior Servicer to Documents
 **Ticket:** [#80067](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/80067)
@@ -35,8 +22,8 @@
 
 ---
 
-### 🆕 NEW: Create Document Page
-**Ticket:** [#89829](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/89829)
+### 🆕 NEW: Create Document Page - Behind Feature Flag
+ **Ticket:** [#89829](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/89829)
 **Type:** User Story
 
 **Summary:**
@@ -95,7 +82,7 @@
 
 ## Servicing (6 items)
 
-### 🆕 NEW: Add Payoff Quicker Function to Payment Card
+### 🆕 NEW: Add Payoff Quicker Calculator to Payment Card
 **Ticket:** [#93311](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93311)
 **Type:** User Story
 
@@ -107,19 +94,6 @@
 **Screenshots:**
 - `screenshots/93311_1.png`
 
----
-
-### 🔧 TECH: Upgrade Aspen Grove widgets to 1.55.0
-**Ticket:** [#95551](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/95551)
-**Type:** User Story
-
-**Summary:**
-- Upgraded Aspen Grove Servicing Widgets to v1.55.0
-- What changed: Updated the Aspen Grove servicing widget library to version 1.55.0, incorporating multiple feedback-driven improvements to escrow and payment displays.
-- Who benefits: Borrowers see improved messaging in Escrow Details, clearer escrow shortage notifications, and the AutoPay setup button now correctly disables when setup is unavailable.
-
-**Screenshots:**
-- `screenshots/95551_1.png`
 
 ---
 
@@ -148,6 +122,20 @@
 
 **Screenshots:**
 - `screenshots/97375_1.png`
+
+---
+
+### 🔧 TECH: Upgrade Aspen Grove widgets to 1.55.0
+**Ticket:** [#95551](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/95551)
+**Type:** User Story
+
+**Summary:**
+- Upgraded Aspen Grove Servicing Widgets to v1.55.0
+- What changed: Updated the Aspen Grove servicing widget library to version 1.55.0, incorporating multiple feedback-driven improvements to escrow and payment displays.
+- Who benefits: Borrowers see improved messaging in Escrow Details, clearer escrow shortage notifications, and the AutoPay setup button now correctly disables when setup is unavailable.
+
+**Screenshots:**
+- `screenshots/95551_1.png`
 
 ---
 
@@ -196,7 +184,7 @@
 
 ---
 
-### 🆕 NEW: Implement Spanish translation to SmartApp/HomePortal using native Angular localization
+### 🆕 NEW: Implement Spanish translation to SmartApp/HomePortal using native Angular localization - Behind Feature FLag
 **Ticket:** [#93148](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93148)
 **Type:** User Story
 
@@ -211,7 +199,7 @@
 
 ---
 
-### 🆕 NEW: Implement Spanish translation Phase 2 (API/Alerts)
+### 🆕 NEW: Implement Spanish translation Phase 2 (API/Alerts) - Behind Feature FLag
 **Ticket:** [#95525](https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/95525)
 **Type:** User Story
 

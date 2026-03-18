@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CX Sprint 2026.03.18 Release Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark Mode (Default) */
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #666;
+            --accent-primary: #0078FF;
+            --border-color: #2a2a2a;
+            --shadow-color: rgba(0,0,0,0.3);
+            --hover-glow: rgba(0,120,255,0.2);
+
+            /* Status badge colors - Dark */
+            --status-new-bg: rgba(0, 120, 255, 0.15);
+            --status-new-text: #4da3ff;
+            --status-new-border: rgba(0, 120, 255, 0.3);
+
+            --status-enhanced-bg: rgba(0, 200, 255, 0.15);
+            --status-enhanced-text: #5dbbff;
+            --status-enhanced-border: rgba(0, 200, 255, 0.3);
+
+            --status-fix-bg: rgba(255, 100, 100, 0.15);
+            --status-fix-text: #ff8080;
+            --status-fix-border: rgba(255, 100, 100, 0.3);
+
+            --status-performance-bg: rgba(255, 200, 0, 0.15);
+            --status-performance-text: #ffcc66;
+            --status-performance-border: rgba(255, 200, 0, 0.3);
+
+            --status-technical-bg: rgba(150, 150, 150, 0.15);
+            --status-technical-text: #b0b0b0;
+            --status-technical-border: rgba(150, 150, 150, 0.3);
+
+            --status-spike-bg: rgba(100, 200, 255, 0.15);
+            --status-spike-text: #80d4ff;
+            --status-spike-border: rgba(100, 200, 255, 0.3);
+
+            --status-deprecated-bg: rgba(255, 150, 150, 0.15);
+            --status-deprecated-text: #ff9999;
+            --status-deprecated-border: rgba(255, 150, 150, 0.3);
+        }
+
+        [data-theme="light"] {
+            /* Light Mode */
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f0f0f0;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-muted: #999;
+            --accent-primary: #0078FF;
+            --border-color: #e0e0e0;
+            --shadow-color: rgba(0,0,0,0.08);
+            --hover-glow: rgba(0,120,255,0.12);
+
+            /* Status badge colors - Light */
+            --status-new-bg: #d4edda;
+            --status-new-text: #155724;
+            --status-new-border: #c3e6cb;
+
+            --status-enhanced-bg: #cce5ff;
+            --status-enhanced-text: #004085;
+            --status-enhanced-border: #b8daff;
+
+            --status-fix-bg: #f8d7da;
+            --status-fix-text: #721c24;
+            --status-fix-border: #f5c6cb;
+
+            --status-performance-bg: #fff3cd;
+            --status-performance-text: #856404;
+            --status-performance-border: #ffeaa7;
+
+            --status-technical-bg: #e2e3e5;
+            --status-technical-text: #383d41;
+            --status-technical-border: #d6d8db;
+
+            --status-spike-bg: #d1ecf1;
+            --status-spike-text: #0c5460;
+            --status-spike-border: #bee5eb;
+
+            --status-deprecated-bg: #f5c6cb;
+            --status-deprecated-text: #721c24;
+            --status-deprecated-border: #f1aeb5;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            color: var(--text-primary);
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .sprint-dropdown {
+            font-size: 1rem;
+            padding: 0.4rem 2rem 0.4rem 0.8rem;
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230078FF' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 12px;
+        }
+
+        .sprint-dropdown:hover {
+            background-color: var(--hover-glow);
+            border-color: var(--accent-primary);
+        }
+
+        .sprint-dropdown:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px var(--hover-glow);
+        }
+
+        .header .sprint-dates {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 1rem;
+        }
+
+        .markdown-link {
+            color: var(--accent-primary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .markdown-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .navigation {
+            background: var(--bg-secondary);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px var(--shadow-color);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex: 1;
+            overflow-x: auto;
+            justify-content: center;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            font-weight: bold;
+        }
+
+        .nav-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .theme-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .release-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .section-header .count {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .features-container {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px var(--hover-glow);
+            border-color: var(--accent-primary);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .status-new {
+            background: var(--status-new-bg);
+            color: var(--status-new-text);
+            border: 1px solid var(--status-new-border);
+        }
+
+        .status-enhanced {
+            background: var(--status-enhanced-bg);
+            color: var(--status-enhanced-text);
+            border: 1px solid var(--status-enhanced-border);
+        }
+
+        .status-fix {
+            background: var(--status-fix-bg);
+            color: var(--status-fix-text);
+            border: 1px solid var(--status-fix-border);
+        }
+
+        .status-performance {
+            background: var(--status-performance-bg);
+            color: var(--status-performance-text);
+            border: 1px solid var(--status-performance-border);
+        }
+
+        .status-technical {
+            background: var(--status-technical-bg);
+            color: var(--status-technical-text);
+            border: 1px solid var(--status-technical-border);
+        }
+
+        .status-spike {
+            background: var(--status-spike-bg);
+            color: var(--status-spike-text);
+            border: 1px solid var(--status-spike-border);
+        }
+
+        .status-deprecated {
+            background: var(--status-deprecated-bg);
+            color: var(--status-deprecated-text);
+            border: 1px solid var(--status-deprecated-border);
+        }
+
+        .feature-title {
+            flex: 1;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        .ticket-link {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .ticket-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .feature-summary {
+            margin-top: 1rem;
+            color: var(--text-primary);
+            line-height: 1.8;
+            background: var(--bg-tertiary);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .feature-summary strong {
+            color: var(--accent-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-summary ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .feature-summary li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .feature-details {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .feature-details ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .feature-details li {
+            margin-bottom: 0.3rem;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .screenshot-item {
+            text-align: center;
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .screenshot-item img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px var(--hover-glow);
+            border-color: var(--accent-primary);
+        }
+
+        .screenshot-caption {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        footer {
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            transition: background 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .navigation {
+                padding: 0.5rem 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .feature-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>CX Sprint 2026.03.18</h1>
+            <select id="sprint-selector" class="sprint-dropdown" onchange="switchSprint(this.value)" aria-label="Switch to different sprint">
+                <option value="CX-2026.01.07" >2026.01.07</option>
+<option value="CX-2026.01.28" >2026.01.28</option>
+<option value="CX-2026.02.18" >2026.02.18</option>
+<option value="CX-2026.03.18" selected>2026.03.18</option>
+            </select>
+        </div>
+        <p class="sprint-dates">
+            <a href="release-notes.md" class="markdown-link" download>📄 View Markdown Source</a>
+        </p>
+    </div>
+
+    <nav class="navigation">
+        <div class="nav-links">
+            <a href="#home-portal" class="nav-link">Home Portal (4)</a>
+<a href="#smartapp" class="nav-link">SmartApp (2)</a>
+<a href="#servicing" class="nav-link">Servicing (6)</a>
+<a href="#sitewide" class="nav-link">Sitewide (3)</a>
+<a href="#tech-enhancements" class="nav-link">Tech Enhancements (8)</a>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-icon">🌙</span>
+            <span id="theme-text">Light</span>
+        </button>
+    </nav>
+
+    <div class="container">
+        
+        <section id="home-portal" class="release-section">
+            <h2 class="section-header">Home Portal <span class="count">(4 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">View Authorized Third Party</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/33066" class="ticket-link" target="_blank">#33066</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Authorized Third Parties Viewer Added to Home Portal Profile</li><li>What changed: Added a dedicated Authorized Third Parties section to the borrower's Home Portal profile page.</li><li>Who benefits: Borrowers can now view a list of people authorized to speak about their loan on their behalf, along with the full authorization history, without contacting support.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/33066_1.png" alt="View Authorized Third Party" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Add Mortgage Periodic Statement - Prior Servicer to Documents</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/80067" class="ticket-link" target="_blank">#80067</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Prior Servicer Mortgage Statements Now Available in Documents</li><li>What changed: Added Mortgage Periodic Statement documents from prior servicers to the Home Portal Documents section.</li><li>Who benefits: Borrowers with transferred loans can now access prior servicer statements directly in their document library, eliminating the need to call support.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/80067_1.png" alt="Add Mortgage Periodic Statement - Prior Servicer to Documents" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Create Document Page</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/89829" class="ticket-link" target="_blank">#89829</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Dedicated Documents Page Added to Home Portal</li><li>What changed: Built a new Documents page in the Home Portal, accessible from the Dashboard via the Documents card.</li><li>Who benefits: Borrowers can browse and access all their mortgage documents from a single organized page instead of navigating multiple sections.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/89829_1.png" alt="Create Document Page" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-enhanced">✨ ENHANCED</span>
+                    <h3 class="feature-title">Update HouseCanary API calls to use correct ClientID/Secret for BankCMG domain</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93519" class="ticket-link" target="_blank">#93519</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Corrected HouseCanary API Credentials for BankCMG Domain</li><li>What changed: Updated HouseCanary API calls to use the correct ClientID and Secret for the BankCMG domain.</li><li>Who benefits: BankCMG users can now successfully claim properties, save homes, and use all home value features that were previously failing due to incorrect API credentials.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/93519_1.png" alt="Update HouseCanary API calls to use correct ClientID/Secret for BankCMG domain" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="smartapp" class="release-section">
+            <h2 class="section-header">SmartApp <span class="count">(2 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-enhanced">✨ ENHANCED</span>
+                    <h3 class="feature-title">Update permissible purpose</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/95040" class="ticket-link" target="_blank">#95040</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Updated LexisNexis Permissible Purpose Code in SmartApp</li><li>What changed: Updated the permissible purpose value sent to LexisNexis in identity verification API calls to use the correct regulatory code.</li><li>Who benefits: Loan applicants' identity verification requests are submitted with the correct compliance purpose code, ensuring adherence to LexisNexis data usage requirements.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/95040_1.png" alt="Update permissible purpose" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Fix TRUV Timeout Issue</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/95438" class="ticket-link" target="_blank">#95438</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Fixed TRUV Session Timeout Leaving Mortgage Applications Stuck</li><li>What changed: Fixed a bug where a TRUV income and employment verification session that times out or is abandoned by the borrower could leave the mortgage application in an unrecoverable state.</li><li>Who benefits: Borrowers who start but don't complete TRUV income verification can now continue their application without needing a support team member to manually reset the process.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/95438_1.png" alt="Fix TRUV Timeout Issue" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="servicing" class="release-section">
+            <h2 class="section-header">Servicing <span class="count">(6 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Add Payoff Quicker Function to Payment Card</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93311" class="ticket-link" target="_blank">#93311</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Added a payoff calculator to the payment card in the servicing view.</li><li>What changed: Introduced a 'Pay Off Quicker' calculator widget on the Home Portal payment card that lets borrowers model the impact of additional payments.</li><li>Who benefits: Borrowers can instantly see how extra payments reduce their outstanding loan balance and shorten their payoff timeline, without leaving the portal.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/93311_1.png" alt="Add Payoff Quicker Function to Payment Card" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Upgrade Aspen Grove widgets to 1.55.0</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/95551" class="ticket-link" target="_blank">#95551</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Upgraded Aspen Grove Servicing Widgets to v1.55.0</li><li>What changed: Updated the Aspen Grove servicing widget library to version 1.55.0, incorporating multiple feedback-driven improvements to escrow and payment displays.</li><li>Who benefits: Borrowers see improved messaging in Escrow Details, clearer escrow shortage notifications, and the AutoPay setup button now correctly disables when setup is unavailable.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/95551_1.png" alt="Upgrade Aspen Grove widgets to 1.55.0" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-enhanced">✨ ENHANCED</span>
+                    <h3 class="feature-title">Updates to Payoff Quicker and Lump Sum calculators</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/97318" class="ticket-link" target="_blank">#97318</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Updated Payoff Quicker and Lump Sum Payment Calculators</li><li>What changed: Made accuracy and clarity improvements to the Payoff Quicker and Lump Sum principal payment calculators in the Home Portal.</li><li>Who benefits: Borrowers get more accurate projections when exploring how extra principal payments would reduce their loan term and total interest paid.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/97318_1.png" alt="Updates to Payoff Quicker and Lump Sum calculators" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Add feature flag for Calculator page</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/97375" class="ticket-link" target="_blank">#97375</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Added Feature Flag to Control Calculator Page Visibility in Navigation</li><li>What changed: Introduced a feature flag in the Admin Portal that controls whether the Calculator page appears in the Home Portal's top navigation menu.</li><li>Who benefits: Administrators can enable or disable the Calculator navigation item per environment without requiring a code deployment.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/97375_1.png" alt="Add feature flag for Calculator page" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Upgrade Aspen Grove widgets to 1.56.0</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/98104" class="ticket-link" target="_blank">#98104</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Upgraded Aspen Grove Servicing Widgets to v1.56.0</li><li>What changed: Updated the Aspen Grove servicing widget library to version 1.56.0, introducing a new 'Paid in Full' account detection feature with tailored UI changes.</li><li>Who benefits: Borrowers with fully paid-off loans see a streamlined UI that hides irrelevant actions like future payment scheduling, while their full payment history remains accessible.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/98104_1.png" alt="Upgrade Aspen Grove widgets to 1.56.0" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Upgrade Aspen Grove widgets to 1.57.0</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/98876" class="ticket-link" target="_blank">#98876</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Upgraded Aspen Grove Servicing Widgets to v1.57.0</li><li>What changed: Updated the Aspen Grove servicing widget library to version 1.57.0, adding a 'Maximum Pre Pay' safeguard to the Payments widget.</li><li>Who benefits: Borrowers who have reached their maximum prepayment limit for the current month see a clear explanatory message and cannot accidentally submit a duplicate one-time payment.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/98876_1.png" alt="Upgrade Aspen Grove widgets to 1.57.0" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="sitewide" class="release-section">
+            <h2 class="section-header">Sitewide <span class="count">(3 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Long-Term SSO : Switch to Hosted Login</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/92590" class="ticket-link" target="_blank">#92590</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Seamless Single Sign-On Across CMG Domains via Hosted Login</li><li>What changed: Switched the SSO login flow to a hosted login experience that supports seamless cross-domain authentication between BankCMG and CMG Home Loans.</li><li>Who benefits: Borrowers can move between BankCMG and CMG Home Loans sites without re-entering credentials, while each domain's login page reflects the correct brand identity.</li><li>Technical context: Migrated to a hosted login integration to support long-term SSO, resolving cross-domain session management limitations of the previous implementation.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/92590_1.png" alt="Long-Term SSO : Switch to Hosted Login" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Implement Spanish translation to SmartApp/HomePortal using native Angular localization</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93148" class="ticket-link" target="_blank">#93148</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Implemented Spanish language localization for SmartApp and Home Portal.</li><li>What changed: Added Spanish translation support using Angular's native i18n localization framework across SmartApp and Home Portal.</li><li>Who benefits: Spanish-speaking borrowers can now navigate the application in their preferred language, improving accessibility for a broader customer base.</li><li>Technical context: Built on Angular's built-in localization system for long-term maintainability and straightforward addition of future languages.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/93148_1.png" alt="Implement Spanish translation to SmartApp/HomePortal using native Angular localization" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Implement Spanish translation Phase 2 (API/Alerts)</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/95525" class="ticket-link" target="_blank">#95525</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Spanish Language Support Extended to API Responses and System Alerts</li><li>What changed: Extended Spanish localization to cover API response messages and system alerts across the Home Portal and SmartApp.</li><li>Who benefits: Spanish-speaking borrowers now see system messages, notifications, and alerts in Spanish, completing the second phase of the platform's localization rollout.</li><li>Technical context: Builds on Phase 1 Angular UI localization by adding Spanish translations to back-end API messages and the alerting infrastructure.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/95525_1.png" alt="Implement Spanish translation Phase 2 (API/Alerts)" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="tech-enhancements" class="release-section">
+            <h2 class="section-header">Tech Enhancements <span class="count">(8 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Fix duplicate claimHome API calls causing 109K+ weekly 409 errors</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93412" class="ticket-link" target="_blank">#93412</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Fixed Duplicate Home-Claim API Calls That Generated 109K+ Weekly Errors</li><li>What changed: Resolved the root cause of duplicate claimHome API calls that were generating over 109,000 failed requests per week in the ConX API.</li><li>Who benefits: Borrowers experience fewer background errors during Home Portal initialization, and the platform's API reliability improves significantly on home claim requests.</li><li>Technical context: Fixed the trigger logic for the claimHome endpoint, eliminating duplicate calls and reducing weekly 409 conflict errors from 109,724 to near zero (17.7% failure rate resolved).</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/93412_1.png" alt="Fix duplicate claimHome API calls causing 109K+ weekly 409 errors" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Modify Home Portal to use new Alert Endpoints</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/93862" class="ticket-link" target="_blank">#93862</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Home Portal Migrated to Updated Alert API Endpoints</li><li>What changed: Updated the Home Portal's announcement and alert display infrastructure to consume the new Alerts API endpoints.</li><li>Who benefits: Borrowers continue to receive timely system alerts and announcements, now powered by a more reliable and maintainable alerting backend.</li><li>Technical context: Aligns Home Portal with the new alerting system, replacing the legacy endpoint integration.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/93862_1.png" alt="Modify Home Portal to use new Alert Endpoints" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Change Alert Messages to explicitly use "en-US" as fallback culture</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/95273" class="ticket-link" target="_blank">#95273</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Standardized Alert Message Locale to English (US)</li><li>What changed: Alerts now explicitly use 'en-US' as the fallback culture instead of inheriting the server's current culture setting.</li><li>Who benefits: Borrowers consistently receive alert messages in English rather than seeing unexpected language or formatting variations caused by server locale differences.</li><li>Technical context: Replaces the implicit CultureInfo.CurrentCulture fallback in the Alerts API with an explicit 'en-US' override.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/95273_1.png" alt="Change Alert Messages to explicitly use "en-US" as fallback culture" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Allow for "Global All/Any" for Tag Matching in Alerts</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/96601" class="ticket-link" target="_blank">#96601</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Added Global All/Any Tag Matching Option to the Alerts System</li><li>What changed: Extended the Alerts API to support a global 'All' or 'Any' matching mode across tag criteria, in addition to per-tag matching rules.</li><li>Who benefits: System administrators can configure more precise alert targeting rules, ensuring borrowers only receive alerts that match all, or at least one, of a defined tag set.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/96601_1.png" alt="Allow for "Global All/Any" for Tag Matching in Alerts" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Add web app restart to CX deployments</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/96701" class="ticket-link" target="_blank">#96701</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Added Automatic Web App Restart to CX Deployment Pipeline</li><li>What changed: Added an automatic web app restart step to the CX deployment process to ensure updated code is picked up correctly after each release.</li><li>Who benefits: Reduces the risk of deployments silently running stale code, improving the reliability and predictability of production releases across all CX applications.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/96701_1.png" alt="Add web app restart to CX deployments" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Add documentation for local container support</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/97881" class="ticket-link" target="_blank">#97881</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Added Local Container Documentation for SQL Server Development Setup</li><li>What changed: Added developer documentation for running SQL Server locally using Docker containers as an alternative to direct installation.</li><li>Who benefits: Developers can set up a consistent local SQL environment without installing SQL Server 2025 natively, reducing onboarding friction and resolving local setup compatibility issues.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/97881_1.png" alt="Add documentation for local container support" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Add Google Tag Manager back to SmartApp</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/98006" class="ticket-link" target="_blank">#98006</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Restored Google Tag Manager Integration in SmartApp</li><li>What changed: Re-added Google Tag Manager (GTM) to SmartApp after cross-team alignment confirmed its active usage requirements.</li><li>Who benefits: Analytics and marketing teams regain the ability to track user events in SmartApp through GTM without requiring additional engineering changes.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/98006_1.png" alt="Add Google Tag Manager back to SmartApp" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Update Docker documentation</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/99123" class="ticket-link" target="_blank">#99123</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Improved Docker Local Database Setup Documentation</li><li>What changed: Updated LOCAL_DATABASE_SETUP.md with clarity improvements, including SQL Server memory limit configuration (MSSQL_MEMORY_LIMIT_MB=2048) across all Docker run commands.</li><li>Who benefits: Developers setting up local environments experience less memory pressure and have clearer, more reliable guidance for Docker-based SQL Server configuration.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/99123_1.png" alt="Update Docker documentation" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Consumer Experience Team | Generated from Azure DevOps</p>
+    </footer>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Sprint switching functionality
+        function switchSprint(sprintFolder) {
+            // Navigate to the selected sprint's HTML file
+            window.location.href = '../' + sprintFolder + '/release-notes.html';
+        }
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            // Update button text and icon
+            if (newTheme === 'light') {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            } else {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            }
+        }
+
+        // Load saved theme on page load
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+
+            html.setAttribute('data-theme', savedTheme);
+
+            if (savedTheme === 'light') {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            } else {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            }
+        })();
+
+        function enlargeImage(img) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'flex';
+            modalImg.src = img.src;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CX Sprint 2026.05.07 Release Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark Mode (Default) */
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #666;
+            --accent-primary: #0078FF;
+            --border-color: #2a2a2a;
+            --shadow-color: rgba(0,0,0,0.3);
+            --hover-glow: rgba(0,120,255,0.2);
+
+            /* Status badge colors - Dark */
+            --status-new-bg: rgba(0, 120, 255, 0.15);
+            --status-new-text: #4da3ff;
+            --status-new-border: rgba(0, 120, 255, 0.3);
+
+            --status-enhanced-bg: rgba(0, 200, 255, 0.15);
+            --status-enhanced-text: #5dbbff;
+            --status-enhanced-border: rgba(0, 200, 255, 0.3);
+
+            --status-fix-bg: rgba(255, 100, 100, 0.15);
+            --status-fix-text: #ff8080;
+            --status-fix-border: rgba(255, 100, 100, 0.3);
+
+            --status-performance-bg: rgba(255, 200, 0, 0.15);
+            --status-performance-text: #ffcc66;
+            --status-performance-border: rgba(255, 200, 0, 0.3);
+
+            --status-technical-bg: rgba(150, 150, 150, 0.15);
+            --status-technical-text: #b0b0b0;
+            --status-technical-border: rgba(150, 150, 150, 0.3);
+
+            --status-spike-bg: rgba(100, 200, 255, 0.15);
+            --status-spike-text: #80d4ff;
+            --status-spike-border: rgba(100, 200, 255, 0.3);
+
+            --status-deprecated-bg: rgba(255, 150, 150, 0.15);
+            --status-deprecated-text: #ff9999;
+            --status-deprecated-border: rgba(255, 150, 150, 0.3);
+        }
+
+        [data-theme="light"] {
+            /* Light Mode */
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f0f0f0;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-muted: #999;
+            --accent-primary: #0078FF;
+            --border-color: #e0e0e0;
+            --shadow-color: rgba(0,0,0,0.08);
+            --hover-glow: rgba(0,120,255,0.12);
+
+            /* Status badge colors - Light */
+            --status-new-bg: #d4edda;
+            --status-new-text: #155724;
+            --status-new-border: #c3e6cb;
+
+            --status-enhanced-bg: #cce5ff;
+            --status-enhanced-text: #004085;
+            --status-enhanced-border: #b8daff;
+
+            --status-fix-bg: #f8d7da;
+            --status-fix-text: #721c24;
+            --status-fix-border: #f5c6cb;
+
+            --status-performance-bg: #fff3cd;
+            --status-performance-text: #856404;
+            --status-performance-border: #ffeaa7;
+
+            --status-technical-bg: #e2e3e5;
+            --status-technical-text: #383d41;
+            --status-technical-border: #d6d8db;
+
+            --status-spike-bg: #d1ecf1;
+            --status-spike-text: #0c5460;
+            --status-spike-border: #bee5eb;
+
+            --status-deprecated-bg: #f5c6cb;
+            --status-deprecated-text: #721c24;
+            --status-deprecated-border: #f1aeb5;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            color: var(--text-primary);
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .sprint-dropdown {
+            font-size: 1rem;
+            padding: 0.4rem 2rem 0.4rem 0.8rem;
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230078FF' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 12px;
+        }
+
+        .sprint-dropdown:hover {
+            background-color: var(--hover-glow);
+            border-color: var(--accent-primary);
+        }
+
+        .sprint-dropdown:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px var(--hover-glow);
+        }
+
+        .header .sprint-dates {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 1rem;
+        }
+
+        .markdown-link {
+            color: var(--accent-primary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .markdown-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .navigation {
+            background: var(--bg-secondary);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px var(--shadow-color);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex: 1;
+            overflow-x: auto;
+            justify-content: center;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            font-weight: bold;
+        }
+
+        .nav-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .theme-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .release-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .section-header .count {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .features-container {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px var(--hover-glow);
+            border-color: var(--accent-primary);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .status-new {
+            background: var(--status-new-bg);
+            color: var(--status-new-text);
+            border: 1px solid var(--status-new-border);
+        }
+
+        .status-enhanced {
+            background: var(--status-enhanced-bg);
+            color: var(--status-enhanced-text);
+            border: 1px solid var(--status-enhanced-border);
+        }
+
+        .status-fix {
+            background: var(--status-fix-bg);
+            color: var(--status-fix-text);
+            border: 1px solid var(--status-fix-border);
+        }
+
+        .status-performance {
+            background: var(--status-performance-bg);
+            color: var(--status-performance-text);
+            border: 1px solid var(--status-performance-border);
+        }
+
+        .status-technical {
+            background: var(--status-technical-bg);
+            color: var(--status-technical-text);
+            border: 1px solid var(--status-technical-border);
+        }
+
+        .status-spike {
+            background: var(--status-spike-bg);
+            color: var(--status-spike-text);
+            border: 1px solid var(--status-spike-border);
+        }
+
+        .status-deprecated {
+            background: var(--status-deprecated-bg);
+            color: var(--status-deprecated-text);
+            border: 1px solid var(--status-deprecated-border);
+        }
+
+        .feature-title {
+            flex: 1;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        .ticket-link {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .ticket-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .feature-summary {
+            margin-top: 1rem;
+            color: var(--text-primary);
+            line-height: 1.8;
+            background: var(--bg-tertiary);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .feature-summary strong {
+            color: var(--accent-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-summary ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .feature-summary li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .feature-details {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .feature-details ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .feature-details li {
+            margin-bottom: 0.3rem;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .screenshot-item {
+            text-align: center;
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .screenshot-item img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px var(--hover-glow);
+            border-color: var(--accent-primary);
+        }
+
+        .screenshot-caption {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        footer {
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            transition: background 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .navigation {
+                padding: 0.5rem 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .feature-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>CX Sprint 2026.05.07</h1>
+            <select id="sprint-selector" class="sprint-dropdown" onchange="switchSprint(this.value)" aria-label="Switch to different sprint">
+                <option value="CX-2026.01.07" >2026.01.07</option>
+<option value="CX-2026.01.28" >2026.01.28</option>
+<option value="CX-2026.02.18" >2026.02.18</option>
+<option value="CX-2026.03.18" >2026.03.18</option>
+<option value="CX-2026.04.01" >2026.04.01</option>
+<option value="CX-2026.04.22" >2026.04.22</option>
+<option value="CX-2026.05.07" selected>2026.05.07</option>
+            </select>
+        </div>
+        <p class="sprint-dates">
+            <a href="release-notes.md" class="markdown-link" download>📄 View Markdown Source</a>
+        </p>
+    </div>
+
+    <nav class="navigation">
+        <div class="nav-links">
+            <a href="#home-portal" class="nav-link">Home Portal (1)</a>
+<a href="#smartapp" class="nav-link">SmartApp (2)</a>
+<a href="#servicing" class="nav-link">Servicing (2)</a>
+<a href="#admin-portal" class="nav-link">Admin Portal (1)</a>
+<a href="#sitewide" class="nav-link">Sitewide (1)</a>
+<a href="#tech-enhancements" class="nav-link">Tech Enhancements (14)</a>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-icon">🌙</span>
+            <span id="theme-text">Light</span>
+        </button>
+    </nav>
+
+    <div class="container">
+        
+        <section id="home-portal" class="release-section">
+            <h2 class="section-header">Home Portal <span class="count">(1 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Include Assigned Borrower in Upload payload</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/103662" class="ticket-link" target="_blank">#103662</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Document Uploads Now Correctly Identify the Associated Borrower</li><li>What changed: Enhanced the Home Portal document upload payload to include borrower identification when a task is assigned to a specific borrower or borrower pair.</li><li>Who benefits: Borrowers uploading documents through Home Portal - their files are now correctly associated with the right applicant in ClearDocs, reducing manual processing for loan teams.</li><li>Technical context: When a task is assigned to a single borrower, that borrower is passed in the POST to ClearDocs; when assigned to a pair, both borrower identifiers are included in the payload.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/103662_1.png" alt="Include Assigned Borrower in Upload payload" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="smartapp" class="release-section">
+            <h2 class="section-header">SmartApp <span class="count">(2 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-enhanced">✨ ENHANCED</span>
+                    <h3 class="feature-title">Update Okta template for Partner Portal support</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/103966" class="ticket-link" target="_blank">#103966</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Extended Okta Login Template to Support Partner Portal</li><li>What changed: Updated the Okta hosted sign-in template to support Partner Portal authentication and aligned its visual design with the partner portal's white-header login page.</li><li>Who benefits: Mortgage brokers and TPO partners logging into the Partner Portal - they now see a consistent, brand-appropriate login experience using the Okta hosted login flow.</li><li>Technical context: Extended src/static/okta-templates/login.html; design aligned with the Partner Portal white-header login redesign per GHE issue #63 in pilot-program/partner-portal.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/103966_1.png" alt="Update Okta template for Partner Portal support" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-enhanced">✨ ENHANCED</span>
+                    <h3 class="feature-title">Disclaimer for NextMortgage should be updated</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/104363" class="ticket-link" target="_blank">#104363</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Updated Legal Disclaimer Text for NextMortgage</li><li>What changed: Updated the SmartApp short and long disclaimer text for the NextMortgage brand to reflect current licensing and regulatory information, including state-specific license numbers.</li><li>Who benefits: Borrowers applying through the NextMortgage brand - the disclosure text they see now accurately reflects NextMortgage's current regulatory status and NMLS ID 1937279.</li><li>Technical context: Updated disclaimer covers California (DFPI CRMLA #60DBO-117725), Colorado, Texas, Georgia, Ohio, Oregon, and additional state-specific licensing language.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/104363_1.png" alt="Disclaimer for NextMortgage should be updated" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="servicing" class="release-section">
+            <h2 class="section-header">Servicing <span class="count">(2 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-enhanced">✨ ENHANCED</span>
+                    <h3 class="feature-title">Paid in Full account Loan Details card updates_part 2</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/103667" class="ticket-link" target="_blank">#103667</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Completed Updates to the Loan Details Card for Paid-in-Full Accounts</li><li>What changed: Completed the second phase of Loan Details card updates on the Mortgage Account dashboard for LoanServ accounts that have been fully paid off.</li><li>Who benefits: Homeowners who have paid off their mortgage - the account dashboard now clearly reflects their paid-in-full status with accurate balances and appropriately hidden payment options.</li><li>Technical context: Builds on #90905 deployed last sprint; Part 2 completes the remaining acceptance criteria for paid-in-full account display in LoanServ-backed accounts.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/103667_1.png" alt="Paid in Full account Loan Details card updates_part 2" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-enhanced">✨ ENHANCED</span>
+                    <h3 class="feature-title">Update Payment Amount and Due to Active Bankruptcy</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/103790" class="ticket-link" target="_blank">#103790</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Updated Payment Display for Borrowers in Active Bankruptcy</li><li>What changed: Updated the Home Portal Mortgage Account dashboard to show the post-petition payment amount and due date for accounts with an active bankruptcy status.</li><li>Who benefits: Homeowners in active bankruptcy - the payment amount and due date shown on their dashboard now accurately reflects their bankruptcy repayment terms rather than the standard mortgage payment.</li><li>Technical context: Uses the bankruptcy detection logic from #101485 to conditionally swap displayed payment data to post-petition values; the change only applies when the BK flag is 'A' (Active).</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/103790_1.png" alt="Update Payment Amount and Due to Active Bankruptcy" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="admin-portal" class="release-section">
+            <h2 class="section-header">Admin Portal <span class="count">(1 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Brand Specific Emails | Next Mortgage</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/103788" class="ticket-link" target="_blank">#103788</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Added Next Mortgage Brand to Admin Portal Email Trigger</li><li>What changed: Added Next Mortgage as a selectable organization in the Admin Portal brand dropdown when triggering emails such as account unlock notifications.</li><li>Who benefits: Admin users managing Next Mortgage accounts - they can now trigger brand-accurate emails under the Next Mortgage identity rather than defaulting to another brand.</li><li>Technical context: Extends the existing Admin Portal email trigger that previously supported only BankCMG and CMG Home Loans; Next Mortgage email routing follows the same brand-selection pattern.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/103788_1.png" alt="Brand Specific Emails | Next Mortgage" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="sitewide" class="release-section">
+            <h2 class="section-header">Sitewide <span class="count">(1 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-new">🆕 NEW</span>
+                    <h3 class="feature-title">Implement Email Branding with Email module - CMG and BankCMG</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/103668" class="ticket-link" target="_blank">#103668</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Implemented Brand-Specific Email Templates for CMG Home Loans and BankCMG</li><li>What changed: Wired up the Email module so that transactional emails sent from SmartApp and Home Portal reflect the originating brand (CMG Home Loans or BankCMG) rather than a generic template.</li><li>Who benefits: Borrowers and loan officers receiving email notifications - emails now display the correct branding, logos, and sender identity matching the brand that originated the transaction.</li><li>Technical context: Brand selection uses the Email module routing logic; CMG and BankCMG configurations tested across all notification types from both SmartApp and Home Portal entry points.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/103668_1.png" alt="Implement Email Branding with Email module - CMG and BankCMG" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+
+        <section id="tech-enhancements" class="release-section">
+            <h2 class="section-header">Tech Enhancements <span class="count">(14 items)</span></h2>
+            <div class="features-container">
+                
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Remove oktaSsoToken post/get logic (no longer needed with hosted Okta login)</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/99167" class="ticket-link" target="_blank">#99167</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Removed Obsolete Okta SSO Token Relay from SmartApp</li><li>What changed: Removed the client-side oktaSsoToken POST/GET endpoints and supporting database infrastructure used for cross-domain SSO redirects during authentication.</li><li>Who benefits: Engineers maintaining the codebase - fewer dead-code paths and database endpoints reduce maintenance overhead and potential attack surface.</li><li>Technical context: This pattern stored Okta tokens temporarily in the database during cross-domain redirects; the hosted Okta login page now handles token exchange natively, making this relay unnecessary.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/99167_1.png" alt="Remove oktaSsoToken post/get logic (no longer needed with hosted Okta login)" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Add [DisableGlobalAuthorize] attribute to ExternalController in ConX API</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/100268" class="ticket-link" target="_blank">#100268</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Fixed Authorization Conflict on External API Controller</li><li>What changed: Added the [DisableGlobalAuthorize] attribute to ExternalController in ConX API to prevent the Plinth global-authorize filter from conflicting with its per-method API-key authorization.</li><li>Who benefits: Engineering and ops teams - eliminates spurious authorization errors in App Insights caused by the duplicate authorization check.</li><li>Technical context: ExternalController uses explicit [ApiKey] attributes on every method; the global Plinth filter was incorrectly intercepting these calls before method-level auth could evaluate.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/100268_1.png" alt="Add [DisableGlobalAuthorize] attribute to ExternalController in ConX API" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Update Vulnerable Packages in ConX API</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/101092" class="ticket-link" target="_blank">#101092</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Updated Vulnerable Dependencies in ConX API</li><li>What changed: Upgraded AutoMapper, Scriban, and MimeKit to resolve moderate and high-severity vulnerabilities flagged in the ConX API codebase.</li><li>Who benefits: All users of the platform - running production code without known high vulnerabilities reduces security risk exposure.</li><li>Technical context: Unresolved vulnerabilities were also blocking Entity Framework migration work; this unblocks continued EF development alongside the security remediation.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/101092_1.png" alt="Update Vulnerable Packages in ConX API" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Update Vulnerable Packages in ConX Admin</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/101094" class="ticket-link" target="_blank">#101094</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Updated Vulnerable Dependencies in ConX Admin</li><li>What changed: Upgraded the Scriban package in ConX Admin to resolve moderate and high-severity vulnerabilities in the admin codebase.</li><li>Who benefits: All users of the admin platform - removes known security vulnerabilities from production-deployed code.</li><li>Technical context: Aligned with the parallel ConX API package update (#101092); both addressed in the same sprint to maintain parity between services.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/101094_1.png" alt="Update Vulnerable Packages in ConX Admin" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">SmartApp Save Flow � Race Conditions, Missing BorrowerGUID, and Partial Failure Handling</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/102732" class="ticket-link" target="_blank">#102732</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Fixed Race Conditions and Data Loss in SmartApp Save Flow</li><li>What changed: Refactored the SmartApp wizard save flow to resolve race conditions that caused NULL BorrowerGUID errors, duplicate entity creation, and silently discarded save results.</li><li>Who benefits: Borrowers filling out loan applications - eliminates a class of data-loss bugs where employment, income, liability, and real estate entries were silently dropped or duplicated during multi-borrower saves.</li><li>Technical context: The prior forkJoin parallel-save pattern fired child entity endpoints before the parent borrower POST returned a GUID; 411 SqlExceptions over 30 days confirmed active production data loss (usp_InsertEmployment: 283, usp_InsertIncome: 70, usp_InsertLiability: 30, usp_InsertRealEstateOwned: 28).</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/102732_1.png" alt="SmartApp Save Flow � Race Conditions, Missing BorrowerGUID, and Partial Failure Handling" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">SmartApp Submit Skips Save � Dirty Data Lost on Loan Application Submission</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/102733" class="ticket-link" target="_blank">#102733</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Fixed Lost Form Data When Submitting a Loan Application</li><li>What changed: Updated the SmartApp submission flow to save any unsaved form changes before dispatching the application, preventing silent data loss on the prequalification review page.</li><li>Who benefits: Borrowers - any last-minute edits made on the review page before clicking 'Submit Application' are now preserved and included in the submitted application.</li><li>Technical context: The wizardComplete action in wizard.store.ts skipped calling save() before setting complete: true; the fix ensures save is called in smart-1003.component.ts prior to api.submit(guid).</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/102733_1.png" alt="SmartApp Submit Skips Save � Dirty Data Lost on Loan Application Submission" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">XSS Pipe Remediation � Replace safeHtml with Whitelist Sanitizer</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/102817" class="ticket-link" target="_blank">#102817</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Replaced Unsafe HTML Pipe with Whitelist-Based Sanitizer</li><li>What changed: Replaced the safeHtml Angular pipe - which bypassed all XSS sanitization - with a new sanitizedHtml pipe that enforces a whitelist of safe tags and attributes.</li><li>Who benefits: All borrowers and staff using the platform - eliminates a class of cross-site scripting vulnerabilities across 12 template locations.</li><li>Technical context: The new sanitizedHtml pipe uses DOMParser to strip non-whitelisted tags and attributes, then passes output through Angular's SecurityContext.HTML sanitizer as a second pass; allowed tags are limited to b, i, strong, em, a, br, p, ul, ol, li, and span.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/102817_1.png" alt="XSS Pipe Remediation � Replace safeHtml with Whitelist Sanitizer" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">innerHTML Surface Reduction � Convert Error Bindings to Text Interpolation</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/102823" class="ticket-link" target="_blank">#102823</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Reduced XSS Attack Surface by Converting Error Bindings to Safe Text Interpolation</li><li>What changed: Converted approximately 10 [innerHTML] bindings that rendered plain error messages to Angular text interpolation, which auto-escapes HTML content.</li><li>Who benefits: All platform users - eliminates unnecessary XSS vectors in error message display across loan selection, upload, borrower document, and task list components.</li><li>Technical context: None of the converted bindings contained HTML formatting, making this a zero-risk refactor; affected components include loan-select, upload, borrower-docs-upload-auth, borrower-docs-upload-contact, documents-list-task, and task-list.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/102823_1.png" alt="innerHTML Surface Reduction � Convert Error Bindings to Text Interpolation" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Match borrowers by identity after loan creation, not array position</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/102843" class="ticket-link" target="_blank">#102843</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Fixed Borrower Identity Mismatch After Initial Loan Creation</li><li>What changed: Updated createLoanApplicationOnApi to match borrowers from the API response by identity (borrowerGUID) rather than array position when merging form data after a loan is first created.</li><li>Who benefits: Borrowers applying as a pair - eliminates a class of bugs where co-borrower data could be silently applied to the primary borrower due to position-based array merging.</li><li>Technical context: Ramda's mergeDeepRight replaces arrays wholesale and Angular's FormArray.patchValue patches by index; both break when loanFull returns borrowers in a different order than the form expects.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/102843_1.png" alt="Match borrowers by identity after loan creation, not array position" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Harden loanFull borrower sort to handle missing isPrimary</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/102844" class="ticket-link" target="_blank">#102844</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Hardened Borrower Sort to Handle Missing Primary Flag</li><li>What changed: Updated the loanFull borrower sort in api.stores.ts to include a fallback when no borrower has isPrimary set, preventing co-borrower data from appearing in the primary borrower position.</li><li>Who benefits: Borrowers in joint loan applications - prevents a scenario where both applicants could be treated as co-borrowers, potentially mixing their loan data.</li><li>Technical context: The prior filter-based sort treated null, undefined, and false identically; when isPrimary is absent, usp_SearchBorrowers returns borrowers ORDER BY DateInserted DESC, placing the co-borrower first and inverting expected order.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/102844_1.png" alt="Harden loanFull borrower sort to handle missing isPrimary" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">API � Ensure at least one borrower has IsPrimary after creation</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/102846" class="ticket-link" target="_blank">#102846</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Added Server-Side Guarantee That Every Loan Has a Primary Borrower</li><li>What changed: Updated LoanApplicationManager.SetDefaults in ConX API to validate that at least one borrower has IsPrimary set after loan creation and to assign it when missing.</li><li>Who benefits: Borrowers applying as a pair - prevents silent data errors downstream when neither borrower is designated as the primary applicant.</li><li>Technical context: The prior null-coalescing assignment was skipped whenever the client submitted borrowers in the POST body; with IsPrimary typed as bool? (nullable), a null value from deserialization could pass validation unchallenged.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/102846_1.png" alt="API � Ensure at least one borrower has IsPrimary after creation" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Fix positional borrower merge in formGroupCreateExisting</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/102868" class="ticket-link" target="_blank">#102868</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Fixed Borrower Data Mix-Up When Resuming an In-Progress Loan Application</li><li>What changed: Replaced hardcoded array-index merging in formGroupCreateExisting with identity-based borrower matching, preventing primary and co-borrower data from being swapped when a user returns to a saved application.</li><li>Who benefits: Borrowers resuming a joint loan application - their personal information now reliably appears in the correct section rather than being transposed with their co-borrower.</li><li>Technical context: The prior merge assumed borrowers[0] is always primary and borrowers[1] is always co-borrower; if loanFull returned them in a different order when the isPrimary sort failed, data was silently cross-applied to the wrong borrower.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/102868_1.png" alt="Fix positional borrower merge in formGroupCreateExisting" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-technical">🔧 TECH</span>
+                    <h3 class="feature-title">Replace hardcoded positional borrower access with identity-based lookups</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/102869" class="ticket-link" target="_blank">#102869</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Replaced Positional Borrower Array Access with Identity-Based Lookups</li><li>What changed: Replaced all hardcoded borrowers[0]/borrowers[1] array index access across the smart-1003 module with lookups by isPrimary flag and borrowerGUID.</li><li>Who benefits: Borrowers in joint loan applications - ensures VOIE, VOA provider selection, and co-borrower detection always operate on the correct applicant regardless of array order.</li><li>Technical context: Affected locations include smart-1003.service.ts VOIE/VOA provider aggregation and review.component.ts isCoBorrower getter; this is the final step in a sprint-wide borrower identity hardening effort.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/102869_1.png" alt="Replace hardcoded positional borrower access with identity-based lookups" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+
+            <div class="feature-item">
+                <div class="feature-header">
+                    <span class="status-badge status-spike">🔍 SPIKE</span>
+                    <h3 class="feature-title">Improve Sensitive-Data Logging Infrastructure for Request Logging [16HRS]</h3>
+                    <a href="https://cmgfidev.visualstudio.com/Consumer%20Experience/_workitems/edit/101112" class="ticket-link" target="_blank">#101112</a>
+                </div>
+                
+                <div class="feature-summary">
+                    <strong>Summary:</strong>
+                    <ul><li>Researched a Targeted Strategy for Redacting Sensitive Data from Request Logs</li><li>What was researched: A more precise approach for redacting sensitive data from request logs, as an improvement over the existing method that disables logging entirely for sensitive API paths.</li><li>Key findings: The current brute-force approach sacrifices observability; configurable field-level redaction was evaluated as the preferred replacement to preserve audit capability while protecting sensitive borrower data.</li><li>Next steps: Findings unblock a proper implementation of field-level log redaction that balances security and operational visibility.</li></ul>
+                </div>
+                
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="screenshots/101112_1.png" alt="Improve Sensitive-Data Logging Infrastructure for Request Logging [16HRS]" onclick="enlargeImage(this)" onerror="this.parentElement.style.display='none'">
+                        <p class="screenshot-caption">Click to enlarge</p>
+                    </div>
+                    </div>
+            </div>
+            
+            </div>
+        </section>
+        
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Consumer Experience Team | Generated from Azure DevOps</p>
+    </footer>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Sprint switching functionality
+        function switchSprint(sprintFolder) {
+            // Navigate to the selected sprint's HTML file
+            window.location.href = '../' + sprintFolder + '/release-notes.html';
+        }
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            // Update button text and icon
+            if (newTheme === 'light') {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            } else {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            }
+        }
+
+        // Load saved theme on page load
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+
+            html.setAttribute('data-theme', savedTheme);
+
+            if (savedTheme === 'light') {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            } else {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            }
+        })();
+
+        function enlargeImage(img) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'flex';
+            modalImg.src = img.src;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
